@@ -5,7 +5,7 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="GIvaHbZFUjQboe49xxG8-5" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Operation" vertex="1">
-          <mxGeometry height="560" width="400" x="40" y="200" as="geometry">
+          <mxGeometry height="580" width="400" x="40" y="200" as="geometry">
             <mxRectangle height="30" width="90" x="30" y="210" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -15,8 +15,8 @@
         <mxCell id="GIvaHbZFUjQboe49xxG8-7" parent="GIvaHbZFUjQboe49xxG8-5" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="400" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="GIvaHbZFUjQboe49xxG8-8" parent="GIvaHbZFUjQboe49xxG8-5" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Operation(&lt;div&gt;name: String = null,&lt;/div&gt;&lt;div&gt;num_qubits: int = 0,&lt;/div&gt;&lt;div&gt;num_clbits: int = 0,&lt;/div&gt;&lt;div&gt;definition: QuantumCircuit = null&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;params: List&amp;lt;float&amp;gt; = [],&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;init_op: Operation = null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ copy(): Operation&lt;/div&gt;&lt;div&gt;+ get_unitary(decimals: int = -1): ndarray&lt;/div&gt;&lt;div&gt;+ inverse(): Operation&lt;/div&gt;&lt;div&gt;+ control(&lt;br&gt;num_ctrl_qubits: int = 1,&lt;/div&gt;&lt;div&gt;ctrl_state: int | String =-1,&lt;/div&gt;&lt;div&gt;method: String | Callable = &quot;&quot;): Operation&lt;/div&gt;&lt;div&gt;+ hash(): int&lt;/div&gt;&lt;div&gt;+ is_permeable(indices: int): bool&lt;/div&gt;&lt;div&gt;+ bind_parameters(subs_dic:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Map&amp;lt;float, Object&amp;gt;): Operation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ c_if(num_control: int = 1, ctrl_state: int = -1): ClControlledOperation&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="302" width="400" y="258" as="geometry" />
+        <mxCell id="GIvaHbZFUjQboe49xxG8-8" parent="GIvaHbZFUjQboe49xxG8-5" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ Operation(&lt;div&gt;name: String = null,&lt;/div&gt;&lt;div&gt;num_qubits: int = 0,&lt;/div&gt;&lt;div&gt;num_clbits: int = 0,&lt;/div&gt;&lt;div&gt;definition: QuantumCircuit = null&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;params: List&amp;lt;float&amp;gt; = [],&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;init_op: Operation = null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ copy(): Operation&lt;/div&gt;&lt;div&gt;+ get_unitary(decimals: int = -1): ndarray&lt;/div&gt;&lt;div&gt;+ inverse(): Operation&lt;/div&gt;&lt;div&gt;+ control(&lt;br&gt;num_ctrl_qubits: int = 1,&lt;/div&gt;&lt;div&gt;ctrl_state: int | String =-1,&lt;/div&gt;&lt;div&gt;method: String | Callable = &quot;&quot;): Operation&lt;/div&gt;&lt;div&gt;+ hash(): int&lt;/div&gt;&lt;div&gt;+ is_permeable(indices: int): bool&lt;/div&gt;&lt;div&gt;+ bind_parameters(subs_dic:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Map&amp;lt;float, Object&amp;gt;): Operation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ c_if(num_control: int = 1, ctrl_state: int = -1): ClControlledOperation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ __str__(): String&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="322" width="400" y="258" as="geometry" />
         </mxCell>
         <mxCell id="GIvaHbZFUjQboe49xxG8-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;" value="&amp;lt;&amp;lt;Note&amp;gt;&amp;gt;&lt;div&gt;unitary and lambdified_parmas are dynamically set&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="540" y="70" as="geometry" />
@@ -44,17 +44,17 @@
               <mxPoint x="240" y="870.5" />
             </Array>
             <mxPoint x="256.60000000000014" y="869.96" as="sourcePoint" />
-            <mxPoint x="240" y="762.5" as="targetPoint" />
+            <mxPoint x="240" y="780" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="CSIcsK7wcFvsWr7VOFRF-9" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="PauliGate" vertex="1">
-          <mxGeometry height="100" width="400" x="40" y="1240" as="geometry" />
+          <mxGeometry height="120" width="400" x="40" y="1240" as="geometry" />
         </mxCell>
         <mxCell id="CSIcsK7wcFvsWr7VOFRF-11" parent="CSIcsK7wcFvsWr7VOFRF-9" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="400" y="26" as="geometry" />
         </mxCell>
-        <mxCell id="CSIcsK7wcFvsWr7VOFRF-12" parent="CSIcsK7wcFvsWr7VOFRF-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ PauliGate(name: String)&lt;div&gt;+ inverse(): PauliGate&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __repr__(): String&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="66" width="400" y="34" as="geometry" />
+        <mxCell id="CSIcsK7wcFvsWr7VOFRF-12" parent="CSIcsK7wcFvsWr7VOFRF-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ PauliGate(name: String)&lt;div&gt;+ inverse(): PauliGate&lt;/div&gt;&lt;div&gt;+ bind_parameters( subs_dict: Object): PauliGate&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __repr__(): String&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="86" width="400" y="34" as="geometry" />
         </mxCell>
         <mxCell id="CSIcsK7wcFvsWr7VOFRF-14" edge="1" parent="1" source="CSIcsK7wcFvsWr7VOFRF-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.499;entryY=1.01;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=block;endFill=0;endSize=12;" target="CSIcsK7wcFvsWr7VOFRF-5">
           <mxGeometry relative="1" as="geometry">
@@ -372,14 +372,10 @@
         <mxCell id="p1Hlx-LU7doNpaPxBukJ-13" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="1" vertex="1">
           <mxGeometry height="30" width="60" x="-10" y="360" as="geometry" />
         </mxCell>
-        <mxCell id="p1Hlx-LU7doNpaPxBukJ-18" edge="1" parent="1" source="p1Hlx-LU7doNpaPxBukJ-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;endSize=12;" target="GIvaHbZFUjQboe49xxG8-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="p1Hlx-LU7doNpaPxBukJ-14" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="QuantumCircuit" vertex="1">
-          <mxGeometry height="34" width="160" x="160" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="p1Hlx-LU7doNpaPxBukJ-16" parent="p1Hlx-LU7doNpaPxBukJ-14" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="160" y="26" as="geometry" />
+        <mxCell id="p1Hlx-LU7doNpaPxBukJ-18" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;endSize=12;" target="GIvaHbZFUjQboe49xxG8-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="74" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="sGvH1r2_go12BbRwGDqb-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="StimNoiseGate" vertex="1">
           <mxGeometry height="290" width="160" x="-480" y="1560" as="geometry" />
@@ -402,6 +398,29 @@
             <mxPoint x="-400" y="1739.0000000000005" as="sourcePoint" />
             <mxPoint x="-39.59999999999991" y="519.3059999999998" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="sGvH1r2_go12BbRwGDqb-9" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="ParityOperation" vertex="1">
+          <mxGeometry height="160" width="160" x="-480" y="1880" as="geometry" />
+        </mxCell>
+        <mxCell id="sGvH1r2_go12BbRwGDqb-10" parent="sGvH1r2_go12BbRwGDqb-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ expectation: int&lt;div&gt;+ observable: bool&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="160" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sGvH1r2_go12BbRwGDqb-11" parent="sGvH1r2_go12BbRwGDqb-9" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="160" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sGvH1r2_go12BbRwGDqb-12" parent="sGvH1r2_go12BbRwGDqb-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ ParityOperation(&lt;div&gt;num_inputs: int,&lt;/div&gt;&lt;div&gt;expectation: int = 0,&lt;/div&gt;&lt;div&gt;observable: bool = false&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="160" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="sGvH1r2_go12BbRwGDqb-13" edge="1" parent="1" source="sGvH1r2_go12BbRwGDqb-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=block;endFill=0;endSize=12;" target="GIvaHbZFUjQboe49xxG8-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint y="1960" />
+              <mxPoint y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sGvH1r2_go12BbRwGDqb-14" parent="1" style="html=1;whiteSpace=wrap;" value="QuantumCircuit" vertex="1">
+          <mxGeometry height="50" width="110" x="180" y="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
