@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
   <diagram name="Seite-1" id="czneSXumRkXrSze4MH72">
-    <mxGraphModel dx="1215" dy="2171" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1373" dy="1755" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -12,7 +12,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="YDolSSb6VlgvGAocaq7Z-9" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="QuantumEnvironment" vertex="1">
-          <mxGeometry height="460" width="320" x="240" y="250" as="geometry" />
+          <mxGeometry height="540" width="320" x="240" y="250" as="geometry" />
         </mxCell>
         <mxCell id="YDolSSb6VlgvGAocaq7Z-10" parent="YDolSSb6VlgvGAocaq7Z-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;u&gt;+&amp;nbsp;deepest_environment : List&amp;lt;QuantumEnvironment&amp;gt;&lt;/u&gt;&lt;div&gt;+ env_args: List&amp;lt;Object&amp;gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;env_qs: QuantumSession&lt;/div&gt;&lt;div&gt;+&amp;nbsp;original_data: List&amp;lt;Instruction&amp;gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;env_data: List&amp;lt;Instruction&amp;gt;&amp;nbsp;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;deallocated_qubits: List&amp;lt;Qubit&amp;gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;temp_qubit_cache: Map&amp;lt;Integer, Qubit&amp;gt;&lt;/div&gt;&lt;div&gt;+ parent: QuantumEnvironment&lt;/div&gt;&lt;div&gt;+&amp;nbsp;active_qs_list: List&amp;lt;QuantumSession&amp;gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;manual_allocation_management: bool&lt;/div&gt;" vertex="1">
           <mxGeometry height="154" width="320" y="26" as="geometry" />
@@ -20,8 +20,8 @@
         <mxCell id="YDolSSb6VlgvGAocaq7Z-11" parent="YDolSSb6VlgvGAocaq7Z-9" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="320" y="180" as="geometry" />
         </mxCell>
-        <mxCell id="YDolSSb6VlgvGAocaq7Z-12" parent="YDolSSb6VlgvGAocaq7Z-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ QuantumEnvironment(&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;env_args: List&amp;lt;Object&amp;gt; = []&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;)&lt;/span&gt;&lt;div&gt;«jax_rule»&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;- abstract_eval(abs_qc, *args): AbstractQuantumCircuit&lt;/span&gt;&lt;div&gt;&lt;div&gt;+&amp;nbsp;start_dumping()&lt;/div&gt;&lt;div&gt;+&amp;nbsp;stop_dumping()&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;__enter__():&amp;nbsp;QuantumEnvironment | none&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ __exit__(&lt;/div&gt;&lt;div&gt;exception_type:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;exception_value:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;traceback:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;types.TracebackType&lt;/span&gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;compile()&lt;/div&gt;&lt;div&gt;+ jcompile(&lt;/div&gt;&lt;div&gt;eqn: Equation,&amp;nbsp;&lt;/div&gt;&lt;div&gt;context_dic: Map&amp;lt;Object, Object&amp;gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="272" width="320" y="188" as="geometry" />
+        <mxCell id="YDolSSb6VlgvGAocaq7Z-12" parent="YDolSSb6VlgvGAocaq7Z-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ QuantumEnvironment(&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;env_args: List&amp;lt;Object&amp;gt; = []&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;)&lt;/span&gt;&lt;div&gt;«jax_rule»&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;- abstract_eval(&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;abs_qst: Object,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;*env_args: Object,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;stage: Object = null,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;type: Object = null,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;jaxpr: Object = null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;): AbstractQuantumState&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;+&amp;nbsp;start_dumping()&lt;/div&gt;&lt;div&gt;+&amp;nbsp;stop_dumping()&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;__enter__():&amp;nbsp;QuantumEnvironment | none&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ __exit__(&lt;/div&gt;&lt;div&gt;exception_type:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;exception_value:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;traceback:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;types.TracebackType&lt;/span&gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;compile()&lt;/div&gt;&lt;div&gt;+ jcompile(&lt;/div&gt;&lt;div&gt;eqn: Equation,&amp;nbsp;&lt;/div&gt;&lt;div&gt;context_dic: Map&amp;lt;Object, Object&amp;gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="352" width="320" y="188" as="geometry" />
         </mxCell>
         <mxCell id="12DB0PgJV-4SfeHLQQTD-11" edge="1" parent="YDolSSb6VlgvGAocaq7Z-9" source="YDolSSb6VlgvGAocaq7Z-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=diamondThin;endFill=1;endSize=12;">
           <mxGeometry relative="1" as="geometry">
@@ -32,7 +32,7 @@
             <mxPoint y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="12DB0PgJV-4SfeHLQQTD-17" edge="1" parent="YDolSSb6VlgvGAocaq7Z-9" source="YDolSSb6VlgvGAocaq7Z-10" style="endArrow=diamondThin;html=1;rounded=0;entryX=-0.001;entryY=0.081;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.003;exitY=0.935;exitDx=0;exitDy=0;exitPerimeter=0;endFill=0;endSize=12;" target="YDolSSb6VlgvGAocaq7Z-12" value="">
+        <mxCell id="12DB0PgJV-4SfeHLQQTD-17" edge="1" parent="YDolSSb6VlgvGAocaq7Z-9" source="YDolSSb6VlgvGAocaq7Z-10" style="endArrow=diamondThin;html=1;rounded=0;entryX=-0.003;entryY=0.06;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.003;exitY=0.935;exitDx=0;exitDy=0;exitPerimeter=0;endFill=0;endSize=12;" target="YDolSSb6VlgvGAocaq7Z-12" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
               <mxPoint x="-40" y="170" />
@@ -78,13 +78,13 @@
         <mxCell id="YDolSSb6VlgvGAocaq7Z-27" parent="YDolSSb6VlgvGAocaq7Z-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+&amp;nbsp;ClControlEnvironment(&lt;div&gt;ctrl_bls: List&amp;lt;bool&amp;gt;,&lt;/div&gt;&lt;div&gt;ctrl_state: int = -1,&lt;/div&gt;&lt;div&gt;invert: bool = false&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+&amp;nbsp;compile()&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;__exit__(&lt;/div&gt;&lt;div&gt;exception_type = BaseException,&lt;/div&gt;&lt;div&gt;exception_value = BaseException,&lt;/div&gt;&lt;div&gt;traceback = types.TracebackType&lt;/div&gt;&lt;div&gt;): bool | null&lt;/div&gt;&lt;div&gt;+&amp;nbsp;jcompile(&lt;/div&gt;&lt;div&gt;eqn: Equation,&amp;nbsp;&lt;/div&gt;&lt;div&gt;context_dic: Map&amp;lt;Object, Object&amp;gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;" vertex="1">
           <mxGeometry height="252" width="320" y="88" as="geometry" />
         </mxCell>
-        <mxCell id="eG0_QPbmwU02Hy24r_SW-2" edge="1" parent="1" source="YDolSSb6VlgvGAocaq7Z-27" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.997;exitY=0.098;exitDx=0;exitDy=0;exitPerimeter=0;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;">
+        <mxCell id="eG0_QPbmwU02Hy24r_SW-2" edge="1" parent="1" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;">
           <mxGeometry relative="1" width="160" as="geometry">
             <Array as="points">
               <mxPoint x="120" y="470" />
               <mxPoint x="120" y="306" />
             </Array>
-            <mxPoint x="100" y="480" as="sourcePoint" />
+            <mxPoint y="470" as="sourcePoint" />
             <mxPoint x="240" y="306" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -140,7 +140,7 @@
         <mxCell id="pczg5f3In5xK4fec1prI-4" parent="pczg5f3In5xK4fec1prI-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+&amp;nbsp;ControlEnvironment(&lt;div&gt;ctrl_qubits: List&amp;lt;Qubit&amp;gt;,&lt;/div&gt;&lt;div&gt;ctrl_state: int | String = -1,&lt;/div&gt;&lt;div&gt;ctrl_method: String = null,&lt;/div&gt;&lt;div&gt;invert: bool = false&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;__enter__(): Qubit&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ __exit__(&lt;/div&gt;&lt;div&gt;exception_type:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;exception_value:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;traceback: types.TracebackType&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;compile()&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ jcompile(&lt;/div&gt;&lt;div&gt;eqn: Equation,&amp;nbsp;&lt;/div&gt;&lt;div&gt;context_dic: Map&amp;lt;Object, Object&amp;gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="292" width="440" y="178" as="geometry" />
         </mxCell>
-        <mxCell id="pczg5f3In5xK4fec1prI-5" edge="1" parent="1" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0;entryY=0.595;entryDx=0;entryDy=0;entryPerimeter=0;" target="YDolSSb6VlgvGAocaq7Z-12" value="">
+        <mxCell id="pczg5f3In5xK4fec1prI-5" edge="1" parent="1" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" value="">
           <mxGeometry relative="1" width="160" as="geometry">
             <Array as="points">
               <mxPoint x="160" y="1480" />
@@ -148,7 +148,7 @@
               <mxPoint x="160" y="600" />
             </Array>
             <mxPoint y="1480" as="sourcePoint" />
-            <mxPoint x="240" y="600" as="targetPoint" />
+            <mxPoint x="240" y="599" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="cZSBTijLqoflZL5SrNkl-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="CustomControlEnvironment" vertex="1">
@@ -234,7 +234,7 @@
         <mxCell id="cZSBTijLqoflZL5SrNkl-19" parent="cZSBTijLqoflZL5SrNkl-16" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+&amp;nbsp;IterationEnvironment(&lt;div&gt;qs: QuantumSession,&amp;nbsp;&lt;/div&gt;&lt;div&gt;iteration_amount: int,&amp;nbsp;&lt;/div&gt;&lt;div&gt;precompile: bool = false&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;__enter__()&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;«&lt;/span&gt;environment&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;»&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ __exit__(&lt;/div&gt;&lt;div&gt;exception_type =&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;exception_value =&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;BaseException&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;traceback =&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;types.TracebackType&lt;/span&gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;compile()&lt;/div&gt;" vertex="1">
           <mxGeometry height="212" width="320" y="88" as="geometry" />
         </mxCell>
-        <mxCell id="cZSBTijLqoflZL5SrNkl-20" edge="1" parent="1" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=1;entryY=0.865;entryDx=0;entryDy=0;entryPerimeter=0;" target="YDolSSb6VlgvGAocaq7Z-12" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;">
+        <mxCell id="cZSBTijLqoflZL5SrNkl-20" edge="1" parent="1" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=1.001;entryY=0.666;entryDx=0;entryDy=0;entryPerimeter=0;" target="YDolSSb6VlgvGAocaq7Z-12" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;">
           <mxGeometry relative="1" width="160" as="geometry">
             <Array as="points">
               <mxPoint x="700" y="820" />
@@ -309,28 +309,7 @@
               <mxPoint x="440" y="1888" />
             </Array>
             <mxPoint x="760" y="1888" as="sourcePoint" />
-            <mxPoint x="440" y="710" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="cu6IMoUx1tRmu0l3ZKIb-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="OperationPrimitive" vertex="1">
-          <mxGeometry height="160" width="320" x="-320" y="-80" as="geometry" />
-        </mxCell>
-        <mxCell id="cu6IMoUx1tRmu0l3ZKIb-2" parent="cu6IMoUx1tRmu0l3ZKIb-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ op: Operation" vertex="1">
-          <mxGeometry height="26" width="320" y="26" as="geometry" />
-        </mxCell>
-        <mxCell id="cu6IMoUx1tRmu0l3ZKIb-3" parent="cu6IMoUx1tRmu0l3ZKIb-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="320" y="52" as="geometry" />
-        </mxCell>
-        <mxCell id="cu6IMoUx1tRmu0l3ZKIb-4" parent="cu6IMoUx1tRmu0l3ZKIb-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+&amp;nbsp;OperationPrimitive(op: Operation)&lt;div&gt;+&amp;nbsp;inverse():&amp;nbsp;OperationPrimitive&lt;/div&gt;&lt;div&gt;+&amp;nbsp;control(&lt;/div&gt;&lt;div&gt;num_ctrl: int = 1,&lt;/div&gt;&lt;div&gt;ctrl_state: int | String = -1&lt;/div&gt;&lt;div&gt;):&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;OperationPrimitive&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="320" y="60" as="geometry" />
-        </mxCell>
-        <mxCell id="cu6IMoUx1tRmu0l3ZKIb-5" edge="1" parent="1" source="cu6IMoUx1tRmu0l3ZKIb-4" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=1.01;exitY=0.4;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.125;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="YDolSSb6VlgvGAocaq7Z-16" value="">
-          <mxGeometry relative="1" width="160" as="geometry">
-            <Array as="points">
-              <mxPoint x="280" y="20" />
-            </Array>
-            <mxPoint x="130" y="270" as="sourcePoint" />
-            <mxPoint x="280" y="80" as="targetPoint" />
+            <mxPoint x="440" y="790" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="bHLzcy62P8gq-QX0j-_T-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="JRangeIterator" vertex="1">
@@ -347,12 +326,6 @@
         </mxCell>
         <mxCell id="EtZ6sqZS5XH6N-ZxWZOl-1" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;Primitive&lt;/b&gt;" vertex="1">
           <mxGeometry height="50" width="110" x="345" y="-370" as="geometry" />
-        </mxCell>
-        <mxCell id="H6Iy6vxF5vcXRWwpolzT-1" parent="1" style="html=1;whiteSpace=wrap;" value="Operation" vertex="1">
-          <mxGeometry height="50" width="110" x="-580" y="-50" as="geometry" />
-        </mxCell>
-        <mxCell id="H6Iy6vxF5vcXRWwpolzT-2" edge="1" parent="1" source="H6Iy6vxF5vcXRWwpolzT-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.002;entryY=-0.041;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=diamondThin;endFill=0;endSize=12;" target="cu6IMoUx1tRmu0l3ZKIb-4">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="12DB0PgJV-4SfeHLQQTD-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="{ordered}" vertex="1">
           <mxGeometry height="30" width="60" x="140" y="350" as="geometry" />
@@ -542,9 +515,6 @@
         <mxCell id="YT1B9rPwpvPM1U0MCRLI-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;1" vertex="1">
           <mxGeometry height="30" width="100" x="-530" y="970" as="geometry" />
         </mxCell>
-        <mxCell id="YT1B9rPwpvPM1U0MCRLI-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;1" vertex="1">
-          <mxGeometry height="30" width="130" x="-460" y="-15" as="geometry" />
-        </mxCell>
         <mxCell id="YT1B9rPwpvPM1U0MCRLI-5" parent="1" style="html=1;whiteSpace=wrap;" value="Instruction" vertex="1">
           <mxGeometry height="50" width="110" x="1186" y="395" as="geometry" />
         </mxCell>
@@ -710,16 +680,16 @@
           <mxGeometry height="50" width="140" x="920" y="1250" as="geometry" />
         </mxCell>
         <mxCell id="Yb8ziXn2E2eR5Ni0GGpB-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="qRange" vertex="1">
-          <mxGeometry height="270" width="250" x="-800" y="420" as="geometry" />
+          <mxGeometry height="270" width="300" x="-800" y="420" as="geometry" />
         </mxCell>
         <mxCell id="Yb8ziXn2E2eR5Ni0GGpB-2" parent="Yb8ziXn2E2eR5Ni0GGpB-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ create_index_qf: bool&lt;div&gt;+ max_index_qf: QuantumFloat&lt;/div&gt;&lt;div&gt;+ index_qf: QuantumFloat&lt;/div&gt;&lt;div&gt;+ quantum_condition_env: ClControlledEnvironment&lt;/div&gt;&lt;div&gt;+ c_index: int&lt;/div&gt;" vertex="1">
-          <mxGeometry height="104" width="250" y="26" as="geometry" />
+          <mxGeometry height="104" width="300" y="26" as="geometry" />
         </mxCell>
         <mxCell id="Yb8ziXn2E2eR5Ni0GGpB-3" parent="Yb8ziXn2E2eR5Ni0GGpB-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="250" y="130" as="geometry" />
+          <mxGeometry height="8" width="300" y="130" as="geometry" />
         </mxCell>
         <mxCell id="Yb8ziXn2E2eR5Ni0GGpB-4" parent="Yb8ziXn2E2eR5Ni0GGpB-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ qRange(&lt;div&gt;&lt;div&gt;max_index_qf: QuantumFloat,&lt;/div&gt;&lt;div&gt;create_index_qf: bool&lt;/div&gt;&lt;div&gt;)&lt;div&gt;&amp;lt;&amp;lt;iteration&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __iter__(): qRange&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;iteration&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __next__(): int&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="132" width="250" y="138" as="geometry" />
+          <mxGeometry height="132" width="300" y="138" as="geometry" />
         </mxCell>
         <mxCell id="Yb8ziXn2E2eR5Ni0GGpB-6" edge="1" parent="1" source="YDolSSb6VlgvGAocaq7Z-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=1;endSize=12;" target="Yb8ziXn2E2eR5Ni0GGpB-2">
           <mxGeometry relative="1" as="geometry">
