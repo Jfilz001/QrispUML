@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
   <diagram name="Seite-1" id="SPLtcjVpP1hkusS6U2cZ">
-    <mxGraphModel dx="2477" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2046" dy="272" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -161,16 +161,14 @@
             <mxPoint x="-687.9000000000001" y="2433.46" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Mz_5fhvYAqw6JkiKLwph-7" parent="1" style="html=1;whiteSpace=wrap;" value="DynamicQubitArray" vertex="1">
-          <mxGeometry height="50" width="110" x="-880" y="2740" as="geometry" />
-        </mxCell>
-        <mxCell id="Mz_5fhvYAqw6JkiKLwph-8" edge="1" parent="1" source="Mz_5fhvYAqw6JkiKLwph-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.005;entryY=0.1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=diamondThin;endFill=1;endSize=12;" target="JE9Riz0hxKQ3xS1mOpBz-4">
+        <mxCell id="Mz_5fhvYAqw6JkiKLwph-8" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.005;entryY=0.1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=diamondThin;endFill=1;endSize=12;" target="JE9Riz0hxKQ3xS1mOpBz-4">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="-770" y="2770" />
               <mxPoint x="-730" y="2770" />
               <mxPoint x="-730" y="2506" />
             </Array>
+            <mxPoint x="-770" y="2765" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Mz_5fhvYAqw6JkiKLwph-10" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.995;entryY=0.149;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=diamondThin;endFill=1;endSize=12;">
@@ -294,15 +292,15 @@
           <mxGeometry height="202" width="210" y="108" as="geometry" />
         </mxCell>
         <mxCell id="EDgWoNGli7e9BF4EWx0a-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="DynamicQubitArray" vertex="1">
-          <mxGeometry height="300" width="380" x="-1120" y="2900" as="geometry" />
+          <mxGeometry height="300" width="380" x="-1150" y="2750" as="geometry" />
         </mxCell>
-        <mxCell id="EDgWoNGli7e9BF4EWx0a-2" parent="EDgWoNGli7e9BF4EWx0a-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ tracer: TracingQuantumSession&lt;div&gt;+ size(): int&lt;/div&gt;&lt;div&gt;+ reg: DynamicQubitArray&lt;/div&gt;" vertex="1">
+        <mxCell id="EDgWoNGli7e9BF4EWx0a-2" parent="EDgWoNGli7e9BF4EWx0a-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ tracer: TracingQuantumSession&lt;div&gt;+ size: int&lt;/div&gt;&lt;div&gt;+ reg: DynamicQubitArray&lt;/div&gt;" vertex="1">
           <mxGeometry height="64" width="380" y="26" as="geometry" />
         </mxCell>
         <mxCell id="EDgWoNGli7e9BF4EWx0a-3" parent="EDgWoNGli7e9BF4EWx0a-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="380" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="EDgWoNGli7e9BF4EWx0a-4" parent="EDgWoNGli7e9BF4EWx0a-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&amp;lt;&amp;lt;indexing&amp;gt;&amp;gt;&lt;/div&gt;+ __getitem__(&lt;div&gt;key: slice&lt;/div&gt;&lt;div&gt;): DynamicQubitArray | Qubit&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;arithmetic&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __add__(&lt;/div&gt;&lt;div&gt;other: DynamicQubitArray&lt;br&gt;): DynamicQubitArray&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;arithmetic&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __radd__(&lt;/div&gt;&lt;div&gt;other: DynamicQubitArray | List&amp;lt;DynamicQubitArray&amp;gt;&lt;/div&gt;&lt;div&gt;): DynamicQubitArray&lt;/div&gt;&lt;div&gt;+ measure(): int&lt;/div&gt;" vertex="1">
+        <mxCell id="EDgWoNGli7e9BF4EWx0a-4" parent="EDgWoNGli7e9BF4EWx0a-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&amp;lt;&amp;lt;indexing&amp;gt;&amp;gt;&lt;/div&gt;+ __getitem__(&lt;div&gt;key: slice&lt;/div&gt;&lt;div&gt;): DynamicQubitArray | Qubit&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;indexing&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __add__(&lt;/div&gt;&lt;div&gt;other: DynamicQubitArray | List&amp;lt;Qubit&amp;gt;&lt;br&gt;): DynamicQubitArray&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;arithmetic&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __radd__(&lt;/div&gt;&lt;div&gt;other: DynamicQubitArray | List&amp;lt;Qubit&amp;gt;&lt;/div&gt;&lt;div&gt;): DynamicQubitArray&lt;/div&gt;&lt;div&gt;+ measure(): int&lt;/div&gt;" vertex="1">
           <mxGeometry height="202" width="380" y="98" as="geometry" />
         </mxCell>
       </root>
