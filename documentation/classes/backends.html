@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="index.html">Overview</a>
+        <a href="documentation/classes/backends.html">Backends</a>
+        <a href="documentation/classes/Hamiltionian.html">Hamiltonian</a>
+        <a href="documentation/classes/Permeabilty.html">Permeability</a>
+        <a href="documentation/classes/Operations.html">Operations</a>
+        <a href="documentation/classes/QuantumManagement.html">QuantumManagement</a>
+        <a href="documentation/classes/Tensors.html">Tensors </a>
+        <a href="documentation/classes/Primitives.html">Primitives</a>
+        <a href="documentation/classes/Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+
+        <h2 id="explanation">Explanation</h2>
+        <p>In the following chapter the details of the depicted classes are explained. Furthermore, interesting
+            functionalities,
+            attributes, constructors, methods, details and design choices are disclosed.</p>
+        <p>Dictionaries are written as Maps, since they serve the same purpose and are more generally seen in UML class
+            diagrams.</p>
+        <p>Sometimes datatypes are listed with logical OR Operations (|) – this implies that due to the dynamic typing
+            of the
+            eDSL there are multiple datatypes possible.</p>
+        <p>The dunder methods or decorators have <em>&lt;&lt;&gt;&gt;</em> descriptions in the diagram to describe the
+            ground
+            concept of the methods functionality.</p>
+        <p>Every class attribute that has already been described in the parent class will not be referenced in the child
+            class
+            in the diagrams.</p>
+        <p>In Python, class attributes describe what is in other statically typed object oriented languages considered
+            to be a
+            static method. When the documentations refers to class attributes it is refered to how classical object
+            oriented
+            languages define class attributes. Python class attributes are referred to as static methods, with an
+            underlining.
+        </p>
+        <h2 id="backends">Backends</h2>
+        <p><img width="1281" height="774" alt="Backends"
+                src="https://github.com/user-attachments/assets/009bfaed-6eab-47c2-8191-02e8e40cf357" /></p>
+        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
+        <p><strong>‘BackendClient’</strong> and every subclass of it implements a <strong>‘run’</strong> method (except
+            for
+            AQTBackend), taking a <strong>‘‘QuantumCircuit’’</strong> as <strong>‘qc’</strong> and a number of
+            <strong>‘shots’</strong>. The <strong>‘run’</strong> method executes the <strong>‘qc’</strong>, delivering
+            measurement results in form of a dictionary, mapping a bitstring to an integer. Some classes have slight
+            variations
+            on parameters.
+        </p>
+        <h3 id="backendclient">BackendClient</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>‘BackendClients’</strong> allows connecting to Qunicorn backend servers [6].</p>
+        <h4 id="class-attributes-and-constructor-">Class attributes and constructor:</h4>
+        <p>An object of the class can be instantiated by an IP-Adress as a String <strong>‘api_endpoint’</strong> and
+            optionally
+            providing a <strong>‘port’</strong> integer and <strong>‘token’</strong> string.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p><strong>‘BackendClient’</strong> is a central class in the Backends diagram, as many classes inherit from it.
+        </p>
+        <h3 id="virtualbackend">VirtualBackend</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As the name suggests, <strong>‘VirtualBackend’</strong> provides a virtual backend for circuit execution. It
+            runs on
+            the same machine as a separate Python thread. The structure of it allows the easy setup of wrappers for
+            foreign or
+            modified circuits. [7].</p>
+        <h4 id="class-attributes-">Class attributes:</h4>
+        <p>It contains a function <strong>‘run_func’</strong> that receives a <strong>‘‘QuantumCircuit’’</strong>, an
+            integer
+            specifying the amount of shots and a token in the form of a string. It returns the counts as a dictionary of
+            bitstrings [7].</p>
+        <p>It also contains a <strong>‘backend_server’</strong> , which is only instantiated if no port is specified in
+            the
+            constructor.</p>
+        <h4 id="class-constructor-">Class Constructor:</h4>
+        <p>The constructor instantiates the <strong>‘run_func’</strong> attribute and receives an optional
+            <strong>‘port’</strong> integer.
+        </p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p><strong>‘VirtualBackend’</strong> is inheriting the <strong>‘BackendClient’</strong>.</p>
+        <h3 id="backendserver">BackendServer</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>‘BackendServers’</strong> allow the convenient setup of a server relating to the
+            <strong>‘Qunicorn’</strong>
+            interface [8].
+        </p>
+        <h4 id="class-attributes-and-constructor-">Class attributes and constructor:</h4>
+        <p>It contains a function <strong>‘run_func’</strong> that receives a <strong>‘‘QuantumCircuit’’</strong>, an
+            integer
+            specifying the amount of shots and a token in the form of a string. It returns the counts as a dictionary of
+            bitstrings [8].</p>
+        <p>An <strong>‘ip_address’</strong> is optionally set for the listening socket that should be opened. By default
+            the
+            IP-address of the host machine is used [8].</p>
+        <p>A <strong>‘port’</strong> can be entered optionally, by default it is 9010 [8].</p>
+        <p>A bool variable <strong>‘is_simulator’</strong> specifies whether the results returned by the server are due
+            to a
+            simulator. It is normally set to true [8].</p>
+        <p>A Flask object is instantiated as <strong>‘app’</strong>. Flask provides a lightweight WSGI web application
+            framework
+            with the ability to scale up to complex applications [9]. The constructor implements methods for REST
+            endpoints,
+            that have not been included in the diagram.</p>
+        <p>A list of JSON objects are saved as ‘deployments’.</p>
+        <p>Finally a list of Maps which map Strings to any type named <strong>‘jobs’</strong>.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p><strong>‘BackendServer’</strong> is an attribute of <strong>‘VirtualBackend’</strong>, that is only
+            instantiated if a
+            port is given.</p>
+        <h3 id="qiskitbackend">QiskitBackend</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>‘QiskitBackend’</strong> instantiates a <strong>‘VirtualBackend’</strong> using a Qiskit backend.
+            This allows
+            easy accesss to Qiskit backends throught the qrisp interface [10].</p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>It is optionally instantiated with 2 parameters:<br>A ‘backend’ which is a AerSimulator object and a
+            <strong>‘port’</strong>, which is by default none [10]. The class constructor also defines the method
+            <strong>‘run’</strong>.
+        </p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class does not have unique attributes and only implements the attributes from the parent class
+            <strong>‘BackendClient’</strong>.
+        </p>
+        <h3 id="qiskitruntimebackend">QiskitRuntimeBackend</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>“This class instantiates a VirtualBackend using a Qiskit Runtime backend. This allows easy access to
+                Qiskit
+                Runtime backends through the qrisp interface. It is imporant to close the session after the execution of
+                the
+                algorithm”</strong> [11].</p>
+        <p>Class constructor:<br>It is instantiated with an <strong>‘api_token’</strong> string, an optional
+            <strong>‘backend’</strong>, that can be either be a qiskit_ibm_runtime.Session or a
+            qiskit.providers.BackendV2, an
+            optional <strong>‘channel’</strong> String, which is “ibm_cloud” per default and an optional
+            <strong>‘mode’</strong>
+            String, being “job” per default. The class constructor also defines the method <strong>‘run’</strong>.
+        </p>
+        <p>Class attributes<br>The only attribute of this class is <strong>‘session’</strong>, a
+            qiskit_ibm_runtime.Session
+            object which is also depicted in the diagram.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p><strong>‘QiskitRuntimeBackend’</strong> contains a <strong>‘close_session’</strong> method, which simply
+            closes the
+            attribute <strong>‘session’.</strong></p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p><strong>‘QiskitRuntimeBackend’</strong> is inheriting the <strong>‘BackendClient’</strong>.</p>
+        <h3 id="batchedbackend">BatchedBackend</h3>
+        <h4 id="class-functionality-and-methods-">Class functionality and methods:</h4>
+        <p>“<strong>This class tackles the problem that many physical backends have a high-overhead regarding individual
+                circuit
+                execution. This overhead typically comes from finite network latency, authentication procedures,
+                compilation
+                steps etc. Typically this overhead is remedied through supporting the execution of batches of circuits,
+                which
+                however doesn’t really fit that well into the Qrisp programming model, which shields the user from
+                handling
+                individual circuits and automatically decodes the measurement results into human readable
+                labels.</strong></p>
+        <p><strong>In order to bridge these worlds and still allow automatic decoding, the BatchedBackend allows Qrisp
+                users to
+                evaluate measurements from a multi-threading perspective. The idea is here that the circuit batch is
+                collected
+                through several threads, which each execute Qrisp code until a individual backend call is required. This
+                backend
+                call is then saved until the batch is complete. The batch can then be sent through the .dispatch method,
+                which
+                resumes each thread to execute the post-processing logic</strong>”[12].</p>
+        <p>Class constructor:</p>
+        <p>For instantiation it receives a function <strong>‘batch_run_func’</strong>, which is described in the
+            documentation
+            as: “<strong>A function that recieves a list of tuples in the form list[tuple[‘QuantumCircuit’, int]], which
+                represents the quantum circuits and the corresponding shots to execute on the backend. It should return
+                a list
+                of dictionaries, where each dictionary corresponds to the measurement results of the appropriate backend
+                call</strong>.” [12].</p>
+        <p>Class attributes:<br><strong>‘batch_run_func’</strong>, which is the function instantiated in the
+            constructor.
+            <strong>‘batch’</strong>, which is a list of tuples, that contain ‘QuantumCircuit’s and integers.
+            <strong>‘results_available’</strong> as a bool and <strong>‘result’</strong>, which is implemented as a map
+            which
+            maps an integer to an integer. ‘<strong>backend_exception</strong>’ is an attribute which is empty by
+            default, if it
+            is not empty, an exception will be thrown in the ‘<strong>run</strong>’ method.
+        </p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class implements the following methods:</p>
+        <ul>
+            <li>‘<strong>run</strong>’ – This method runs the the ‘<strong>BatchedBackend</strong>’ object.</li>
+            <li>‘<strong>dispatched</strong>’ – “<strong>This method dispatches all collected queries and seubsequently
+                    resumes
+                    their threads.</strong>” [34]</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>It inherits from <strong>‘BackendClient’</strong> and is the parent class of <strong>‘AQTBackend’</strong>.
+        </p>
+        <h3 id="aqtbackend">AQTBackend</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>This class instantiates a <strong>‘BatchedBackend’</strong> using an AQT backend. This allows easy access to
+            AQT
+            backends through the qrisp interface. Using this backend requires addtional dependencies: <strong>pip
+                install
+                qiskit-aqt-provider.</strong> [13] (The documentation writes VirtualBackend, instead of BatchedBackend,
+            which is
+            false)</p>
+        <p>Class constructor:</p>
+        <p>The class can be instantiated with a <strong>‘api_token’</strong> string, a
+            <strong>‘device_instance’</strong> string
+            and a <strong>‘workplace’</strong> string. The constructor implements the method
+            <strong>‘run_batch_aqt’</strong>,
+            which is used to instantiate the parent constructor. It is not listed in the diagram, as it only serves it’s
+            function in the constructor.
+        </p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class does not have unique attributes and only implements the attributes from the parent class
+            <strong>‘BatchedBackend’</strong>.
+        </p>
+        <p>This concludes the <strong>‘Backends’</strong> UML class diagram.</p>
+    </div>
