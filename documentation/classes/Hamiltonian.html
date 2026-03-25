@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeabilty.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="Primitives.html">Primitives</a>
+        <a href="Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+        <h2 id="hamiltonian">Hamiltonian</h2>
+        <p><img width="1211" height="2574" alt="Hamiltonian"
+                src="https://github.com/user-attachments/assets/338ad45c-ad6e-4e2d-81b7-28f5f4b5dabd" /></p>
+        <h3 id="information-about-classes-and-methods-">Information about classes and methods:</h3>
+        <p>The Hamiltonian class itself is an abstract class. It can be implemented by one of its 3 subclasses. All of
+            them have
+            a <strong>‘terms_dict’</strong> dictionary as the only class Attribute but provide many methods,
+            particularly many
+            methods that alter the syntax of the eDSL.</p>
+        <h3 id="hamiltonian">Hamiltonian</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>“Central structure to facilitate treatment of quantum Hamiltonians</strong>.” [14] This function
+            provides the
+            blueprint for implementation of the Hamiltonian datatypes.</p>
+        <p>Class constructor and methods:</p>
+        <p>The <strong>‘Hamiltonian’</strong> class constructor and methods are not implemented, as they simply pass. As
+            stated
+            previously, the <strong>‘Hamiltonian’</strong>only provides an abstract interface of a Hamiltonian datatype.
+            Many
+            methods alter the syntax, labelled with the <strong>&lt;<operator&gt;></strong> annotation. Alteration of
+            representations are labelled with the <strong>&lt;<representation&gt;></strong> annotation. The methods are
+            abstract, which is represented in <em>italics</em> in the diagram.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p><strong>‘Hamiltonian’</strong> is the parent class of <strong>‘FermionicOperator’</strong>,
+            <strong>‘BoundQubitOperator’</strong>, <strong>‘QubitOperator’</strong>. It inherits from the
+            <strong>‘ABC’</strong>
+            module for abstract classes.
+        </p>
+        <h3 id="fermionicoperator">FermionicOperator</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>“This class provides an efficient implementation of ladder term operators, i.e., operators of the
+                form</strong></p>
+        <p><strong>where each term is a product of fermionic raising and lowering operators acting on the fermionic
+                mode.”</strong> [15]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor of <strong>‘FermionicOperator’</strong> instantiates the <strong>‘terms_dict’</strong>
+            dictionary, as empty by default. The Datatypes of the keys and values are undetermined and thus are referred
+            to as
+            Object.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class implements many methods that change the object of the class and return a new
+            <strong>‘FernionicOperator’</strong>. <strong>‘Trotterization’</strong> and
+            <strong>‘to_qubit_operator’</strong> are
+            also examples of the many uses this class brings.
+        </p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>Some class methods can be called, without instantiating the class, such as the
+            <strong>‘from_openfermion’</strong>
+            method. They are written with underscores in the documentation. The class has a method called
+            <strong>‘from_pyscf’</strong>, which takes a pyscf object. The document specifies it as
+            <strong>‘pyscf.gto.mole.Mole‘</strong> [15]. The class makes use of complex integers, which are simply
+            referred to
+            as <strong>‘complex’.</strong> Its parent class is the abstract class <strong>‘Hamiltonian’.</strong>
+        </p>
+        <h3 id="boundqubitoperator">BoundQubitOperator</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>“This class provides an efficient implementation of Pauli Hamiltonians acting on ‘QuantumVariable’s,
+                i.e.,
+                Hamiltonians“</strong> [15]</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class implements many methods that change the object of the class and return a new
+            <strong>‘BoundQubitOperator’</strong>. <strong>‘Trotterization’</strong> and
+            <strong>‘ground_state_energy’</strong>
+            are also examples of the many uses this class brings.
+        </p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The method <strong>‘trotterization</strong>, implements multiple functions and uses all of these functions to
+            return
+            a function. The class makes use of complex integers, which are simply referred to as
+            <strong>‘complex’.</strong> The
+            <strong>‘measurement_data’</strong> parameter of the method <strong>‘get_measurement’</strong> is most
+            likely a
+            dictionary that maps a bitstrings to integers, while it is hard to tell, this is why its datatype is Object.
+            The
+            parent class of <strong>‘BoundQubitOperator’</strong> is the abstract class <strong>‘Hamiltonian’.</strong>
+        </p>
+        <h3 id="qubitoperator">QubitOperator</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p><strong>“This class provides an efficient implementation of QubitOperators, i.e. Operators, that act on a
+                qubit space
+                . “</strong> [16]</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class implements many methods that change the object of the class and return a new
+            <strong>‘QubitOperator‘.</strong> With methods such as <strong>‘to_array‘</strong> or
+            <strong>‘to_sparse_matrix’</strong> the class provides functionality to convert
+            <strong>‘QubitOperator’</strong>
+            objects into different representations.
+        </p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>Some class methods can be called, without instantiating the class, such as the
+            <strong>‘from_numpy_array’</strong>
+            method. They are written with underscores in the documentation. The class makes use of complex integers,
+            which are
+            simply referred to as <strong>‘complex’.</strong> The parent class of <strong>‘QubitOperator’</strong> is
+            the
+            abstract class <strong>‘Hamiltonian’.</strong>
+        </p>
+        <p>This concludes the <strong>‘Hamiltonian’</strong> UML class diagram.</p>
+    </div>
