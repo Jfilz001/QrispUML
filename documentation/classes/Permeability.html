@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeabilty.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="Primitives.html">Primitives</a>
+        <a href="Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+<h2 id="permeability">Permeability</h2>
+        <p><img width="1311" height="911" alt="Permeability"
+                src="https://github.com/user-attachments/assets/bb8fa3dd-192b-49a2-b4a5-414d5d589141" /></p>
+        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
+        <p>The <strong>‘Permeability’</strong> diagram is a collection of classes that provide the ability to represent
+            a
+            permeability DAGs (Directed Acyclic Graph), describing a clear hierarchical execution of a task [17]. This
+            facilitates numerous powerful transformations such as parallelization, memory management, synthesis of
+            uncomputation
+            and many more use-cases [18]. Permeability is a property of quantum gates, that was initially introduced by
+            Frauenhofer Institute in [4] and gives a formal meaning of what “constant” could mean for a quantum function
+            [18].
+            For a more detailed understanding of Permeability, here is is a Definition out of [4]:</p>
+        <p>Definition 2.1 (Permeability):</p>
+        <p>A (composite) quantum gate <em>U</em> is called Z-permeable in qubit <em>i</em>, if it commutes with the
+            <em>Z</em>
+            operator on this qubit.
+        </p>
+        <p><em>U</em> is permeable on qubit (1)</p>
+        <p>Similarly, <em>U</em> is called X-permeable in qubit <em>i</em> if it commutes with the <em>X</em> operator
+            on this
+            qubit</p>
+        <h3 id="unqompnode">UnqompNode</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>Described in the source code [14] as</p>
+        <p><strong>“This is the base class of the Nodes that appear in the Permeability DAG”</strong></p>
+        <p>It defines the core features of the Nodes for the Permeability DAG.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor receives and instantiates the <strong>‘name’</strong> String and <strong>‘instr’</strong>
+            Instruction. Furthermore it defines an uninstantiated <strong>‘UnqompNode’</strong> as
+            <strong>‘uncomputed_node’</strong>. It also sets a unique id as a <strong>‘hash’</strong>.
+        </p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The <strong>‘UnqompNode’</strong> defines two methods: <strong>‘_<em>hash</em>_’</strong> a dunder method,
+            which
+            returns the hash value of the object and <strong>‘_<em>eq</em>_’</strong> a dunder method, which alters the
+            functionality of the “==” operation by comparing the hash values of two <strong>‘UnqompNodes’</strong>.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The <strong>‘UnqompNode’</strong> is the parent class of <strong>‘InstructionNode’</strong>,
+            <strong>‘TerminatorNode’</strong>, <strong>‘DeallocNode’</strong> and <strong>‘AllocNode’.</strong> It is
+            the
+            central class of the Permeability diagram.
+        </p>
+        <h3 id="allocnode">AllocNode</h3>
+        <h4 id="class-functionality-and-attributes-">Class functionality and attributes:</h4>
+        <p>Described in the source code [14] as:</p>
+        <p><strong>“Node which describes allocations.</strong></p>
+        <p><strong>The artificial attribute indicates, whether the Allocation node has been added</strong></p>
+        <p><strong>by the DAG construction function or whether it has been in the given ‘QuantumCircuit’”</strong></p>
+        <h4 id="class-constructor-and-constructor-">Class constructor and constructor:</h4>
+        <p>The class constructor of <strong>‘AllocNode’</strong> initializes the <strong>‘UnqompNode’</strong> parent
+            constructor and the bool attribute <strong>‘artificial’.</strong></p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p><strong>‘AllocNode’</strong> defines one method: <strong>‘_<em>repr</em>_’</strong> a dunder method, which
+            changes
+            the official string representation of an object.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p><strong>‘AllocNode’</strong> is the sub class of <strong>‘UnqompNode’</strong>.</p>
+        <h3 id="deallocnode">DeallocNode</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>Described in the source code [14] as:</p>
+        <p><strong>“Node describing deallocations.”</strong></p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The class constructor of <strong>‘DeallocNode’</strong> initializes the <strong>‘UnqompNode’</strong> parent
+            constructor.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p><strong>‘DeallocNode’</strong> defines one method: <strong>‘_<em>repr</em>_’</strong> a dunder method, which
+            changes
+            the official string representation of an object.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p><strong>‘DeallocNode’</strong> is a sub class of <strong>‘UnqompNode’</strong>.</p>
+        <h3 id="terminatornode">TerminatorNode</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>Described in the source code [14] as:</p>
+        <p><strong>“Node describing terminations.”</strong></p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor of <strong>‘TerminatorNode’</strong> initializes the <strong>‘UnqompNode’</strong>
+            parent
+            constructor and receives the ‘<strong>qubit’</strong> attribute.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p><strong>‘TerminatorNode</strong> defines one method: <strong>‘_<em>repr</em>_’</strong> a dunder method,
+            which
+            changes the official string representation of an object.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p><strong>‘TerminatorNode</strong> is a sub class of <strong>‘UnqompNode’</strong>.</p>
+        <h3 id="terminatornode">TerminatorNode</h3>
+        <h4 id="class-functionality-and-attributes-">Class functionality and attributes:</h4>
+        <p>Described in the source code [14] as:</p>
+        <p><strong>“Node describing terminations.”</strong></p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor of <strong>‘TerminatorNode’</strong> initializes the <strong>‘UnqompNode’</strong>
+            parent
+            constructor and receives the ‘<strong>qubit’</strong> attribute.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p><strong>‘TerminatorNode</strong> defines one method: <strong>‘_<em>repr</em>_’</strong> a dunder method,
+            which
+            changes the official string representation of an object.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p><strong>‘TerminatorNode</strong> is a sub class of <strong>‘UnqompNode’</strong>.</p>
+        <h3 id="instructionnode">InstructionNode</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>Described in the source code [14] as:</p>
+        <p><strong>“Node describing instructions.”</strong></p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The class constructor of <strong>‘InstructionNode’</strong> initializes the <strong>‘UnqompNode’</strong>
+            parent
+            constructor.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p><strong>‘InstructionNode</strong> defines one method: <strong>‘_<em>repr</em>_’</strong> a dunder method,
+            which
+            changes the official string representation of an object.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p><strong>‘InstructionNode’</strong> is a sub class of <strong>‘UnqompNode’</strong>.</p>
+        <h3 id="permeabilitygraph">PermeabilityGraph</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>Described in the source code [14] as:</p>
+        <p><strong>“This class represents the Permeability Graph</strong></p>
+        <p><strong>As a subclass of networkx&#39;s DiGraph, it can be processed by</strong></p>
+        <p><strong>many of networkx&#39;s algorithms.“</strong></p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor of <strong>‘PermeabilityGraph’</strong> instantiates its parents class
+            <strong>‘nx.DiGraph’</strong> constructor. Furthermore the only attribute <strong>‘recent_node_dic’</strong>
+            is
+            instantiated with the function <strong>‘dag_from_qc’</strong>, which is from the same
+            <strong>‘permeability_dag.py’</strong> file but not from the class. It is called with the received
+            parameters
+            <strong>‘qc’</strong> as a <strong>‘Quantum Circuit’</strong> and <strong>‘remove_artificials’</strong> as a
+            bool,
+            which is by default false.
+        </p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods provide functionality to visualize, convert, determining qubits, copying and many more
+            operations
+            with a permeability DAG.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>Its parents class is <strong>‘nd.DiGraph’</strong>. The <strong>‘recent_node_dic’</strong> maps classical bit
+            or
+            qubits to UnqompNode.</p>
+        <p>This concludes the <strong>‘Permeability</strong> UML class diagram.</p>
+    </div>
