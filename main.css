@@ -37,8 +37,10 @@ div.content {
 }
 
 img {
-max-width: 60%;
-height: auto;
+  max-width: 60%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
