@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="QEnv_QPrim.html">Quantum Environments and QuantumPrimitives</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a href="Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+                <h2 id="qenvironment-and-qprimitive">QEnvironment and QPrimitive</h2>
+        <p><img width="2611" height="2464" alt="QEnvironment, QPrimitive"
+                src="https://github.com/user-attachments/assets/f3a317c3-3a3d-4014-a99f-fb5d3b50ce3e" /></p>
+        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
+        <p>The ‘<strong>Environment</strong>’ diagram is named after the central class of the diagram. It unites the
+            ‘<strong>QuantumPrimitive</strong>’ with its descendants, outlining the class hierarchy. Different
+            implementations
+            of ‘<strong>QuantumEnvironments</strong>’ can be found in this diagram.</p>
+        <h3 id="quantumprimitive">QuantumPrimitive</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>This class provides a wrapper class to identify Qrisp primitives. It is on top of the class hierarchy of the
+            ‘<strong>Environment</strong>’.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor has one parameter that receives the ‘<strong>name</strong>’ as a string. The
+            constructor is
+            calling the parent constructor of the base class ‘<strong>Primitive</strong>’. The ‘<strong>name</strong>’
+            parameter
+            is instantiated as ‘<strong>qrisp_name</strong>’.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class does not have methods. Even though it is stated in the description that it is on top of the class
+            hierarchy, this only means the top of the Qrisp hierarchy part of this diagram. The top of this diagram is
+            the
+            ‘<strong>Primitive</strong>’ class, ‘<strong>QuantumPrimitive</strong>’ inherits from it.</p>
+        <h3 id="operationprimitive-not-in-0-8-">OperationPrimitive (not in 0.8)</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>‘<strong>OperationPrimitive</strong>’ wraps a quantum operation object and exposes it as a
+            ‘<strong>QuantumPrimitive</strong>’. This allows the operation to be used within a JAX-based quantum
+            framework that
+            distinguishes between abstract evaluation.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor has one parameter that receives the operation, to be wrapped. The attribute is called
+            ‘<strong>op</strong>’.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are:</p>
+        <ul>
+            <li>‘<strong>inverse</strong>’ – this method returns a ‘<strong>OperationPrimitive</strong>’ with an
+                inversed
+                operation.</li>
+            <li>‘<strong>control</strong>’ – this method returns a ‘<strong>OperationPrimitive</strong>’ with a
+                controlled
+                operation.</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class inherits from ‘<strong>QuantumPrimitive</strong>’. It has an aggregation to the Operation class,
+            which is
+            described in in the ‘<strong>Operation</strong>’ diagram.</p>
+        <h3 id="quantumenvironment">QuantumEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the source code [14]:</p>
+        <p>&nbsp; “<strong>QuantumEnvironments are blocks of code, that undergo some user-specified compilation process.
+                They
+                can be entered using the ``with`` statement</strong>”</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives ‘<strong>env_args</strong>’, which can be any type of argument. It calls the
+            parent
+            constructor of ‘<strong>QuantumPrimitive</strong>’ with the name ‘<strong>q_env</strong>’. It also sets the
+            ‘<strong>multiple_results</strong>’ attribute to true and defines a decorator function
+            ‘<strong>abstract_eval</strong>’. Finally the ‘<strong>env_args</strong>’ parameter is getting instantiated.
+            The
+            class attributes are:</p>
+        <ul>
+            <li>‘<strong>deepest_environment: List[QuantumEnvironment]</strong>’ – This attribute is static and
+                describes the
+                deepest environment</li>
+            <li>‘<strong>env_args: List[Object]</strong>’ – This attribute is a list of arguments to be used by the
+                class</li>
+            <li>‘<strong>env_qs: QuantumSession</strong>’ – The ‘<strong>QuantumSession</strong>’ of the
+                ‘<strong>QuantumEnvironment</strong>’</li>
+            <li>‘<strong>original_data: List[Instructions]</strong>’ – “<strong>This list stores the original data of
+                    the
+                    quantum session tracked</strong>” [14]</li>
+            <li>‘<strong>env_data: List[Instruction]</strong>’ – <strong>“[…] which is the list of instructions, that
+                    have been
+                    appended in this environment. Note that child environments append themselves in this list upon
+                    exiting.”
+                    [14]</strong></li>
+            <li>‘<strong>deallocated_qubits: List[Qubit]</strong>‘ - „<strong>This list stores the qubits that have been
+                    deallocated in this environment. This information is required because the need to be temporarily
+                    reallocated
+                    to prevent compilation errors at compile time.</strong>” [14]</li>
+            <li>‘<strong>temp_qubit_cache: Map[Integer, Qubit]</strong>’ – A dictionary required for checking the
+                tracing mode
+            </li>
+            <li>‘<strong>parent: QuantumEnvironment</strong>’ – this is the deepest environment</li>
+            <li>‘<strong>active_qs_list: List[QuantumSession]</strong>’ – &quot;<strong>Acquire a list of all active
+                    quantum
+                    sessions</strong>&quot; [14]</li>
+            <li>‘<strong>manual_allocation_management : bool</strong>’ – &quot;<strong>Manual allocation management
+                    means that
+                    the compile method can process allocation and deallocation gates.</strong>&quot; [14]</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li><strong>&#39;abstract_eval</strong>&#39; – this class is only internally and thus private, it evaluates
+                an
+                &#39;<strong>AbstractQuantumCircuit</strong>&#39; object. It is annotated with jax_rule, to indicate
+                that the
+                JAX framework is utilizing this method.</li>
+            <li>&#39;<strong>start_dumping</strong>&#39;- &quot;The methods to start the dumping process for this
+                environment.&quot; [14]</li>
+            <li>&#39;<strong>stop_dumping</strong>&#39; – this method ends the dumping process for this environment</li>
+            <li>&#39;<strong>__enter__</strong>&#39; – this dunder method is called as it enters the environment.</li>
+            <li>&#39;<strong>__exit__</strong>&#39; - this dunder method is called as it exits the environment.</li>
+            <li>&#39;<strong>compile</strong>&#39; - &quot;<strong>This is the default compilation method. It simply
+                    compiles
+                    all subenvironments and the collected data to the session.[…]</strong>&quot; [14]</li>
+            <li>&#39;<strong>jcompile</strong>&#39; – The method evaluates a JAX intermediate representation and writes
+                the
+                resulting values back into the compilation context</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. Furthermore this class uses
+            the jax
+            library, instantiating a method in the class constructor for utilization. The class has many associations of
+            which 2
+            are aggregations: the ‘<strong>parent</strong>’ and the ‘<strong>active_qs_list</strong>’, as they exist
+            outside the
+            ‘<strong>QuantumEnvironment</strong>’. The other attributes are compositions as they only exist during the
+            lifetime
+            of a ‘<strong>QuantumEnvironment</strong>’ object. The diagram shows question marks at the
+            &#39;<strong>__exit__</strong>&#39; methods parameters, as these parameters are never used and thus not
+            determinable. The class inherits from the &#39;<strong>QuantumPrimitive</strong>&#39; class and is the
+            parent class
+            of the following classes:</p>
+        <ul>
+            <li>CLControlEnvironment</li>
+            <li>ConjugationEnvironment</li>
+            <li>ControlEnvironment</li>
+            <li>CustomControlEnvironment</li>
+            <li>GateWrapEnvironment</li>
+            <li>GMSEnvironment</li>
+            <li>IterationEnvironment</li>
+            <li>JIterationEnvironment</li>
+            <li>ConditionEnvironment</li>
+            <li>InversionEnvironment</li>
+        </ul>
+        <h3 id="clcontrolenvironment">ClControlEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the source code [14]:</p>
+        <p>&nbsp; “<strong>The ‘ClControlEnvironment’ enables execution of quantum code conditioned on classical values.
+                The
+                environment works with similar semantics as the ‘ControlEnvironment’, implying this environment can also
+                be
+                entered using the ‘control’ keyword.</strong>”</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives ‘<strong>ctrl_bls’</strong>, which is a list of bools. It also receives a
+            ‘<strong>ctrl_state</strong>’ integer, which is -1 by default. Finally the constructor receives a bool
+            ‘<strong>invert</strong>’, which is by default false, all of them get instantiated as class attributes.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>&#39;<strong>compile</strong>&#39; – This compile method calls the ‘<strong>QuantumEnvironment</strong>’
+                compile
+                method only when the corresponding ‘<strong>ctrl_bls</strong>’ match the ‘<strong>ctrl_state</strong>’
+            </li>
+            <li>&#39;<strong>__exit__</strong>&#39; - this dunder method is called as it exits the environment.</li>
+            <li>&#39;<strong>jcompile</strong>&#39; – The method evaluates a JAX intermediate representation and writes
+                the
+                resulting values back into the compilation context</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. The class inherits from the
+            &#39;<strong>QuantumEnvironment</strong>’ class.</p>
+        <h3 id="qrange">qRange</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>qRange</strong>’ class implements a reversible ‘<strong>QuantumFloat</strong>’ iterator, that
+            works with
+            integers. It implements a quantum-controlled version of Python’s ‘<strong>range()</strong>’ function.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor for ‘<strong>qRange</strong>’ receives and instantiates a
+            ‘<strong>QuantumFloat</strong>’
+            ‘<strong>max_index_qf</strong> and an optional bool ‘<strong>create_index_qf</strong>’, which is false by
+            default.
+        </p>
+        <p>The class attributes are:</p>
+        <ul>
+            <li><strong>index_qf: QuantumFloat</strong> – this attribute functions as a quantum loop counter register
+                and drives
+                the iteration in a reversible and unitary way</li>
+            <li><strong>quantum_condition: ClControlledEnvironment</strong> – this environment conditionally executes
+                the loop
+                body based on the sign bit of the ‘<strong>index_qf</strong>’ register. It implements a reversible
+                quantum loop
+                condition</li>
+            <li><strong>c_index: int</strong> – this integer is a loop counter that track the current iteration index is
+                is
+                returned on each <strong>__next__</strong> method call</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>_<em>iter</em>_(): qRange – this dunder method prepares the iterator object and returns it</li>
+            <li>_<em>next</em>_(): int – this dunder method implements the logic of the next step of the iterator</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The ‘<strong>qRange</strong>’ class has two dunder methods that are labelled as ‘<strong>&lt;<iteration&gt;>
+            </strong>’. Furthermore the class holds a composition for the ‘<strong>quantum_condition_env</strong>‘
+            attribute.</p>
+        <h3 id="conjugationenvironment">ConjugationEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the qrisp documentation [25]:</p>
+        <p>“<strong>This</strong> <a
+                href="https://www.qrisp.eu/reference/Quantum%20Environments/index.html#quantumenvironment"><strong>QuantumEnvironment</strong></a>
+            <strong>can be used for perfoming conjugated operations. An arbitrary unitary can be conjugated by another
+                unitary
+                :</strong>
+        </p>
+        <p><strong>This structure appears in many quantum algorithms such as</strong> <a
+                href="https://arxiv.org/abs/quant-ph/9605043"><strong>Grover</strong></a><strong>,</strong> <a
+                href="https://arxiv.org/abs/1509.02374"><strong>Quantum backtracking</strong></a> <strong>or</strong> <a
+                href="https://arxiv.org/abs/quant-ph/0008033"><strong>Fourier arithmetic</strong></a><strong>.</strong>
+        </p>
+        <p><strong>Using the ConjugationEnvironment not only helps to structure the code, but can also grant performance
+                advantages.</strong></p>
+        <p><strong>This is because the controlled circuit of such a conjugation is can be realized by just controlling
+                instead
+                of all three operations.</strong></p>
+        <p><strong>The ConjugationEnvironment can be called using the alias conjugate. Conjugate takes the conjugation
+                function
+                (in our example ) and returns a function that takes the arguments for the conjugation function and
+                returns the
+                corresponding ConjugationEnvironment. For more information consult the examples section.</strong>”</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives a function ‘<strong>conjugation_function’</strong>, which is “<strong>the
+                function
+                performing the operation V</strong>” [25]. It also receives an iterable of objects
+            ‘<strong>args</strong>’,
+            which are “<strong>the arguments for the conjugation function</strong>” [25]. Furthermore it receives a
+            mapping from
+            a string to an object ‘<strong>kwargs</strong>’, for “<strong>the keyword arguments for the conjugation
+                function</strong>” [25]. Also the constructor receives a bool ‘<strong>allocation_management</strong>’,
+            which is
+            by default true. All of them get instantiated as class attributes.<br><br />The class has one more attribute
+            that is
+            set in the ‘<strong>enter</strong>’ method: ‘<strong>conjugation_circ</strong>’. This is a copy
+            ‘<strong>QuantumCircuit</strong>’ of the ‘<strong>env_qs</strong>’ that is used for the conjugation.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>__enter__</strong>’ – This dunder method is called as it enters the environment. It mostly
+                prepares
+                data for the conjugation.</li>
+            <li>&#39;<strong>__exit__</strong>&#39; - this dunder method is called as it exits the environment. It
+                performs the
+                conjugation or performs an inversion if in tracing mode.</li>
+            <li>‘<strong>perform_conjugation</strong>’ – this is the logic of the conjugation.</li>
+            <li>‘<strong>jcompile</strong>’ - This method implements the JAX compilation logic</li>
+            <li>‘<strong>compile</strong>’ – This method implements the compilation logic</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. Furthermore this class uses
+            the jax
+            library. The method ‘<strong>compile</strong>’ uses a parameter ctrl, which is never used, so it has a ‘?’
+            type. The
+            ‘<strong>perform_conjugation</strong>’ method uses the decorator ‘<strong>@custom_control</strong>’, it is
+            labelled
+            with ‘<strong>&lt;<custom_control&gt;></strong>’. The class has an composition to the
+            ‘<strong>QuantumCircuit</strong>’ class, since the circuit wouldn’t exist without the
+            ‘<strong>ConjugationEnvironment</strong>’. The class inherits from the
+            &#39;<strong>QuantumEnvironment</strong>’
+            class.</p>
+        <h3 id="controlenvironment">ControlEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp Documentation of ‘<strong>ControlEnvironment</strong>’ [26]:</p>
+        <p>“<strong>This class behaves similarly to ConditionEnvironment but instead of a function calculating a truth
+                value, we
+                supply a list of qubits. The environment’s content is then controlled on these qubits.</strong></p>
+        <p><strong>An alias for this QuantumEnvironment is “control”.</strong>“</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives following parameters:</p>
+        <ul>
+            <li>‘<strong>ctrl_qubits: List[Qubit]</strong>’ – this is the list of qubits on which to control the
+                environments
+                contents. [26]</li>
+            <li>‘<strong>ctrl_state: int | String = -1</strong>’ – “<strong>The computational basis state which is
+                    supposed to
+                    activate the environment. Can be supplied as a bitstring or integer. The default is
+                    “1111..”.</strong>” [26]
+            </li>
+            <li>‘<strong>ctrl_method: String = null</strong>’ – this is the method being passed to the controlled
+                Instruction in
+                the compiler</li>
+            <li>‘<strong>invert: bool = false</strong>’ – this bool decides over control states</li>
+        </ul>
+        <p>All parameters get instantiated as class attributes. Furthermore the remaining class attributes are:</p>
+        <ul>
+            <li>‘<strong>arg_qs: QuantumSession</strong>’ – these are the merged sessions of the
+                ‘<strong>ctrl_qubits</strong>’
+            </li>
+            <li>‘<strong>sub_condition_envs: List[ ControlEnvironment | ConditionEnvironment]</strong>’ - This attrbute
+                prevents
+                redundant application of control gates by allowing the parent environment to distinguish between normal
+                quantum
+                gates and nested environments.</li>
+            <li>‘<strong>condition_truth_value: Qubit</strong>’ – this qubit represents if the
+                ‘<strong>ControlEnvironment</strong>’ is active or true</li>
+            <li>‘<strong>qbool: QuantumBool</strong>’ – this is a ancilla qubit holding the environments condition truth
+                value
+            </li>
+            <li>‘<strong>parent_cond_env: ControlEnvironment | ConditionEnvironment</strong>’ – this attribute is needed
+                to make
+                nested control or condition blocks compile correctly and efficiently</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>__enter__</strong>’ – This dunder method is called as it enters the environment. It mostly
+                prepares
+                data. It returns the ‘<strong>condition_truth_table</strong>’</li>
+            <li>&#39;<strong>__exit__</strong>&#39; - this dunder method is called as it exits the environment. It
+                determines
+                the tracing mode and then the parent environment</li>
+            <li>‘<strong>compile</strong>’ – This method implements the compilation logic</li>
+            <li>‘<strong>jcompile</strong>’ - This method implements the JAX compilation logic</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. The
+            ‘<strong>sub_condition_envs</strong>’ and ‘<strong>parent_cond_env</strong>’ are in round brackets to imply
+            that it
+            can be either one of them and that the attribute doesn’t have to be of that specific type but can. The class
+            has a
+            composition to ‘<strong>Qubit</strong>’, because the ‘<strong>ctrl_qubits</strong>’ wouldn’t serve a purpose
+            without
+            a context, same goes for the ‘<strong>QuantumBool</strong>’ association and the
+            ‘<strong>sub_condition_envs</strong>’ attribute. The ‘<strong>QuantumSession</strong>’
+            ‘<strong>arg_qs</strong>’,
+            the ‘<strong>parent_cond_env</strong>’ and ‘<strong>qbool</strong>’ exist on their own, thus they are
+            aggregations.
+            The class inherits from ‘<strong>QuantumEnvironment</strong>’.</p>
+        <h3 id="customcontrolenvironment">CustomControlEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The purpose of ‘<strong>CustomControlEnvironment</strong>’ is to rewrite all instructions in an environment
+            into
+            ‘<strong>CustomControlOperation</strong>’, controlled by a specific qubit. Most importantly this is
+            happening
+            without using standard controlled-gate synthesis.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor has two parameters, of which only one is used: ‘<strong>control_qb</strong>’, it is
+            instantiated as a Qubit. It is the control qubit that controls the operations.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>__enter__</strong>’ – This dunder method is called as it enters the environment. The method
+                calls the
+                parents ‘<strong>__enter__</strong>’ method and merges the environment’s
+                ‘<strong>QuantumSession</strong>’ with
+                the ‘<strong>control_qb</strong>’s ‘<strong>QuantumSession</strong>’.</li>
+            <li>‘<strong>compile</strong>’ - This method implements the compilation logic</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. This method has an aggregation
+            to the
+            ‘Qubit’ class, because the Qubit is already preexisting to the ‘<strong>CustomControlEnvironment</strong>’.
+            The
+            class inherits from the ‘<strong>QuantumEnvironment</strong>’ class.</p>
+        <h3 id="gatewrapenvironment">GateWrapEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp documentation:<br>“<strong>This environment allows to hide complexity in the
+                circuit
+                visualisation. Operations appended inside this environment are bundled into a single</strong> <a
+                href="https://www.qrisp.eu/reference/Circuit%20Manipulation/Instruction.html#instruction"><strong>Instruction</strong></a>
+            <strong>object.</strong>
+        </p>
+        <p><strong>The functionality of this</strong> <a
+                href="https://www.qrisp.eu/reference/Quantum%20Environments/index.html#quantumenvironment"><strong>Quantum
+                    Environments</strong></a> <strong>can also be used with the</strong> <a
+                href="https://www.qrisp.eu/reference/generated/qrisp.gate_wrap.html#qrisp.gate_wrap"><strong>gate_wrap</strong></a>
+            <strong>decorator.</strong>
+        </p>
+        <p><strong>After compiling, the wrapped instruction can be retrieved using the .instruction attribute.</strong>“
+            [27]
+        </p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor calls the parent constructor and instantiates the ‘<strong>name</strong>’ of the class
+            as a
+            String, by default null. It then sets the parents class attribute
+            ‘<strong>manual_allocation_management</strong>‘ to
+            true. The class has one more unique attribute: ‘<strong>instruction</strong>’, which is (obviously) an
+            ‘<strong>Instruction</strong>’.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has a single method:<br>‘<strong>compile</strong>’ – this method implements the compilation logic.
+        </p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class has a single composition, the ‘instruction’. This instruction only exists during the lifetime of a
+            ‘<strong>GateWrapEnvironment</strong>’ object. The class inherits from
+            ‘<strong>QuantumEnvironment</strong>’.</p>
+        <h3 id="gmsenvironment">GMSEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp documentation:</p>
+        <p>“<strong>This environment provides a convenient interface for constructing quantum algorithms using the
+                Ion-trap
+                native GMS gates. GMS gates allow entangling more than 2 qubits in a single step and can therefore boost
+                performance in many situations. For more information on GMS gates consult <a
+                    href="https://arxiv.org/abs/quant-ph/9810040">https://arxiv.org/abs/quant-ph/9810040</a>. The
+                techniques for
+                converting the circuits presented to this environment are mostly based on</strong> <a
+                href="https://ieeexplore.ieee.org/document/9815035"><strong>https://ieeexplore.ieee.org/document/9815035</strong></a><strong>.
+                This environment allows to code blocks of phase-only gates as we are used to but compiles these blocks
+                to GMS
+                gates.</strong>” [28]</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has only one method:</p>
+        <p>‘<strong>compile</strong>’ – this method implements the compilation logic of the
+            ‘<strong>GMSEnvironment</strong>’.
+        </p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>This class has no unique attributes and inherits from the ‘<strong>QuantumEnvironment</strong>’.</p>
+        <h3 id="iterationenvironment">IterationEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp documentation:<br><br />“<strong>This QuantumEnvironment can be used for reducing
+                bottlenecks in compilation time. Many algorithms such as Grover or QPE require repeated execution of the
+                same
+                quantum circuit. When scaling up complex algorithms that perform a lot of non-trivial logic many
+                iterations can
+                significantly slow down the compilation speed. The IterationEnvironment remedies this flaw by recording
+                the
+                circuit of a single iteration and then duplicating the instructions the required amount of
+                times.</strong></p>
+        <p><strong>Another bottleneck that can appear is the</strong> <a
+                href="https://www.qrisp.eu/reference/Core/generated/qrisp.QuantumSession.compile.html#qrisp.QuantumSession.compile"><strong>compile</strong></a>
+            <strong>method as the qubit allocation algorithm can also scale bad for really large algorithms. For this
+                problem
+                the IterationEnvironment exposes the precompile keyword. Setting this keyword to True will perform the
+                Qubit
+                allocation algorithm on the QuantumEnvironments content and then (if necessary) allocate
+                another</strong> <a
+                href="https://www.qrisp.eu/reference/Core/QuantumVariable.html#quantumvariable"><strong>QuantumVariable</strong></a>
+            <strong>to accomodate the workspace qubits of the compilation result. This way there is only a single
+                (de)allocation
+                per IterationEnvironment.</strong>“ [29]
+        </p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives a ‘<strong>QuantumSession</strong>’ ‘<strong>qs</strong>’, an integer
+            ‘<strong>iteration_amount</strong>’ and a bool ‘<strong>precompile</strong>’, which is by default false.
+            ‘<strong>iteration_amount</strong>’ and ‘<strong>precompile</strong>’ get instantiated as class attributes.
+            Furthermore there is one class attribute ‘<strong>initial_qvs</strong>’, which is a the set of list of
+            ‘<strong>QuantumVariables</strong>’. It is essentially the list of unique
+            ‘<strong>QuantumVariables</strong>’ if the
+            ‘<strong>qs</strong>’ ‘<strong>QuantumSession</strong>’.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>__enter__</strong>’ – this dunder method gets called when the code enters the
+                ‘<strong>IterationEnvironment</strong>’. The method prepares the ‘<strong>inital_qvs</strong>’ parameter
+                and
+                calls the parent ‘<strong>__enter__</strong>’ method</li>
+            <li>‘<strong>__exit__</strong>’ – this dunder method gets called when the code exists the
+                ‘<strong>IterationEnvironment</strong>’</li>
+            <li>‘<strong>compile</strong>’ – this method implements the compilation logic</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. The class has a composition to
+            ‘<strong>QuantumVariable</strong>’, because it only exists with an object of
+            ‘I<strong>terationEnvironment</strong>’. The class inherits from ‘<strong>QuantumEnvironment</strong>’.</p>
+        <h3 id="jiterationenvironment">JIterationEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class only has the purpose of running a ‘<strong>iteration_env_evaluator</strong>’ function, which is
+            defined in
+            the ‘<strong>jiteration_environment.py</strong>’ class.</p>
+        <p>The idea is described in the source code [14]:</p>
+        <p>“<strong>The idea behind this equation compiler is the following: The jrange feature executes 2 iterations of
+                the
+                loop to capture the loop body in an QuantumEnvironment. We need 2 iterations to determine which inputs
+                are
+                updated each iteration and which inputs stay the same.</strong>”</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>As stated above, the class only has only one method ‘<strong>jcompile</strong>’, which executes the
+            ‘<strong>Iteration_env_evaluator</strong>’.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>This class inherits from the class ‘<strong>QuantumEnvironment</strong>’. The types of the map couldn’t be
+            determined.</p>
+        <h3 id="jrangeiterator">JRangeIterator</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>This class implements the logic, that is called in the function Jrange. The use is described in the source
+            code
+            [14]:<br><br />„<strong>Performs a loop with a dynamic bound. Similar to the Python native range this
+                iterator can
+                receive multiple arguments. If it receives just one, this value is interpreted as the stop value and the
+                start
+                value is assumed to be 0. Two arguments represent start and stop value, whereas three represent start,
+                stop and
+                step.</strong>“</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives a list of arguments, which can be of any type. The constructor instantiates
+            the
+            attributes ‘<strong>start</strong>’, ‘<strong>stop</strong>’ and ‘<strong>step</strong>’ depending on the
+            count of
+            arguments, if they get instantiated they are arrays of the type integer. The attributes of the class are as
+            following:</p>
+        <ul>
+            <li>‘<strong>iteration: int</strong>’ – this is the iteration index, when it reaches 3 the Iterator ends
+            </li>
+            <li>‘<strong>loop_index: Array&lt;Integer&gt;</strong>’ – this the loop iteration index tracer</li>
+            <li>‘<strong>iter_env: JIterationEnvironment</strong>’ - This is the
+                ‘<strong>JIterationEnvironment</strong>’ in
+                which the iteration logic happens</li>
+            <li>‘<strong>iter_1_qvs: List&lt;QuantumVariable&gt;</strong>’- The ‘<strong>QuantumVariables</strong>’ of
+                the
+                ‘<strong>TracingQuantumSession</strong>’</li>
+            <li>‘<strong>iter_2_qvs: List&lt;QuantumVariable&gt;</strong>’ – A second list of
+                ‘<strong>QuantumVariables</strong>’ of the ‘<strong>TracingQuantumSession</strong>’</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘_<em>**iter</em>_: JRangeIterator**’ – This dunder method makes the object iterable and return an
+                iterator
+                object</li>
+            <li>‘<strong>_<em>next</em>_: Array&lt;Integer&gt;</strong>’ – this dunder method produces the next value in
+                the
+                iterator</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The ‘<strong>JRangeIterator</strong>’ class has a composition to ‘<strong>JIterationEnvironment</strong>’, as
+            the
+            environment only exists during the lifetime of a ‘<strong>JRangeIterator</strong>’ object. It also has a
+            composition
+            to QuantumVariable, for the same reasons.</p>
+        <h3 id="conditionenvironment">ConditionEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp documentation:<br><br />“<strong>This class enables the usage of
+                <em>if</em>-conditionals
+                as we are used to from classical programming</strong>” [30]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor has 3 parameters: a callable function ‘<strong>cond_eval_function</strong>’, a list of
+            objects
+            ‘<strong>args</strong>’ and a map ‘<strong>kwargs</strong>’ of keyword arguments for
+            ‘<strong>cond_eval_function</strong>’ [30]. The class instantiates all the parameters and merges the
+            ‘<strong>args</strong>’ into a ‘<strong>QuantumSession</strong>’ ‘<strong>arg_qs</strong>’ and the
+            ‘<strong>manual_allocation_management</strong>’ is set to true. The class attributes, excluding previously
+            listed
+            ones, are:</p>
+        <ul>
+            <li>‘<strong>sub_condition_envs: List&lt;ContrlEnvironment | ConditionEnvironment&gt;</strong>’ - This
+                attribute is
+                used for a list that will contain the qubits holding the truth values of the conditional/control
+                environments
+                within this environment. [30]</li>
+            <li>‘<strong>qbool: QuantumBool</strong>’ - this is a ancilla qubit holding the environments condition truth
+                value
+            </li>
+            <li>‘<strong>condition_truth_value: Qubit</strong>’ – this qubit represents if the
+                ‘<strong>ConditionEnvironment</strong>’ is active or true</li>
+            <li>‘<strong>parent_cond_evn: ControlEnvironment | ConditionEnvironment</strong>’ - this attribute is needed
+                to make
+                nested control or condition blocks compile correctly and efficiently</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>__enter__</strong>’ – This dunder method is called as the
+                ‘<strong>ConditionEnvironment</strong>’ is
+                entered</li>
+            <li>‘<strong>__exit__</strong>’ – This dunder method is called as the
+                ‘<strong>ConditionEnvironment</strong>’ is
+                exited</li>
+            <li>‘<strong>compile</strong>’ – This method implements the compilation logic</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. The
+            ‘<strong>sub_condition_envs</strong>’ and ‘<strong>parent_cond_env</strong>’ are in round brackets to imply
+            that it
+            can be either one of them and that the attribute doesn’t have to be of that specific type but can. The class
+            has a
+            composition to ‘<strong>Qubit</strong>’, because the ‘<strong>ctrl_qubits</strong>’ wouldn’t serve a purpose
+            without
+            a context, same goes for the ‘<strong>QuantumBool</strong>’ association and the
+            ‘<strong>sub_condition_envs</strong>’ attribute. The ‘<strong>QuantumSession</strong>’
+            ‘<strong>arg_qs</strong>’,
+            the ‘<strong>parent_cond_env</strong>’ and ‘<strong>qbool</strong>’ exist on their own, thus they are
+            aggregations.
+            The class inherits from ‘<strong>QuantumEnvironment</strong>’.</p>
+        <h3 id="inversionenvironment">InversionEnvironment</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp documentation:<br>“<strong>This QuantumEnvironment can be used to invert (i.e.
+                “dagger”) a
+                block of operations. An alias for this is invert.</strong>” [31]</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>__enter__</strong>’ – This dunder method is called as the
+                ‘<strong>InversionEnvironment</strong>’ is
+                entered</li>
+            <li>‘<strong>compile</strong>’ – This method implements the compilation logic</li>
+            <li>‘<strong>jcompile</strong>’ - This method implements the JAX compilation logic</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class is an environment and thus implements the dunder methods required for supplying the environment
+            functionality, they are marked with ‘<strong>&lt;<environment&gt;></strong>’. It does not implement a
+            constructor or
+            any unique attributes. The class inherits from ‘<strong>QuantumEnvironment</strong>’.</p>
+        <p>This concludes the QEnvironment and QPrimitive class diagram.</p>
+    </div>

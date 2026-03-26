@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="QEnv_QPrim.html">Quantum Environments and QuantumPrimitives</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a href="Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+        <h2 id="operations">Operations</h2>
+        <p><img width="1412" height="2094" alt="Operations"
+                src="https://github.com/user-attachments/assets/b7ebe95a-9980-49de-a5ba-6b7da8663724" /></p>
+        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
+        <p>The <strong>‘Operations’</strong> is one of the most central diagrams within the Qrisp framework. It is an
+            especially
+            important diagram as it defines the operations that can be applied to a quantum circuit. Central of this
+            class is
+            the <strong>‘Operation’</strong> class, practically every class inherits from it. Operations are used on a
+            <strong>‘‘QuantumCircuit’’</strong> object, as quantum gates, measurements or classical logic gates [19].
+        </p>
+        <h3 id="operation">Operation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the qrisp documentation:</p>
+        <p>“This class describes operations like quantum gates, measurements or classical logic gates. Operation objects
+            do not
+            carry information about which Qubit/Clbits they are applied to. This can be found in the Instruction class,
+            which is
+            a combination of an Operation object together with its operands.” [19]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor is built with the following attributes, described in the Qrisp-documentation as:</p>
+        <p>“Operation objects consist of five basic attributes:</p>
+        <ul>
+            <li>.name : A string identifying the operation</li>
+            <li>.num_qubits : An integer specifying the amount qubits on which to operate</li>
+            <li>.num_clbits : An integer specifying the amount of classical bits on which to operate.</li>
+            <li>.params : A list of floats specifying the parameters of the Operation</li>
+            <li>.definition : A <a
+                    href="https://www.qrisp.eu/reference/Circuit%20Manipulation/QuantumCircuit.html#quantumcircuit">‘QuantumCircuit’</a>.
+                For synthesized (i.e. non-elementary) operations, this ‘QuantumCircuit’ specifies the operation.” [19]
+            </li>
+        </ul>
+        <p>Additionally an ‘<strong>init_op</strong>’ object is optionally received. Although these are the attributes
+            received
+            by the constructor the class has a few more attributes: ‘<strong>abstract_params</strong>’, which are
+            represented as
+            a list of Sympy Symbols [20], ‘<strong>is_qfree</strong>’ a bool describing if the unitary is a permutation
+            matrix
+            [14]. ‘<strong>permeability</strong>’ is a dict that maps integers, representing the indices of qubits to a
+            bool,
+            depending if it is permeable on that qubit. ‘<strong>Unitary</strong>’ is an ndarray, describing the unitary
+            of the
+            operation. The last available attribute is ‘<strong>lambdified_params</strong>’, which is a list of
+            functions.
+            ‘<strong>Unitary</strong>’ and ‘<strong>lambdified_params</strong>’ are both set within if-junctions and
+            thus
+            declared as “dynamically set” in an annotation within the diagram.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has many useful methods. The methods give possibilities to manipulate the Operation and to get
+            further
+            information, such as the inverse or unitary. A ‘<strong>Operation’</strong> object can also be converted
+            into a
+            ‘<strong>ClControlledOperation’</strong>, with the method ‘<strong>c_if</strong>’.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The ‘<strong>Operation</strong>’ class is central of the diagram. With the ‘<strong>append</strong>’ method
+            from
+            ‘<strong>QuantumCircuit</strong>’ it is possible to apply these objects to a quantum circuit. A
+            ‘<strong>QuantumCircuit</strong>’ can be converted to a ‘<strong>Operation</strong>’ object with the
+            ‘<strong>to_gate</strong>’ function of the ‘<strong>QuantumCircuit</strong>’. Its sub classes are: </p>
+        <ul>
+            <li><strong>PTControlledOperation</strong></li>
+            <li><strong>ControlledOperation</strong></li>
+            <li><strong>CustomControlOperation</strong></li>
+            <li><strong>GZZ_wrapper</strong></li>
+            <li><strong>GXX_wrapper</strong></li>
+            <li><strong>QuasiRZZ</strong></li>
+            <li><strong>U3Gate</strong></li>
+            <li><strong>CLControlledOperation</strong></li>
+            <li><strong>ConjugatedOperation</strong></li>
+            <li><strong>GidneyLogicalAND</strong></li>
+            <li><strong>GraySynthGate</strong></li>
+            <li><strong>JonesToffoli</strong></li>
+            <li><strong>LogicSynthGate</strong></li>
+            <li><strong>StimNoiseGate</strong></li>
+            <li><strong>ParityOperation</strong></li>
+        </ul>
+        <h3 id="ptcontrolledoperation">PTControlledOperation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the source code:</p>
+        <p>“This class describes phase tolerant controlled operations.</p>
+        <p>Phase tolerant means that the unitary can take the form</p>
+        <p>[D_0, 0, 0, 0]</p>
+        <p>[0, D_1,0, 0]</p>
+        <p>[0, 0, D_2, 0]</p>
+        <p>[0, 0, 0, U]</p>
+        <p>Where U is the operation to be controlled and D_i are diagonal operators.” [14]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor has 4 parameters, an ‘Operation’ as ‘<strong>base_operation</strong>’, an optional
+            integer
+            ‘<strong>num_ctrl_qubits</strong>’ with 1 by default, an optional integer or String
+            ‘<strong>ctrl_state’</strong>,
+            which is by default -1 and an optional String or function ‘<strong>method’</strong>, which is “auto” by
+            default.
+            ‘<strong>num_ctrl_qubits</strong>’ is the range for the class attribute List ‘<strong>controls</strong>’.
+            Every
+            other parameter has a respective class attribute.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class implements the methods from its parents class respectively to its
+            ‘<strong>PTControlledOperation</strong>’
+            versions.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>Two attributes of the class are surrounded by round brackets. Because this part of the code is unreachable,
+            it was
+            decided is not of relevance. The class ‘<strong>ControlledOperation</strong>’ inherits from this class.</p>
+        <h3 id="controlledoperation">ControlledOperation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the source code:</p>
+        <p>“<strong>Class to describe controlled operation</strong></p>
+        <p><strong>Very similar to phase tolerant operations but with a more specific naming</strong></p>
+        <p><strong>convention, inversion algorithm and unitary generation algorithm.</strong>” [14]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor has 4 parameters, an ‘<strong>Operation</strong>’ as ‘<strong>base_operation</strong>’,
+            an
+            optional integer ‘<strong>num_ctrl_qubits</strong>’ with 1 by default, an optional integer or String
+            ‘<strong>ctrl_state’</strong>, which is by default -1 and an optional String or function
+            ‘<strong>method</strong>’,
+            which is “gray” by default. Every attribute is getting passed to the parent constructor. The class doesn’t
+            have any
+            attributes of itself.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>This class contains two methods: ‘<strong>inverse</strong>’ and ‘<strong>get_unitary</strong>’</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>‘<strong>ControlledOperation</strong>’ is the subclass of ‘<strong>PTControlledOperation</strong>’</p>
+        <h3 id="customcontroloperation">CustomControlOperation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class extends Operations and creates a custom, control-style quantum operation based on an existing
+            operation.
+            It’s behavior depends on the flag ‘<strong>targeting_control</strong>’.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor has two cases depending on the bool ‘<strong>targeting_control</strong>’. When
+            ‘<strong>targeting_control</strong>’ is false, the class adds an extra control qubit and shift the original
+            operation onto the remaining qubits. If it is true, the operation is wrapped exactly as it is with no
+            additional
+            qubits or structural changes. The constructor also instantiates two attributes, that are unique to the
+            class: the
+            bool ‘<strong>targeting_control</strong>’ and the ‘<strong>init_op</strong>’ Operation.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has two methods, ‘inverse’ creating the inverse of the Operation and ‘<strong>copy’</strong>,
+            creating a
+            copy of the ‘<strong>CustomControlOperation</strong>’</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>This class inherits from ‘<strong>Operation</strong>’. There is also an aggregation, due to the
+            ‘<strong>init_op</strong>’ object.</p>
+        <h3 id="gzz_wrapper">GZZ_wrapper</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>GZZ_wrapper</strong>’ is a multiqubit GZZ-Gate. A GZZ-Gate is in it’s core a collection of
+            RZZ-Gates
+            which phases are implemented in a matrix.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor has two parameters: ‘<strong>n</strong>’, an Integer and ‘<strong>ch</strong>i’ a matrix of
+            floats,
+            here declared as a List in a List with the type float.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class does not have methods</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>It is unclear for what the ‘<strong>n</strong>’ integer is being used for, as it does not reappear in the
+            code again.
+            The class does not implement any methods but in the source code the ‘<strong>GZZ_converter’</strong> method
+            is very
+            close to it [14].</p>
+        <h3 id="gxx_wrapper">GXX_wrapper</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>GXX_wrapper</strong>’ is a multiqubit GXX-Gate. A GXX-Gate is in its core a collection of
+            RXX-Gates
+            which phases are implemented in a matrix.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor has two parameters: ‘<strong>n</strong>’, an Integer and ‘<strong>chi</strong>’ a matrix of
+            floats,
+            here declared as a List in a List with the type float.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has a ‘<strong>inverse</strong>’ method, that returns the inverse.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>It is unclear for what the ‘<strong>n</strong>’ integer is being used for, as it does not reappear in the
+            code again.
+            The method GXX_converter in the source code is very close related to it [14].</p>
+        <h3 id="quasirzz">QuasiRZZ</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>‘<strong>QuasiRZZ</strong>’ is a custom ‘<strong>Operation</strong>’ that behaves like an RZZ-type
+            interaction,
+            implemented using a sequence of two CNOTs and a phase gate. It also supports controlled versions of this
+            operation.
+        </p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The class constructor has one parameter ‘<strong>angle</strong>’ which can be a float or a sympy.Symbol.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has two methods, an ‘<strong>inverse</strong>’ method, which returns the inverse and a
+            ‘<strong>control</strong>’ method that returns either a ‘<strong>PTControlledOperation</strong>’ or a
+            ‘<strong>ControlledOperation</strong>’</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The class has no unique attributes. It inherits from ‘<strong>Operation</strong>’.</p>
+        <h3 id="stimnoisegate">StimNoiseGate</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the Qrisp source code [34]:</p>
+        <p>“Class for representing Stim errors in Qrisp circuits. This class is used to wrap Stim instructions into
+            Qrisp
+            Operations. These operations are effectively identity gates (they have an empty definition) but carry the
+            information about the Stim noise channel. When converted to Stim circuits, these operations are replaced by
+            the
+            corresponding Stim instruction.”</p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The class constructor receives 3 parameters:</p>
+        <ul>
+            <li>Stim_name: String – this parameter is the name of the Stim error gate [34]. This attribute gets
+                instantiated.
+            </li>
+            <li>params: float - “The parameters of the error channel (e.g. error probability). Further details about the
+                semantics of the parameters can be found in the ‘Stims gate reference <a
+                    href="https://github.com/quantumlib/Stim/blob/main/doc/gates.md#noise-channels’”">https://github.com/quantumlib/Stim/blob/main/doc/gates.md#noise-channels’”</a>
+                [34]</li>
+            <li>pauli_string: String – “A string of Pauli operators (e.g. ``XX``) for correlated errors.” [34] This
+                attribute
+                gets instantiated and is optional.</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class methods are as follows:</p>
+        <ul>
+            <li>‘<strong>inverse</strong>’ – this method throws an exception</li>
+            <li>‘<strong>control</strong>’ – this method throws an exception</li>
+            <li>‘<strong>c_if</strong>’ – this method throws an exception</li>
+        </ul>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>This class inherits from the ‘<strong>Operation</strong>’ class.</p>
+        <h3 id="u3gate">U3Gate</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>U3Gate</strong>’ class implements a gate a generic single-qubit rotation gate with 3 Euler
+            angles. [21]
+        </p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class attributes are ‘<strong>theta</strong>’, ‘<strong>phi’</strong>, ‘<strong>lamb</strong>’, which are
+            floats.
+            The get instantiated by the class constructor, which has ‘<strong>theta</strong>’, ‘<strong>phi</strong>’
+            and
+            ‘<strong>lamb</strong>’ as parameters. Additionally the constructor has the following parameters: a String
+            ‘<strong>name</strong>’, which is “u3” by default and a ‘<strong>global_phase</strong>’, which can be an
+            ‘<strong>Expr</strong>’ or a float.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has three methods: ‘<strong>inverse</strong>’, which returns the inverse,
+            ‘<strong>get_unitary</strong>’
+            which returns the unitary and a ‘<strong>bind_parameters</strong>’ method which evaluates the symbolic
+            parameters of
+            a ‘<strong>U3Gate</strong>’, returning a U3Gate</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>This class inherits from ‘<strong>Operation</strong>’ and is the parent class of ‘<strong>PauliGate</strong>‘
+        </p>
+        <h3 id="pauligate">PauliGate</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>PauliGate’</strong> class implements the X, Y, and Z Pauli Gates.</p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The constructor receives a string ‘<strong>name</strong>’, which dictates the type of Pauli Gate of the
+            object.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has two methods: ‘<strong>inverse</strong>’, which returns the Inverse of the Pauli Gate and a
+            dunder
+            method ‘<strong>__repr__</strong>’ which alters the way a ‘<strong>PauliGate</strong>’ Object is
+            represented.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The ‘<strong>PauliGate</strong>’ class inherits from ‘<strong>U3Gate</strong>’. The class has no unique
+            attributes.
+        </p>
+        <h3 id="clcontrolledoperation">CLControlledOperation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>CLControlledOperation</strong>’ class constructs a classically-controlled version of a
+            ‘Operation’
+            object. The gate is only executed when a set of classical bits match a specified control state.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor receives an Operation ‘<strong>base_op</strong>’, an integer ‘<strong>num_control</strong>’
+            and an
+            integer ‘<strong>ctrl_state</strong>’, which are instantiated as class attributes.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The ‘<strong>CLControlledOperation</strong>’ class inherits from ‘<strong>Operation</strong>’ and has no
+            unique
+            methods. There is an aggregation between ‘<strong>CLControlledOperation</strong>’ and
+            ‘<strong>Operation</strong>’,
+            because a ‘<strong>CLControlledOperation</strong>’ couldn’t exist without an Operation, but the
+            ‘<strong>Operation</strong>’ can still persist without the ‘<strong>CLControlledOperation</strong>’.</p>
+        <h3 id="conjugatedoperation">ConjugatedOperation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class ‘<strong>ConjugatedOperation</strong>’ provides a data structure for two Gates to be conjugated
+            with each
+            other by receiving a “conjugator” and “conjugand”.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class receives two ‘<strong>‘QuantumCircuit’</strong>’ objects: ‘<strong>conjugation_circ</strong>’ and
+            ‘<strong>content_gate</strong>’. These objects which are instantiated as ‘<strong>Operation</strong>’
+            objects
+            ‘<strong>conjugation_gate</strong>’ and ‘<strong>content_gate</strong>’ with the ‘<strong>to_gate</strong>’
+            method
+            of ‘<strong>‘QuantumCircuit’</strong>’. The constructior then calls the parents constructor with
+            conjugated_gate as
+            the definition.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>‘<strong>ConjugatedOperation</strong>’ provides two methods: ‘<strong>control</strong>’ and
+            ‘<strong>inverse</strong>’.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The ‘<strong>ConjugatedOperation</strong>’ class inherits from ‘<strong>Operation</strong>’. There is an
+            aggregation
+            between ‘<strong>ConjugatedOperation</strong>’ and ‘<strong>Operation</strong>’, because a
+            ‘<strong>ConjugatedOperation</strong>’ couldn’t exist without an Operation, but the
+            ‘<strong>Operation</strong>’ can
+            still persist without the ‘<strong>ConjugatedOperation</strong>’.</p>
+        <h3 id="gidneylogicaland">GidneyLogicalAND</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class ‘<strong>GidneyLogicalAND</strong>’ defines a an ‘<strong>Operation</strong>’ for a logical “AND”
+            condition
+            between two Qubits. It uses specific quantum algorithms such as the Margolus-algorithm and provides
+            functionality to
+            invert and compile operations.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor receives a bool ‘<strong>inv</strong>’ which is false by default and a string
+            ‘<strong>ctrl_state</strong>’ which is by default “11”. These parameters are instantiated as the class
+            attributes.
+        </p>
+        <p>Class methods:</p>
+        <p>The class contains two methods: ‘<strong>inverse</strong>’ and ‘<strong>recompile</strong>’.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The class inherits from ‘<strong>Operation</strong>’.</p>
+        <h3 id="graysynthgate">GraySynthGate</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class provides a data structure to synthesize Gray Gates, optionally with target phases and phase
+            tolerance.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor receives a List out of floats or Expr ‘<strong>target_phases</strong>’ and a bool
+            ‘<strong>phase_tolerant</strong>’ which is by default false. These parameters are instantiated as the class
+            attributes.</p>
+        <p>Class methods:</p>
+        <p>The class contains two methods: ‘<strong>control</strong>’ and ‘<strong>inverse</strong>’.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The class inherits from ‘<strong>Operation</strong>’.</p>
+        <h3 id="jonestoffoli">JonesToffoli</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the source code:</p>
+        <p>“<strong>Implementation of the T-Depth 1 Toffoli found in</strong> <a
+                href="https://arxiv.org/pdf/1212.5069.pdf"><strong>https://arxiv.org/pdf/1212.5069.pdf</strong></a>”
+            [14]</p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The class constructor receives one parameter ‘<strong>ctrl_state</strong>’, which can either be an integer or
+            a
+            string. It is by default “11”. It constructs an “uncompiled_jones_toffoli” by appending a x gates to a
+            ‘<strong>‘QuantumCircuit’</strong>’ first and second qubit and then adding an “amy_toffoli”
+            ‘<strong>‘QuantumCircuit’</strong>’.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has two methods: ‘<strong>recompile</strong>’ and ‘<strong>inverse</strong>’.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The class has no unique attributes and inherits from ‘<strong>Operation</strong>’</p>
+        <h3 id="logicsynthgate">LogicSynthGate</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class ‘<strong>LogicSynthGate</strong>’ combines an ‘<strong>Operation</strong>’ and a truth table and
+            creates a
+            new ‘<strong>Operation</strong>’. It can be phase tolerant too.</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives 3 parameters, an ‘<strong>Operation</strong>’ as ‘<strong>init_op</strong>’, a
+            ‘<strong>TruthTable</strong>’ as ‘<strong>tt</strong>’ and a bool as ‘<strong>phase_tolerant</strong>’, of
+            which the
+            last two get instantiated as class attributes. ‘<strong>phase_tolerant</strong>’ is
+            ‘<strong>logic_synth_method</strong>’.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class provides an ‘<strong>inverse</strong>’ method.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>The class inherits from ‘<strong>Operation</strong>’ and has an composition to an object of
+            ‘<strong>TruthTable</strong>’. This is because a ‘<strong>TruthTable</strong>’ for the
+            ‘<strong>LogicSynthGate</strong>’ could not exist without a ‘<strong>LogicSynthGate</strong>’.</p>
+        <h3 id="parityoperation">ParityOperation</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The class is described in the Qrisp source code [34]</p>
+        <p>“Operation class representing a Stim parity instructions (DETECTOR or OBSERVABLE_INCLUDE). This operation is
+            used to
+            interface with Stim&#39;s DETECTOR and OBSERVABLE instructions during the conversion process. It acts as a
+            placeholder in the Qrisp QuantumCircuit. The operation takes n input clbits (the measurements to compute
+            parity of).
+            Parity results are tracked via ParityHandle objects returned by jaspr.to_qc().&quot;</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor receives 3 parameters:</p>
+        <ul>
+            <li>‘<strong>num_inputs: int</strong>’ – This parameter creates a definition
+                ‘<strong>QuantumCircuit</strong>’ that
+                is later used in the parents constructor</li>
+            <li>‘<strong>expectation: int = 0</strong>’ – this parameter is by default 0 and gets instantiated. It is
+                not used
+                within the class</li>
+            <li>‘<strong>observable: bool = false</strong>’ – this parameter is by default false and gets instantiated.
+                It is
+                not used within the class</li>
+        </ul>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>This class implements no methods. It inherits from the ‘<strong>Operation</strong>’ class</p>
+        <h3 id="truthtable">TruthTable</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>As described in the source code:</p>
+        <p>“<strong>Class to describe truth tables. Can be intialized with a list of bitstrings, or a numpy array with 1
+                and 0s
+                or a sympy expression.</strong>” [14]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The constructor receives a ‘<strong>init_object’</strong>, that can be either a sympy expression, a list of
+            strings
+            or a numpy array. The attributes are dynamically set, depending on the if-junctions. The attributes are the
+            following: ‘<strong>expr’</strong>, which is an sympy expression, ‘<strong>str_l</strong>’ which is a list
+            of
+            strings, ‘<strong>n_rep</strong>’ which is a numpy array, ‘<strong>shape</strong>’ which is a
+            ‘<strong>_ShapeT_cp</strong>’ (numpy datatype) and ‘<strong>bit_amount</strong>’ which is an integer.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has many methods: logical methods like ‘<strong>cofactors</strong>’, ‘<strong>swap_col</strong>’,
+            ‘<strong>calc_complexity</strong>’ but also synthesize methods such as ‘<strong>q_synth</strong>’ or
+            ‘<strong>gate_synth</strong>’. The class also contains two <em>dunder methods</em>:
+            ‘<strong>__repr__</strong>’,
+            which changes the way a ‘<strong>TruthTable</strong>’ object is printed or represented as a string. The
+            second
+            dunder method ‘<strong>or</strong>’ alters the logic of the logical OR operation between two
+            ‘<strong>TruthTable</strong>’ objects.</p>
+        <h4 id="details-and-design-decision-">Details and design decision:</h4>
+        <p>While this class is not an Operation it is closely related to the ‘<strong>LogicSynthGate</strong>’ and thus
+            has been
+            picked up into the ‘<strong>Operations</strong>’ diagram. The class is an composition object for the class
+            ‘<strong>LogicSynthGate</strong>’.</p>
+        <p>This concludes the ‘<strong>Operations</strong>’ UML class diagram.</p>
+    </div>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="QEnv_QPrim.html">Quantum Environments and QuantumPrimitives</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a href="Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+        <h2 id="quantummanagement">QuantumManagement</h2>
+        <p><img width="1722" height="3454" alt="QuantumManagement"
+                src="https://github.com/user-attachments/assets/3054a16d-05db-44b7-bfd2-acea62d86109" /></p>
+        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
+        <p>The <strong>‘QuantumMangagement’</strong> diagram is a very important diagram within the Qrisp framework. It
+            contains
+            central classed such as the <strong>‘QuantumCircuit’</strong> or ‘<strong>QuantumSession</strong>’ class,
+            that
+            provide some of the most basic functionalities of circuit and session management of Qrisp [22].
+            <strong>‘QuantumCircuit’</strong> work with Lists of qubits and classical bits and provide the basic
+            structure for
+            measurement of a circuit. ‘<strong>QuantumCircuit</strong>’ objects need to run within a
+            <strong>‘QuantumSession’</strong>. Additionally ‘<strong>Instruction</strong>’ as well as
+            ‘<strong>GroupedInstruction</strong>’ are also displayed in the diagram with the addition of
+            ‘<strong>QuantumState</strong>’ and ‘<strong>BufferedQuantumState</strong>’.
+        </p>
+        <h3 id="quantumcircuit">QuantumCircuit</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The <strong>‘QuantumCircuit’</strong> class in Qrisp is used to describe and construct quantum
+            circuits.<br>Its
+            design and naming closely follow Qiskit’s <strong>‘QuantumCircuit’</strong>, enabling strong
+            interoperability. [23]
+        </p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class instantiates 2 parameters. The parameters ‘<strong>num_qubits’</strong> and
+            ‘<strong>num_clbits</strong>’
+            are integers, which determine the amount of qubits or classical bits assigned to a
+            <strong>‘QuantumCircuit’</strong>
+            object. The attributes of the class are:
+        </p>
+        <p>‘<strong>qubit_index_counter: ndarray’</strong><br>An array used to keep track of the indices assigned to
+            qubits
+            within the circuit. It ensures that each qubit receives a unique and consistent index.</p>
+        <p>‘<strong>clbit_index_counter: ndarray’</strong><br>Similar to the qubit counter, this array tracks the
+            indices of
+            classical bits in the circuit, ensuring correct mapping and ordering.</p>
+        <p>‘<strong>xla_mode: int’</strong><br>An integer flag determining whether the circuit is operating in
+            XLA-compatible
+            mode. This can influence how operations are constructed or validated.</p>
+        <p>‘<strong>abstract_params: Set[sympy.Symbol]’</strong><br>A set containing all symbolic parameters used within
+            the
+            circuit. These parameters typically come from SymPy and allow for parameterized gates or symbolic analysis.
+        </p>
+        <p>‘<strong>qubits: List[Qubit]’</strong><br>A list of all quantum bits that belong to the circuit. Each element
+            is a
+            Qubit object representing a physical or logical qubit.</p>
+        <p>‘<strong>clbits: List[Clbit]’</strong><br>A list of classical bits associated with the circuit. These are
+            used for
+            measurement outcomes or classical control flow.</p>
+        <p>‘<strong>data: List[Instruction]’</strong><br>A sequential list of all instructions applied to the circuit.
+            Each
+            instruction includes an operation (e.g., a gate or measurement) and its target qubits and/or clbits.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>In the qrisp documentation for ‘<strong>QuantumCircuit</strong>’ methods are divided into:</p>
+        <ul>
+            <li>Constructing ‘QuantumCircuit’s</li>
+            <li>Evaluating ‘QuantumCircuit’s</li>
+            <li>Interfacing</li>
+            <li>Operation application methods</li>
+        </ul>
+        <h5 id="constructing-quantumcircuit-s-">Constructing ‘QuantumCircuit’s:</h5>
+        <ul>
+            <li>‘<strong>append</strong>’ — append an arbitrary Operation or Instruction to the circuit</li>
+            <li>‘<strong>to_op’</strong> — convert the entire circuit into an Operation object.</li>
+            <li>‘<strong>to_gate</strong>’ — convert the circuit into a “gate” (i.e. an operation) — like to_op, but
+                with the
+                restriction that the circuit must not contain classical bits (mirroring Qiskit’s semantics).</li>
+            <li>‘<strong>add_qubit</strong>’ — add a new quantum bit (Qubit) to the circuit.</li>
+            <li>‘<strong>add_clbit</strong>’ — add a new classical bit (Clbit) to the circuit.</li>
+            <li>‘<strong>copy</strong>’ — generate a deep copy of the circuit (i.e. duplicate the circuit, including its
+                qubits,
+                classical bits and instructions).</li>
+            <li>‘<strong>clearcopy</strong>’ — create a copy of the circuit’s qubits and classical bits, but with
+                <strong>no
+                    instructions</strong> — i.e. an “empty” circuit with the same registers.
+            </li>
+            <li>‘i<strong>nverse</strong>’ — returns the inverse (dagger) of the quantum circuit (i.e. the reversed
+                circuit with
+                inverted operations).</li>
+            <li>‘<strong>extend</strong>’ — extend (concatenate) this circuit with another ‘QuantumCircuit’, optionally
+                applying
+                a translation dictionary (e.g. mapping bits) to integrate them.</li>
+            <li>‘<strong>bind_parameters</strong>’— for circuits with symbolic (abstract) parameters: return a new
+                circuit where
+                specified symbolic parameters (e.g. Sympy symbols) are bound to concrete values.</li>
+            <li>‘<strong>transpile</strong>’ — transpiles the ‘QuantumCircuit’ in the sense that there are no longer any
+                synthesized gate objects.</li>
+        </ul>
+        <h5 id="evaluating-quantumcircuit-s-">Evaluating ‘QuantumCircuit’s:</h5>
+        <ul>
+            <li><strong>&#39;run&#39;</strong> — runs the circuit on a backend and returns measurement results.</li>
+            <li><strong>&#39;statevector_array&#39;</strong> — simulates the circuit and returns the statevector as a
+                NumPy
+                array.</li>
+            <li><strong>&#39;get_unitary&#39;</strong> — computes the unitary matrix of the circuit.</li>
+            <li><strong>&#39;compare_unitary&#39;</strong> — compares this circuit’s unitary to another circuit’s
+                unitary.</li>
+            <li><strong>&#39;depth&#39;</strong> — returns the circuit depth.</li>
+            <li><strong>&#39;t_depth&#39;</strong> — returns the T-depth of the circuit.</li>
+            <li><strong>&#39;cnot_depth&#39;</strong> — returns the CNOT-depth of the circuit.</li>
+            <li><strong>&#39;num_qubits&#39;</strong> — returns the number of qubits in the circuit.</li>
+            <li><strong>&#39;count_ops&#39;</strong> — returns a count of all gate types in the circuit.</li>
+            <li><strong>&#39;to_latex&#39;</strong> — produces a LaTeX representation of the circuit.</li>
+            <li><strong>&#39;qasm&#39;</strong> — exports the circuit in QASM format.</li>
+        </ul>
+        <h5 id="interfacing-">Interfacing:</h5>
+        <ul>
+            <li><strong>&#39;from_qiskit&#39;</strong> — creates a ‘QuantumCircuit’ from an existing Qiskit circuit.
+            </li>
+            <li><strong>&#39;from_qasm_str&#39;</strong> — constructs a ‘QuantumCircuit’ from a QASM string.</li>
+            <li><strong>&#39;from_qasm_file&#39;</strong> — loads a ‘QuantumCircuit’ from a QASM file.</li>
+            <li><strong>&#39;to_qiskit&#39;</strong> — converts the circuit into a Qiskit ‘QuantumCircuit’.</li>
+            <li><strong>‘to_pennylane’</strong> — method to convert the given ‘QuantumCircuit’ to a Pennylane Circuit.
+            </li>
+            <li><strong>‘to_pytket’</strong> — method to convert the given QuantumCircuit to a PyTket Circuit.</li>
+        </ul>
+        <h5 id="operation-application-methods-">Operation application methods:</h5>
+        <ul>
+            <li><strong>&#39;measure&#39;</strong> — adds a measurement operation to one or more qubits, optionally
+                storing
+                results in classical bits.</li>
+            <li><strong>&#39;x&#39;</strong> — applies a Pauli-X (NOT) gate to the target qubit(s).</li>
+            <li><strong>&#39;y&#39;</strong> — applies a Pauli-Y gate to the target qubit(s).</li>
+            <li><strong>&#39;z&#39;</strong> — applies a Pauli-Z gate to the target qubit(s).</li>
+            <li><strong>&#39;h&#39;</strong> — applies a Hadamard gate, creating equal superpositions.</li>
+            <li><strong>&#39;cx&#39;</strong> — applies a controlled-X (CNOT) gate with one control and one target.</li>
+            <li><strong>&#39;cy&#39;</strong> — applies a controlled-Y gate.</li>
+            <li><strong>&#39;cz&#39;</strong> — applies a controlled-Z gate.</li>
+            <li><strong>&#39;mcx&#39;</strong> — applies a multi-controlled X gate with arbitrarily many control qubits.
+            </li>
+            <li><strong>&#39;ccx&#39;</strong> — applies a Toffoli gate (double-controlled X).</li>
+            <li><strong>&#39;rx&#39;</strong> — applies a rotation around the X axis.</li>
+            <li><strong>&#39;ry&#39;</strong> — applies a rotation around the Y axis.</li>
+            <li><strong>&#39;rz&#39;</strong> — applies a rotation around the Z axis.</li>
+            <li><strong>&#39;p&#39;</strong> — applies a phase gate.</li>
+            <li><strong>&#39;cp&#39;</strong> — applies a controlled-phase gate.</li>
+            <li><strong>&#39;u3&#39;</strong> — applies a general single-qubit U3 rotation (general Euler-rotation
+                gate).</li>
+            <li><strong>&#39;swap&#39;</strong> — swaps the states of two qubits.</li>
+            <li><strong>&#39;t&#39;</strong> — applies a T-gate (pi/8 phase).</li>
+            <li><strong>&#39;t_dg&#39;</strong> — applies the inverse of the T-gate.</li>
+            <li><strong>&#39;s&#39;</strong> — applies an S-gate (sqrt(Z) phase).</li>
+            <li><strong>&#39;s_dg&#39;</strong> — applies the inverse of the S-gate.</li>
+            <li><strong>&#39;sx&#39;</strong> — applies the square-root of X gate.</li>
+            <li><strong>&#39;sx_dg&#39;</strong> — applies the inverse of the SX gate.</li>
+            <li><strong>&#39;rxx&#39;</strong> — applies a two-qubit XX-rotation.</li>
+            <li><strong>&#39;rzz&#39;</strong> — applies a two-qubit ZZ-rotation.</li>
+            <li><strong>&#39;xxyy&#39;</strong> — applies a parameterized XXYY-rotation on two or more qubits.</li>
+            <li><strong>&#39;reset&#39;</strong> — resets qubits to the computational |0⟩ state.</li>
+            <li><strong>&#39;unitary&#39;</strong> — applies an arbitrary custom unitary matrix to specific qubits.</li>
+            <li><strong>&#39;gphase&#39;</strong> — applies a global phase to the entire state.</li>
+            <li><strong>&#39;id&#39;</strong> — applies an identity operation (no-op), useful for alignment or
+                placeholders.
+            </li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class contains many methods, some of them are static, which is underlined in the diagram. There is also a
+            dunder
+            method ‘<strong>__str__</strong>’, which changes the representation of the object.
+            ‘<strong>QuantumCircuit</strong>’
+            has three compositions to ‘<strong>Qubit</strong>’, ‘<strong>Clbit</strong>’ and
+            ‘<strong>Instruction</strong>’
+            because they don’t cease to have functionality without a circuit. They only find purpose within a context,
+            such as a
+            ‘<strong>QuantumCircuit</strong>’ object. Additionally it is the parent class of
+            ‘<strong>‘QuantumSession’</strong>’.</p>
+        <h3 id="quantumsession">QuantumSession</h3>
+        <h4 id="class-details-">Class details:</h4>
+        <p><strong>“The ‘QuantumSession’ class manages the life cycle of ‘QuantumVariable’s and enables features such as
+                QuantumEnvironments or Uncomputation.</strong>” [24]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor is receiving an optional single attribute called ‘backend’, which is a
+            ‘<strong>BackendClient’</strong>, instantiated as ‘backend’. The class attributes are:</p>
+        <p>‘<strong>qv_list: List[‘QuantumVariable’]’</strong><br>A list of all quantum variables created within this
+            session.
+            Used to track and manage all active qubits/quantum data objects.</p>
+        <p>‘<strong>env_stack: List[QuantumEnvironment]</strong>’<br>A LIFO stack of currently active quantum
+            environments. Used
+            to manage nested blocks or context-dependent operations.</p>
+        <p>‘<strong>uncomp_stack: List[‘QuantumVariable’]</strong>’<br>A stack of quantum variables that still need to
+            be
+            uncomputed, i.e., whose computation should be reversed. Relevant for reversible programming.</p>
+        <p>‘<strong>qs_tracker: List[weakref.ReferenceType]</strong>’<br>Weak references to additional ‘QuantumSession’s
+            or
+            linked objects, preventing cyclic references. Supports memory management.</p>
+        <p>‘<strong>will_be_uncomputed: bool’</strong><br>Indicates whether the session is currently in a region where
+            automatic
+            uncomputation is applied. Controls reversible-flow optimizations.</p>
+        <p>‘<strong>shadow_sessions: List[‘QuantumSession’]’</strong><br>A list of sessions running as “shadow copies,”
+            used for
+            parallel tracking, caching, or theoretical simulation.</p>
+        <p>‘<strong>deleted_qv_list: List[‘QuantumVariable’]</strong>’<br>A list of quantum variables that have been
+            deleted or
+            released. Used for debugging, logging, or memory tracking.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>‘<strong>register_qv</strong>’ – Registers a ‘QuantumVariable’ in the session with a given size.</p>
+        <p>‘<strong>get_qv</strong>’ – Retrieves a ‘QuantumVariable’ by its string key.</p>
+        <p>‘__<strong>str__</strong>’ – a dunder method, changing the string representation of the ‘QuantumSession’.</p>
+        <p>‘<strong>get_depth_dic</strong>’ – Returns a dictionary describing circuit depth information.</p>
+        <p>‘<strong>add_qubit</strong>’ – Adds a new qubit to the session (or registers an existing one).</p>
+        <p>‘__<strong>call__</strong>’ – a dunder method, that returns the current ‘QuantumSession’ when invoked.</p>
+        <p>‘<strong>add_clbit</strong>’ – Adds a classical bit to the session (or registers an existing one).</p>
+        <p>‘<strong>request_qubits’</strong> – Requests and allocates a specific number of qubits, optionally naming
+            them.</p>
+        <p>‘<strong>clear_qubits</strong>’ – Clears or frees the given qubits, optionally verifying safety.</p>
+        <p>‘<strong>delete_qv</strong>’ – Deletes a ‘QuantumVariable’ from the session, with optional verification.</p>
+        <p>‘<strong>cnot_count</strong>’ – Returns the number of CNOT gates present in the current circuit.</p>
+        <p>‘<strong>get_local_qvs</strong>’ – Returns a list of ‘QubitVariable’ objects local to the current
+            environment.</p>
+        <p>‘<strong>logic_synth</strong>’ – Performs logic synthesis based on a truth table onto given input/output
+            qubits.</p>
+        <p>‘__<strong>eq__</strong>’ – a dunder method, that compares this ‘QuantumSession’ to another one for equality.
+        </p>
+        <p>‘<strong>append</strong>’ – Appends an instruction or operation to the circuit with associated qubits,
+            clbits, and
+            parameters.</p>
+        <p>‘__<strong>getitem__</strong>’ – a dunder method, that retrieves a ‘QuantumVariable’ via dictionary-like
+            indexing.
+        </p>
+        <p>‘<strong>clear_data</strong>’ – Clears all quantum/classical data tracked by the session.</p>
+        <p>‘<strong>statevector</strong>’ – Computes and returns the session’s statevector, optionally plotting it.</p>
+        <p>‘<strong>compile</strong>’ – Compiles the session into a QuantumCircuit with various optimization options.
+        </p>
+        <p>‘__<strong>del__</strong>’ – a dunder method, that is called on deletion of the ‘QuantumSession’ (cleanup).
+        </p>
+        <p>‘__<strong>hash__</strong>’ – a dunder method, that returns a hash value for the session (for use in
+            sets/maps).</p>
+        <p>‘__<strong>setattr__</strong>’ – a dunder method, that intercepts attribute setting to manage
+            session-specific
+            behavior.</p>
+        <p>‘<strong>get_active_quantum_session</strong>’ – a static method, that returns weak references to currently
+            active
+            ‘QuantumSession’s.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>‘<strong>QuantumSession</strong>’ has 3 aggregations and 2 compositions.
+            ‘<strong>weakref.ReferenceType</strong>’ is
+            an aggregation because the referenced objects aren’t objects of the ‘<strong>QuantumSession</strong>’
+            itself.
+            ‘<strong>BackendClient</strong>’ is too is an aggregation, because a ‘<strong>BackendClient</strong>’ can
+            have
+            multiple ‘<strong>QuantumSession</strong>’ objects. ‘<strong>QuantumVariable</strong>’ is a composition,
+            because the
+            lists could not exist outside of the ‘<strong>QuantumSession</strong>’.
+            ‘<strong>QuantumEnvironment</strong>’ is
+            also a composition, because while can still exist without a ‘<strong>QuantumSession</strong>’, it would not
+            make
+            sense. The ‘<strong>shadow_sessions’</strong> can exist without the main session, thus it is an aggregation.
+        </p>
+        <p>The class inherits from QuantumCircuit.</p>
+        <h3 id="instruction">Instruction</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>“<strong>This class combines Operation objects with their operands (ie. qubits and classical bits). The data
+                attribut
+                of the QuantumCircuit class consists of a list of Instructions.</strong>“ [25]</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor is receiving a ‘<strong>Operation</strong>’ object as ‘<strong>ob</strong>’, and
+            optionally a
+            list of ‘<strong>Qubit</strong>’ objects and a list of ‘<strong>Clbit</strong>’ objects. These get
+            instantiated as
+            class attributes.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class contains 5 methods:</p>
+        <p>‘<strong>merge</strong>’ – delivers an ‘<strong>Instruction</strong>’ combining this
+            ‘<strong>Instruction</strong>’
+            with another ‘<strong>Instruction</strong>’.</p>
+        <p>‘<strong>copy</strong>’ – delivers the copied ‘<strong>Instruction</strong>’.</p>
+        <p>‘<strong>inverse</strong>’ – delivers the inversed ‘<strong>Instruction</strong>’.</p>
+        <p>‘<strong>_<em>str</em>_’</strong> – a dunder method changing the representation of the string representation
+            of
+            ‘<strong>Instruction</strong>’</p>
+        <p>‘<strong>__repr</strong>__’ – a dunder method that delivers an unambiguous, developer-oriented representation
+            of an
+            ‘<strong>Instruction</strong>’ object.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class has a aggregation to ‘<strong>Operation</strong>’, because the ‘<strong>op</strong>’ can exist
+            outside of
+            the ‘<strong>Instruction</strong>’ object. The ‘<strong>qubits</strong>’ and ‘<strong>clbits</strong>’
+            attributes
+            have a composition, because the classes do not provide functionality without a context, here
+            ‘<strong>Instruction</strong>’. The class does not inherit.</p>
+        <h3 id="groupedinstruction">GroupedInstruction</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>From the qrisp source code [14]:</p>
+        <p>“<strong>This class is supposed to describe a group of instructions. The idea behind the grouping is that
+                grouping
+                instructions together allows to precalculate their unitary. This saves alot of time because applying a
+                medium
+                size unitary on a large statevector is more efficient than applying many small unitaries.</strong>”</p>
+        <h4 id="class-constructor-">Class constructor:</h4>
+        <p>The class constructor receives a ‘<strong>QuantumCircuit</strong>’ as ‘<strong>int_qc</strong>’, a list of
+            integers
+            as ‘<strong>indices</strong>’ and an optional list of qubits as ‘<strong>qubits</strong>’.</p>
+        <h4 id="class-attributes-">Class attributes:</h4>
+        <p>The class attributes are:</p>
+        <ul>
+            <li>‘<strong>gate_signature_list: List[Object]</strong>’ – this attribute isn’t used in the class</li>
+            <li>‘<strong>qubits: List[Qubit]’</strong> – these qubits are the unique qubits of the
+                ‘<strong>int_qc</strong>’
+                instruction</li>
+            <li><strong>‘instr_list: List[Instruction]’</strong> - these instructions are the source data of
+                ‘<strong>int_qc’</strong></li>
+            <li><strong>‘indices: List[Integer]’</strong> – these indices are the received ‘<strong>indices</strong>’
+            </li>
+            <li><strong>‘gain: int</strong>’ – this gain means how beneficial it is to group the instructions.</li>
+            <li>‘<strong>instruction: Instruction’</strong> – this instruction wraps all grouped gates into a single
+                composite
+                operation that replaces the original sequence of instructions in the circuit.</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class contains one method:</p>
+        <p>‘<strong>get_instruction</strong>’ – delivers all grouped gates into a single composite operation as a
+            ‘<strong>Instruction</strong>’.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class has a aggregation to ‘<strong>Instruction</strong>, because the ‘<strong>intr_list</strong>’
+            objects can
+            exist outside of the ‘<strong>GroupedInstruction</strong>’ object. The ‘<strong>qubits</strong>’ attributes
+            has a
+            composition, because the class does not provide functionality without a context. The class does not inherit.
+        </p>
+        <h3 id="quantumstate">QuantumState</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>From the Qrisp documentation [14]:</p>
+        <p>“<strong>This class describes a quantum state. This is achieved by another class, the TensorFactor. Each
+                qubit
+                initially has its own tensor factor. When an entangling operation is executed, the TensorFactors can be
+                entangled. We then have the situation that two qubits are described by the same TensorFactor</strong>.”
+        </p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives an integer ‘<strong>n</strong>’, which is instantiated. A second class
+            attribute is
+            ‘<strong>tensor_factors</strong>’, a list of ‘<strong>TensorFactor’</strong> objects.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class contains <strong>7 methods</strong>:</p>
+        <p>‘<strong>apply_operation</strong>’ – applies an ‘Operation’ to one or multiple ‘Qubit’ objects within this
+            quantum
+            state.<br>‘<strong>eval</strong>’ – returns a ‘TensorFactor’ representing the evaluated quantum
+            state.<br>‘<strong>copy</strong>’ – delivers a copied version of the current
+            ‘QuantumState’.<br>‘<strong>measure</strong>’ – measures a specific qubit index ‘i’ and returns the
+            measurement
+            result and the resulting ‘QuantumState’.<br>‘<strong>multi_measure</strong>’ – performs multiple
+            measurements on
+            selected qubits and returns measurement outcomes and the corresponding post-measurement
+            states.<br>‘<strong>add_qubit</strong>’ – adds a new qubit to the current quantum
+            state.<br>‘<strong>disentangle</strong>’ – removes entanglement involving the qubit at index
+            ‘<strong>qb</strong>’;
+            optionally reports warnings.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class has an aggregation to ‘<strong>TensorFactor</strong>’ , because operations applied to the state can
+            exist
+            independently of the ‘<strong>QuantumState</strong>’ object itself.</p>
+        <h3 id="bufferedquantumstate">BufferedQuantumState</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <h4
+            id="-bufferedquantumstate-acts-as-a-buffered-wrapper-around-a-quantum-state-simulator-batching-operations-managing-qubits-and-synchronizing-measurements-and-gate-application-across-either-a-qrisp-or-stim-backend-">
+            ‘<strong>BufferedQuantumState</strong>’ acts as a buffered wrapper around a quantum-state simulator,
+            batching
+            operations, managing qubits, and synchronizing measurements and gate application across either a Qrisp or
+            Stim
+            backend.</h4>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives an optional ‘<strong>simulator</strong>’ String, which is by default “qrisp”.
+        </p>
+        <p>The class attributes are:</p>
+        <ul>
+            <li>‘<strong>buffer_qc: QuantumCircuit’</strong> – this is the buffered quantum circuit that temporarily
+                stores
+                operations before they are applied to the simulator.</li>
+            <li>‘<strong>quantum_state: QuantumState | stim.TableauSimulator</strong>’ – this is the underlying
+                quantum-state
+                simulator backend used to evolve the quantum state.</li>
+            <li>‘<strong>deallocated_qubits: List[Qubit]</strong>’ – this list tracks qubits that have been deallocated
+                and
+                should be removed during buffer application.</li>
+            <li>‘simulator: String’ – this string specifies which simulation backend (‘qrisp’ or ‘stim’) is being used.
+            </li>
+            <li>‘<strong>qubit_to_index_dict: Map[Qubit, Integer]’</strong> – this dictionary maps circuit-level qubit
+                objects
+                to their corresponding simulator-state indices.</li>
+            <li>‘<strong>qubit_counter: int</strong>’ – this counter assigns sequential indices to newly allocated
+                qubits.</li>
+            <li>‘<strong>gate_counts: Map[String, Integer]</strong>’ – this dictionary tracks how many times each gate
+                type has
+                been executed or measured.</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <h4 id="the-class-contains-8-methods-">The class contains 8 methods:</h4>
+        <h4 id="-"> </h4>
+        <p>‘<strong>BufferedQuantumState</strong>’ – initializes the buffered quantum-state wrapper using either the
+            ‘<strong>qrisp</strong>’ or ‘stim’ simulator backend.<br>‘<strong>add_qubit</strong>’ – allocates a new
+            qubit,
+            registers it in the index map, and adds it to both the buffer and the underlying
+            simulator.<br>‘<strong>append</strong>’ – appends an ‘Operation’ or ‘Instruction’ to the buffer for later
+            application to the quantum state.<br>‘<strong>apply_buffer</strong>’ – applies all buffered operations to
+            the
+            quantum-state simulator and clears the buffer afterward.<br>‘<strong>measure</strong>’ – measures a given
+            qubit and
+            returns the measurement result together with the updated ‘QuantumState’.<br>‘<strong>reset</strong>’ –
+            resets a
+            qubit to the |0⟩ state by measuring and conditionally applying an X gate.<br>‘<strong>copy</strong>’ –
+            delivers a
+            copied version of the current ‘BufferedQuantumState’, including mappings and internal
+            state.<br>‘<strong>multi_measure</strong>’ – performs multiple measurements on selected qubits and returns
+            either
+            sampled results or full probability distributions.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class has an aggregation to ‘<strong>QuantumState</strong>’ , because ‘<strong>QuantumState</strong>’
+            objects can
+            exist outside the ‘<strong>BufferedQuantumState</strong>’ object itself. The
+            ‘<strong>QuantumCircuit</strong>’
+            relationship is an aggregation, because the ‘<strong>QuantumCircuit</strong>’ object can exist by itself,
+            independent of a ‘<strong>BufferedQuantumState</strong>’ object. The connection to ‘<strong>Qubit</strong>’
+            is a
+            composition, because they don’t provide functionality without a context. This class does not inherit.</p>
+        <p>This concludes the ‘<strong>QuantumManagement</strong>’ diagram.</p>
+    </div>

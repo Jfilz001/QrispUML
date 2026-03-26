@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a class="active" href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="QEnv_QPrim.html">Quantum Environments and QuantumPrimitives</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a href="Other.html">Other</a>
+
+    </div>
+
+    <div class="content">
+        <h2 id="tensor">Tensor</h2>
+        <p><img width="1281" height="1764" alt="Tensor"
+                src="https://github.com/user-attachments/assets/2b27cab8-edce-4cd4-ad91-bf94ee5cb49a" /></p>
+        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
+        <p>The ‘<strong>Tensor</strong>’ diagram contains different array and tensor classes describing different
+            mathematical
+            structures, close to numpy arrays. Three major class emerge from this diagram:
+            ‘<strong>DummyBiArray</strong>’,
+            ‘<strong>DenseBiArray</strong>’ and ‘<strong>SparseBiArray</strong>’. The class
+            ‘<strong>TensorFactor</strong>’
+            instantiates either one of these classes.</p>
+        <h3 id="biarray">BiArray</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>BiArray</strong>’ class is a central class in the ‘<strong>Tensor</strong>’ diagram. It provides
+            the
+            blueprint for the different types of arrays. The class does only provide very little functionality and is
+            almost
+            negligible</p>
+        <h4 id="class-attributes-">Class attributes:</h4>
+        <p>The class has two attributes: an tuple of multiple integers ‘<strong>shape</strong>’ and an integer size.</p>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class has one method: ‘<strong>v_dot</strong>’, which returns either a ‘<strong>DummyBiArray</strong>’,
+            ‘<strong>SparseBiArray</strong>’, ‘<strong>DenseBiArray</strong>’. It is a tensor dot of two
+            ‘<strong>BiArray</strong>’ objects.</p>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class does not have a class constructor. Due to this the class was labelled as abstract, even though the
+            class
+            does not inherit from the ‘<strong>ABC</strong>’ class. This design decision was made because the subclasses
+            inherit
+            the ‘<strong>BiArray</strong>’ functionality and it does not provide any functionality on its own, as its
+            methods
+            are not static.</p>
+        <h3 id="dummybiarray">DummyBiArray</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>Out of the Qrisp sourcecode [14]:</p>
+        <p>“<strong>This class is used to estimate the complexity of a contraction order. The contract method does not
+                actually
+                execute a contraction but only logs the estimated amount of floating point operations.</strong>”</p>
+        <h4 id="class-constructor-and-attributes-">Class Constructor and Attributes:</h4>
+        <p>The class constructor has 3 parameters. An optional ndarray ‘<strong>data</strong>’, an optional integer
+            ‘<strong>shape</strong>’ and an integer ‘<strong>sparsity</strong>’, which is by default 1. The class
+            attributes
+            are:</p>
+        <ul>
+            <li>‘<strong>current_memory: ndarray</strong>’ – this 1 ndarray tracks active memory usage and only has 1
+                entry. It
+                is static.</li>
+            <li>‘<strong>max_memory: ndarray</strong>’ – this records the highest value of current_memory. It is static
+            </li>
+            <li>‘<strong>flops: ndarray</strong>‘ – this tracks the computational cost. It is static.</li>
+            <li>‘<strong>sparsity: int</strong>‘ – this is the only attribute to define the properties of a specific
+                ‘<strong>DummyBiArray</strong>’ object. It simulates the data density of the object (between 0 and 1)
+            </li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The class contains 5 methods:</p>
+        <ul>
+            <li><strong>‘reshape’</strong> – modifies the dimensions (shape) of the current array instance to match the
+                provided
+                target shape.</li>
+            <li><strong>‘swapaxes’</strong> – exchanges the positions of two specified axes within the array&#39;s shape
+                tuple,
+                effectively transposing those dimensions.</li>
+            <li><strong>‘contract’</strong> – simulates a tensor contraction with another array by calculating the
+                resulting
+                shape and sparsity, while simultaneously updating the global resource counters (FLOPs and memory usage).
+            </li>
+            <li><strong>‘copy’</strong> – creates and returns a new ‘<strong>DummyBiArray’</strong> instance that
+                duplicates the
+                current array&#39;s shape.</li>
+            <li><strong>‘reset_stat_counter’</strong> – resets the shared global performance statistics (current_memory,
+                max_memory, and flops) back to zero for all instances. The method is static</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The class inherits from ‘<strong>BiArray</strong>’. It has static attributes and methods, that are designed
+            underlined.</p>
+        <h3 id="densebiarray">DenseBiArray</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>From the Qrisp documentation [14]:</p>
+        <p>“<strong>This class serves mainly as an interface to numpy arrays using the same methods as the SparseBiArray
+                class
+                this way the algorithm using these classes doesn&#39;t need to care about wether it&#39;s treating a
+                sparse
+                array or a dense array.</strong></p>
+        <p><strong>Furthermore, some multithreading techniques from the SparseBiArray class are deployed.</strong>”</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class receives 3 parameters, of which 2 are optional. ‘<strong>array’</strong> is a ndarray,
+            ‘<strong>sparsity</strong>’ is an optional integer and ‘<strong>shape</strong>’ is an optional tuple of
+            integers.
+            The class attributes are:</p>
+        <h4 id="-data-ndarray-saves-the-array-that-has-been-called-in-the-constructor-">‘<strong>data: ndarray’</strong>
+            – saves
+            the array that has been called in the constructor.</h4>
+        <h4 id="-dtype-numpy-dtype-the-dtype-of-the-data-ndarray-">‘<strong>dtype: numpy.dtype’</strong> – the dtype of
+            the data
+            ndarray.</h4>
+        <h4
+            id="-sparsity-float-out-of-the-qrisp-code-14-if-not-given-estimate-sparsity-in-many-situations-the-sparsity-of-a-contraction-result-can-be-estimated-and-then-given-to-the-constructor-so-it-is-helpfull-to-track-it-">
+            ‘<strong>sparsity: float</strong>’ – out of the Qrisp code [14]: “<strong>If not given, estimate sparsity.
+                In many
+                situations the sparsity of a contraction result can be estimated (and then given to the constructor), so
+                it is
+                helpfull to track it.”</strong></h4>
+        <h4
+            id="-index_bit_permutation-list-lt-integer-gt-a-list-of-integer-indices-based-on-the-logarithm-base-2-of-the-objects-size-">
+            ‘<strong>index_bit_permutation: List&lt;Integer&gt;</strong>’ – a list of integer indices based on the
+            logarithm
+            (base 2) of the objects size.</h4>
+        <h4
+            id="-thread-thread-this-is-a-dynamically-set-attribute-that-means-that-the-objects-data-is-under-construction-">
+            ‘<strong>thread: Thread’</strong> – this is a dynamically set attribute that means that the objects data is
+            under
+            construction.</h4>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The methods of ‘<strong>DenseBiArray</strong>’ are as follows:</p>
+        <ul>
+            <li>‘<strong>copy</strong>’ – this method copies the ‘<strong>DenseBiArray</strong>’ object</li>
+            <li>‘<strong>catch_up</strong>’ – this method only works, when the object has a thread attribute. It joins
+                the
+                thread and depending on the time it took it will delete the thread attribute.</li>
+            <li>‘<strong>reshape</strong>’ – this method reshapes when the data is required for a contraction</li>
+            <li>‘<strong>swapaxes</strong>’ – this method swaps the two axes</li>
+            <li>‘<strong>move_index_to_front</strong>’ – “This method allows moving an index to the first position
+                without
+                changing the order of the remaining indices” [14]</li>
+            <li>‘<strong>apply_swaps</strong>’ – “<strong>This method applies the index permutation generated
+                    too</strong>” [14]
+            </li>
+            <li>‘<strong>ravel</strong>’ – this method applies the reshape and the apply_swaps method on the object and
+                returns
+                it</li>
+            <li>‘<strong>contract</strong>’ – “<strong>identify contraction axes, move to the front, transpose one
+                    matrix and
+                    then apply matrix multiplication</strong>” [14]</li>
+            <li>‘<strong>squared_norm</strong>’ – “<strong>Calculate the squared norm, ie. the sesquilinear scalar
+                    product of
+                    self with itself</strong>” [14]</li>
+            <li>‘<strong>vdot</strong>’ – returns the dot product of two ‘<strong>DenseBiArray</strong>’ in form a
+                ndarray</li>
+            <li>‘<strong>exclude_linear_independence</strong>’ – this method returns a “cheap” guess whether two inputs
+                are
+                linearly independent. [14]</li>
+            <li>‘<strong>to_array</strong>’ – this method simply return the ‘<strong>DenseBiArray</strong>’ as an
+                ndarray</li>
+            <li>‘<strong>to_sparse</strong>’ – this method converts the object into a ‘<strong>SparseBiArray</strong>’
+                and
+                returns it</li>
+            <li>‘<strong>__repr__</strong>’ – this dunder method changes the representation of the object</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>This class has many similarities with the ‘<strong>SparseBiArray</strong>’ class. It can be instantiated by
+            the
+            ‘<strong>TensorFactor</strong>’ class and inherits from ‘<strong>BiArray</strong>’. The object can have a
+            thread but
+            does not have a thread necessarily, thus it is marked with “<strong>[0..1]</strong>” to indicate the
+            possibility of
+            both.</p>
+        <h3 id="sparsebiarray">SparseBiArray</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>From the Qrisp documentation [14]:</p>
+        <p>“<strong>This SparseBiArray class provides a numpy-esque rank n tensor interface, which uses sparse matrix
+                multiplication for tensor contraction. The fact that only powers of two are allowed for the size, allow
+                efficient index manipulations, that permit faster construction and processing of said sparse matrices
+                compared
+                to for instance the rank n tensor interface of the &quot;sparse&quot; package.</strong>”</p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class receives 3 parameters, of which 2 are optional. ‘<strong>init_object</strong>’ is either a ndarray
+            an tuple
+            of the form (ndarray, ndarray) or a scipy.sparse.coo_matrx. ‘<strong>shape</strong>’ is an optional tuple of
+            integers. ‘<strong>contraction_counter</strong>’ is an optional integer, which is by default 0. The class
+            attributes
+            are:</p>
+        <ul>
+            <li>‘<strong>nz_indices: ndarray</strong>’ – this ndarray defines the non-zero indices</li>
+            <li>‘<strong>contraction_counter</strong>’ – “<strong>This attribute decides after how many contractions,
+                    there
+                    should be a check for duplicates and zero entries in the sparse matrix data</strong>” [14]</li>
+            <li>‘<strong>data: ndarray’</strong> – saves the array that has been called in the constructor.</li>
+            <li>‘<strong>_<em>dict</em>_’</strong> – this dictionary (map) saves the values of the ‘init_object’s
+                dictionary.
+                This attribute only exists, if the ‘init_object’ is a ‘<strong>SparseBiArray</strong>’</li>
+            <li>‘<strong>sparsity: float</strong>’ – out of the Qrisp code [14]: “<strong>If not given, estimate
+                    sparsity. In
+                    many situations the sparsity of a contraction result can be estimated (and then given to the
+                    constructor),
+                    so it is helpfull to track it.”</strong></li>
+            <li>‘<strong>index_bit_permutation: List&lt;Integer&gt;</strong>’ – a list of integer indices based on the
+                logarithm
+                (base 2) of the objects size.</li>
+            <li>‘<strong>dtype: numpy.dtype’</strong> – the dtype of the data ndarray.</li>
+            <li>‘<strong>thread: Thread’</strong> – this is a dynamically set attribute that means that the objects data
+                is
+                under construction.</li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The methods of ‘<strong>SparseBiArray</strong>’ are as follows:</p>
+        <ul>
+            <li>‘<strong>copy</strong>’ – this method copies the ‘<strong>SparseBiArray</strong>’ object</li>
+            <li>‘<strong>catch_up</strong>’ – this method only works, when the object has a thread attribute. It joins
+                the
+                thread and depending on the time it took it will delete the thread attribute.</li>
+            <li>‘<strong>reshape</strong>’ – this method reshapes when the data is required for a contraction</li>
+            <li>‘<strong>swapaxes</strong>’ – this method swaps the two axes</li>
+            <li>‘<strong>apply_swaps</strong>’ – “<strong>This method applies the index permutation generated
+                    [...]</strong>”
+                [14]</li>
+            <li>‘<strong>sum_duplicates</strong>’ – “<strong>This method sums duplicates ie. if an index appears twice
+                    in
+                    nz_indices the corresponding data entries are summed.</strong>” [14]</li>
+            <li>‘<strong>elim_zeros</strong>’ – “<strong>If after a contraction a new zero appeared, this entry does not
+                    need to
+                    tracked anymore. This method removes the zeros</strong>” [14]</li>
+            <li>‘<strong>build_sr_matrix</strong>’ - “<strong>Builds up the sparse matrix in coo format. The coo format
+                    saves an
+                    array of row/column indices and the corresponding entries. Shape is the shape the sparse matrix
+                    should
+                    have</strong>” [14]</li>
+            <li>‘<strong>move_index_to_front</strong>’ – “<strong>This method allows moving an index to the first
+                    position
+                    without changing the order of the remaining indices</strong>” [14]</li>
+            <li>‘<strong>contract</strong>’ – “<strong>identify contraction axes, move to the front, transpose one
+                    matrix and
+                    then apply matrix multiplication</strong>” [14]</li>
+            <li>‘<strong>to_array</strong>’ – this method simply returns the ‘<strong>SparseBiArray’</strong> as an
+                ndarray</li>
+            <li>‘<strong>ravel</strong>’ – this method applies the reshape and the apply_swaps method on the object and
+                returns
+                it</li>
+            <li>‘<strong>__repr__</strong>’ – this dunder method changes the representation of the object</li>
+            <li>‘<strong>split</strong>’ – “<strong>This function allows to split the array into it&#39;s lower and
+                    upper half
+                    […]”</strong> [14]</li>
+            <li>‘<strong>multi_measure</strong>’ - This method performs a multi-index measurement by computing all
+                non-zero
+                measurement outcomes, their probabilities, and optionally the corresponding post-measurement collapsed
+                sparse
+                states.</li>
+            <li>‘<strong>exclude_linear_independence</strong>’ – this method returns a “cheap” guess whether two inputs
+                are
+                linearly independent. [14]</li>
+            <li>‘<strong>squared_norm</strong>’ – “<strong>Calculate the squared norm, ie. the sesquilinear scalar
+                    product of
+                    self with itself</strong>” [14]</li>
+            <li>‘<strong>vdot</strong>’ – returns the dot product of two ‘<strong>SparseBiArray</strong>’ in form a
+                ndarray</li>
+            <li>‘<strong>to_dense</strong>’ – this method converts the object into a ‘<strong>DenseBiArray’</strong> and
+                returns
+                it.</li>
+            <li>‘<strong>to_sparse</strong>’ – this method returns the object.</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>This class has many similarities with the ‘<strong>DenseBiArray</strong> class. It can be instantiated by the
+            ‘<strong>TensorFactor</strong>’ class and inherits from ‘<strong>BiArray</strong>’. The object can have a
+            thread and
+            a ‘<strong>__dict__</strong>’ but not necessarily, thus they are marked with “<strong>[0..1]</strong>” to
+            indicate
+            the possibility of both.</p>
+        <h3 id="tensorfactor">TensorFactor</h3>
+        <h4 id="class-functionality-">Class functionality:</h4>
+        <p>The ‘<strong>TensorFactor</strong>’ class represents a factorized quantum state over a subset of qubits. The
+            class is
+            designed to minimize memory movement and copying, making it critical for efficient large-scale quantum
+            simulation.
+        </p>
+        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+        <p>The class constructor receives 2 parameters, of which 1 is optional. ‘<strong>qubits</strong>’ is described
+            in the
+            Qrisp source code as follows:<br><br />“<strong>This list contains a list of integers, which describe the
+                current
+                permutation of qubit indices inside this TensorFactor, i.e. swapping two elements of this list is the
+                same as
+                applying a swap gate. Using this structure is advantageous because applying matrices on specific qubit
+                indices
+                requires alot of swapping. Swapping the indices of an array is ressource costly because the array needs
+                to be
+                copied. As it turns out memory speed is a bottleneck.</strong>” [14]</p>
+        <p>The second parameter is ‘<strong>init_tensor_array</strong>’, which is an optional ‘<strong>BiArray</strong>’
+            instance. IT could be either a ‘<strong>DummyBiArray</strong>’, a ‘<strong>DenseBiArray</strong>’ or a
+            ‘<strong>SparseBiArray</strong>’. It provides the ‘<strong>tensor_array</strong>’ that is operated upon.</p>
+        <p>The class attributes are: </p>
+        <ul>
+            <li>‘<strong>qubits: List&lt;Qubit&gt;</strong>’ – this is has been described above</li>
+            <li>‘<strong>n: int’</strong> – this is the amount of qubits</li>
+            <li>‘<strong>tensor_array: BiArray</strong>’ – this is the ‘<strong>BiArray</strong>’ that is being operated
+                on.
+            </li>
+            <li>‘<strong>index_init: ndarray</strong>’ – represents an index into a sparse tensor, this is a static
+                attribute
+            </li>
+            <li>‘<strong>data_init: ndarray</strong>’ - represents the corresponding tensor index, this is a static
+                attribute
+            </li>
+        </ul>
+        <h4 id="class-methods-">Class methods:</h4>
+        <p>The methods of ‘<strong>TensorFactor</strong>’ are as follows:</p>
+        <ul>
+            <li>‘<strong>copy</strong>’ - this method copies the SparseBiArray object and returns a deep copy of the
+                TensorFactor</li>
+            <li>‘<strong>swap</strong>’ - this method swaps two qubit indices and updates the underlying tensor
+                accordingly</li>
+            <li>‘<strong>apply_matrix</strong>’ - this method applies a matrix to the specified qubits by reshaping and
+                contracting the tensor-</li>
+            <li>‘<strong>entangle</strong>’ - this method entangles the current TensorFactor with another disjoint
+                TensorFactor-
+            </li>
+            <li>‘<strong>measure</strong>’ - this method measures a single qubit and returns outcome probabilities and
+                resulting
+                tensor factors</li>
+            <li>‘<strong>unravel</strong>’ - this method reorders the qubits into ascending order using axis swaps</li>
+            <li>‘<strong>multi_measure</strong>’ - this method measures multiple qubits and returns probabilities,
+                tensor
+                factors, and outcome indices</li>
+            <li>‘<strong>disentangle</strong>’ - this method attempts to separate a qubit from the tensor factor and
+                returns
+                independent factors when possible</li>
+        </ul>
+        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
+        <p>The ‘<strong>TensorFactor</strong>’ class has two static attributes, which are underscored. The class
+            instantiates a
+            ‘<strong>tensor_array</strong>’, which can be either a ‘<strong>DummyBiArray</strong>’,
+            ‘<strong>DenseBiArray</strong>’ or a ‘<strong>SparseBiArray</strong>’. Therefore there are three
+            aggregations.</p>
+        <p>This concludes the ‘<strong>Tensor</strong>’ diagram.</p>
+    </div>
