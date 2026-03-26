@@ -108,33 +108,35 @@
                 array or a dense array.</strong></p>
         <p><strong>Furthermore, some multithreading techniques from the SparseBiArray class are deployed.</strong>”</p>
         <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
+
         <p>The class receives 3 parameters, of which 2 are optional. ‘<strong>array’</strong> is a ndarray,
             ‘<strong>sparsity</strong>’ is an optional integer and ‘<strong>shape</strong>’ is an optional tuple of
             integers.
             The class attributes are:</p>
-        <h4 id="-data-ndarray-saves-the-array-that-has-been-called-in-the-constructor-">‘<strong>data: ndarray’</strong>
-            – saves
-            the array that has been called in the constructor.</h4>
-        <h4 id="-dtype-numpy-dtype-the-dtype-of-the-data-ndarray-">‘<strong>dtype: numpy.dtype’</strong> – the dtype of
-            the data
-            ndarray.</h4>
-        <h4
-            id="-sparsity-float-out-of-the-qrisp-code-14-if-not-given-estimate-sparsity-in-many-situations-the-sparsity-of-a-contraction-result-can-be-estimated-and-then-given-to-the-constructor-so-it-is-helpfull-to-track-it-">
-            ‘<strong>sparsity: float</strong>’ – out of the Qrisp code [14]: “<strong>If not given, estimate sparsity.
-                In many
-                situations the sparsity of a contraction result can be estimated (and then given to the constructor), so
-                it is
-                helpfull to track it.”</strong></h4>
-        <h4
-            id="-index_bit_permutation-list-lt-integer-gt-a-list-of-integer-indices-based-on-the-logarithm-base-2-of-the-objects-size-">
-            ‘<strong>index_bit_permutation: List&lt;Integer&gt;</strong>’ – a list of integer indices based on the
-            logarithm
-            (base 2) of the objects size.</h4>
-        <h4
-            id="-thread-thread-this-is-a-dynamically-set-attribute-that-means-that-the-objects-data-is-under-construction-">
-            ‘<strong>thread: Thread’</strong> – this is a dynamically set attribute that means that the objects data is
-            under
-            construction.</h4>
+        <ul>
+            <li>'<strong>data: ndarray</strong>'
+                – saves
+                the array that has been called in the constructor.</li>
+            <li>‘<strong>dtype: numpy.dtype’</strong> – the dtype of
+                the data
+                ndarray.</li>
+            <li>‘<strong>sparsity: float</strong>’ – out of the Qrisp code [14]: “<strong>If not given, estimate
+                    sparsity.
+                    In many
+                    situations the sparsity of a contraction result can be estimated (and then given to the
+                    constructor), so
+                    it is
+                    helpfull to track it.”</strong></li>
+            <li>
+                ‘<strong>index_bit_permutation: List&lt;Integer&gt;</strong>’ – a list of integer indices based on the
+                logarithm
+                (base 2) of the objects size.</li>
+            <li>
+                ‘<strong>thread: Thread</strong>' – this is a dynamically set attribute that means that the objects data
+                is
+                under
+                construction.</li>
+        </ul>
         <h4 id="class-methods-">Class methods:</h4>
         <p>The methods of ‘<strong>DenseBiArray</strong>’ are as follows:</p>
         <ul>
