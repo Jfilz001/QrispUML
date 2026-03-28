@@ -1,20 +1,20 @@
-/* The side navigation menu */
 .sidebar {
   margin: 0;
   padding: 0;
-  width: 200px;
+  width: 250px;      
   background-color: #f1f1f1;
   position: fixed;
   height: 100%;
   overflow: auto;
 }
 
-/* Sidebar links */
 .sidebar a {
   display: block;
   color: black;
   padding: 16px;
   text-decoration: none;
+  word-break: break-word;  
+  white-space: normal;     
 }
 
 /* Active/current link */
@@ -31,13 +31,13 @@
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
-  margin-left: 200px;
+  margin-left: 250px;   /* muss mit sidebar width übereinstimmen */
   padding: 1px 16px;
   height: 1000px;
 }
-
 img {
   max-width: 60%;
+  width: 60%;
   height: auto;
   display: block;
   margin: 0 auto;

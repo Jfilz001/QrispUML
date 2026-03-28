@@ -15,14 +15,14 @@
         <a href="Operations.html">Operations</a>
         <a href="QuantumManagement.html">QuantumManagement</a>
         <a href="Tensors.html">Tensors </a>
-        <a href="QEnv_QPrim.html">Quantum Environments and QuantumPrimitives</a>
+        <a href="QEnv_QPrim.html">QEnv & QPrimitive</a>
         <a href="QuantumVariables.html">QuantumVariables</a>
-        <a href="Other.html">Other</a>
+        <a href="References.html">References</a>
 
     </div>
     <div class="content">
         <h2 id="quantumvariables">QuantumVariables</h2>
-        <p><img width="1281" height="774" alt="QuantumVariables" src="../class_diagrams/QuantumVariables.png" />
+        <p><img alt="QuantumVariables" src="../class_diagrams/QuantumVariables.png" />
         </p>
         <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
         <p>The ‘<strong>QuantumVariables</strong>’ diagram is named after the central class of the diagram. It unites
@@ -713,5 +713,103 @@
         <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
         <p>The class has self-explaining descriptions of the dunder methods with the &lt;&lt;&gt;&gt; notation. It is a
             composition of ‘<strong>QuantumArray</strong>’.</p>
+        <h3>
+            QuantumString
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the official Qrisp documentation [37]:
+        </p>
+        <p>
+            “<strong>The QuantumString is the quantum equivalent of a string. It is
+                implemented as a</strong><strong><a
+                    href="https://www.qrisp.eu/reference/Core/QuantumArray.html#quantumarray">QuantumArray</a></strong><strong>of</strong><a
+                href="https://www.qrisp.eu/reference/Quantum%20Types/QuantumChar.html#quantumchar"><strong>QuantumChars</strong></a><strong>.</strong>”
+        </p>
+        <h4>
+            Class constructor:
+        </h4>
+        <p>
+            The class constructor receives an integer ‘<strong>size</strong>’, a
+            optional ‘<strong>QuantumSession</strong>’ ‘<strong>qs</strong>’ and a bool
+            ‘<strong>nisq_char</strong>’, which is true by default. ‘<strong>nisq_char</strong>’
+            determines what the ‘<strong>qtype</strong>’ is the parent constructor gets
+            instantiated with. The other attributes also are used to instantiate the
+            parent constructor.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
 
+
+        <p>
+            The class methods are as follows:
+        </p>
+
+
+        <p>
+            - ‘<strong>decoder</strong>’ – this method turns a measurement
+            result into a human readable form
+        </p>
+
+
+        <p>
+            - ‘<strong>encode</strong>’ – this method encodes a String into
+            the ‘<strong>QuantumString</strong>’ object
+        </p>
+
+
+        <p>
+            - ‘<strong>get_measurement</strong>’ – this returns the
+            measurement result for the specified keyword arguments.
+        </p>
+
+
+        <p>
+            - ‘<strong>__setitem__</strong>’ – this method sets a specific
+            index of the ‘<strong>QuantumString</strong>’ with a value
+        </p>
+
+
+        <p>
+            - ‘<strong><u>quantize_string</u></strong>’ – this static
+            method uses the ‘<strong>__set_item__</strong>’ implementation to
+            convert a String into a new ‘<strong>QuantumString</strong>’ object
+        </p>
+
+
+        <p>
+            - ‘<strong>__add__</strong>’ – this dunder method concatenates
+            the ‘ <strong>QuantumString’</strong> object with an ‘<strong>other</strong>’
+            ‘<strong>QuantumString</strong>’. It alters the arithmetic ‘+’ operation
+            of the class
+        </p>
+
+
+        <p>
+            - ‘<strong>__iadd__</strong>’ – this method concatenates the ‘
+            <strong>QuantumString’</strong> with either a different ‘<strong>QuantumString</strong>’
+            or string.
+        </p>
+
+
+        <h4>
+            Details and design decisions:
+        </h4>
+
+
+        <p>
+            The class has no unique attributes. The method ‘<strong>quantize_string</strong>’
+            is a static method and thus designed underlined. The class features
+            multiple dunder methods, declared with the &lt;&lt;&gt;&gt; notation.
+            ‘<strong>QuantumString</strong>’ inherits from the parent class
+            ‘<strong>QuantumArray</strong>’.
+        </p>
+
+
+        <p>
+            This concludes the ‘<strong>QuantumVariables</strong>’ class diagram.
+        </p>
     </div>
