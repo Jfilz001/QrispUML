@@ -21,700 +21,1687 @@
 
     </div>
     <div class="content">
-        <h2 id="quantumvariables">QuantumVariables</h2>
+        <h2>
+            <a name="_Toc226031237">QuantumVariables</a>
+        </h2>
         <p><img alt="QuantumVariables" src="../class_diagrams/QuantumVariables.png" />
-        </p>
-        <h3 id="information-about-classes-and-methods">Information about classes and methods</h3>
-        <p>The ‘<strong>QuantumVariables</strong>’ diagram is named after the central class of the diagram. It unites
-            the different Quantum Variables with its descendants, outlining the class hierarchy. Different
-            implementations of ‘<strong>QuantumVariable</strong>’ can be found in this diagram.</p>
-        <h3 id="quantumvariable">QuantumVariable</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>As described in the Qrisp Documentation [32]:</p>
-        <p>“<strong>The QuantumVariable is the quantum equivalent of a regular variable in classical programming
-                languages. All <a
-                    href="https://www.qrisp.eu/reference/Quantum%20Types/index.html&quot;%20\l%20&quot;quantumtypes">quantum
-                    types</a> inherit from this class. The QuantumVariable allows many automizations and quality of life
-                improvements such as hidden qubit management, de/encoding to human readable labels or typing.</strong>”
-        </p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The class constructor has 3 parameters: an integer that tracks the amount of qubits the
-            ‘<strong>QuantumVariable</strong>’ object holds named ‘<strong>cond_eval_function</strong>’ [32], a
-            ‘<strong>QuantumSession</strong>’ named ‘<strong>qs</strong>’, where the ‘<strong>QuantumVariable</strong>’
-            is registered and a string ‘<strong>name</strong>’, which uniquely identifies the
-            ‘<strong>QuantumVariable</strong>’. The class attributes, excluding previously listed ones, are:</p>
-        <ul>
-            <li>‘<strong>creation_counter: ndarray</strong>’ - This attribute is a global (static) counter that
-                increases with each created ‘<strong>QuantumVariable</strong>’ instance.</li>
-            <li>‘<strong>live_qvs: List&lt;QuantumVariable&gt;</strong> - this static attribute tracks all currently
-                alive ‘<strong>QuantumVariable</strong>’ objects.</li>
-            <li>‘<strong>name_tracker: Map&lt;String, Integer&gt;</strong>’ – this attribute ensures globally unique
-                names across all ‘<strong>QuantumVariable</strong>’ objects.</li>
-            <li>‘<strong>qubit_cache: Map&lt;Object, Qubit&gt;’</strong> – this attribute caches qubit objects during
-                the JAX tracing mode</li>
-            <li>‘<strong>reg: List&lt;Qubit&gt;</strong>’ - this attribute stores the qubits backing the variable</li>
-            <li>‘<strong>traced_attributes: List&lt;Object&gt;</strong>‘ – this attribute declares which attributes
-                should be tracked during the JAX tracing</li>
-            <li>‘<strong>user_given_name: bool</strong>‘ – this attribute indicates whether the name was explicitly
-                supplied by the user</li>
-            <li>‘<strong>creation_time: Time’</strong> - this attribute provides a stable hash identity for the
-                ‘<strong>QuantumVariable</strong>’ object, in form of a time object</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>Many of the methods of this class are dunder methods. In the following the dunder methods will be listed
-            separated from the non-dunder methods.</p>
-        <p>The dunder methods are as follows:</p>
-        <ul>
-            <li><strong>‘_<em>or</em>_’</strong> – Implements a bitwise OR–like quantum operation between two
-                ‘<strong>QuantumVariable</strong>’, returning a new variable holding the result.</li>
-            <li><strong>‘__and__</strong> ‘– Implements a bitwise AND–like quantum operation between two
-                ‘<strong>QuantumVariable</strong>’, returning a new variable holding the result.</li>
-            <li><strong>‘_<em>xor</em>_’</strong> – Implements a bitwise XOR–like quantum operation between two
-                ‘<strong>QuantumVariable</strong>’, returning a new variable holding the result.</li>
-            <li><strong>‘_<em>eq</em>_’</strong> – Creates a quantum equality comparison between two
-                ‘<strong>QuantumVariable</strong>’, returning a ‘<strong>QuantumBool</strong>’.</li>
-            <li><strong>‘_<em>ne</em>_’</strong> – Creates a quantum inequality comparison between two
-                ‘<strong>QuantumVariable</strong>’, returning a ‘<strong>QuantumBool</strong>’.</li>
-            <li><strong>‘_<em>hash</em>_’</strong> – Returns a stable hash based on the variable’s creation time,
-                allowing use in hashed Python containers.</li>
-            <li><strong>‘_<em>lshift</em>_’</strong> – Injects this ‘<strong>QuantumVariable</strong>’ as the target
-                argument of a quantum function via function redirection.</li>
-            <li><strong>‘_<em>del</em>_’</strong> – Removes the variable from the global live-variable registry upon
-                garbage collection.</li>
-            <li><strong>‘_<em>len</em>_’</strong> – Returns the number of qubits contained in the
-                ‘<strong>QuantumVariable</strong>’.</li>
-            <li><strong>‘_<em>getitem</em>_’</strong> – Returns the qubit (or qubit slice) at the given index from the
-                variable’s register.</li>
-            <li><strong>‘_<em>setitem</em>_’</strong> – Encodes a value, state dictionary, or another
-                ‘<strong>QuantumVariable</strong>’ into this variable using slice assignment.</li>
-            <li><strong>‘_<em>str</em>_’</strong> – Returns a string representation of the variable’s measurement
-                results (or symbolic form in tracing mode).</li>
-            <li><strong>‘_<em>repr</em>_’</strong> – Returns a concise developer-oriented representation including the
-                variable type and name.</li>
-            <li><strong>‘_<em>iter</em>_’ –</strong> Enables iteration over the qubits of a statically sized
-                ‘<strong>QuantumVariable</strong>’.</li>
-        </ul>
-        <p>The non-dunder methods are as follows:</p>
-        <ul>
-            <li><strong>‘delete’</strong> – Deletes the ‘<strong>QuantumVariable</strong>’ and releases its qubits,
-                optionally verifying their state and enabling recomputation.</li>
-            <li>‘<strong>app_phase_function’</strong> – Applies a classical phase function to all basis states of the
-                ‘<strong>QuantumVariable</strong>’.</li>
-            <li>‘<strong>append’</strong> – Appends a ‘<strong>Operation</strong>’ acting on this variable to the active
-                ‘<strong>QuantumSession</strong>’.</li>
-            <li>‘<strong>custom’</strong> – Creates a ‘<strong>QuantumVariable</strong>’ with user-defined measurement
-                labels and optional decoding logic.</li>
-            <li>‘<strong>decoder’</strong> – Converts a measured integer outcome into a human-readable label.</li>
-            <li>‘<strong>is_deleted’</strong> – Checks whether the ‘<strong>QuantumVariable</strong>’ has already been
-                deallocated.</li>
-            <li>‘<strong>duplicate’</strong> – Creates a new ‘<strong>QuantumVariable</strong>’ of the same type and
-                size, optionally initializing it.</li>
-            <li>‘<strong>encode’</strong> – Initializes the ‘<strong>QuantumVariable</strong>’ into a specific
-                computational basis state.</li>
-            <li>‘<strong>encoder</strong>’– Encodes a human-readable value into its corresponding integer
-                representation.</li>
-            <li>‘<strong>ensure_reg’</strong> – Returns the underlying qubit register, ensuring it is initialized.</li>
-            <li>‘<strong>extend’</strong> – Extends the quantum variable by adding additional qubits.</li>
-            <li>‘<strong>get_measurement’</strong> – Executes circuit compilation and measurement and returns the
-                resulting outcome statistics.</li>
-            <li>‘<strong>get_unique_name’</strong> – Generates a globally unique name for the
-                ‘<strong>QuantumVariable</strong>’.</li>
-            <li>‘<strong>init_from’</strong> – Initializes the ‘<strong>QuantumVariable</strong>’ coherently from
-                another ‘<strong>QuantumVariable’</strong>.</li>
-            <li>‘<strong>init_state’</strong> – Initializes the ‘<strong>QuantumVariable</strong>’ into an arbitrary
-                quantum state.</li>
-            <li>‘<strong>jdecoder’</strong> – Returns the raw measurement result without label decoding.</li>
-            <li>‘<strong>measure’</strong> – Measures the ‘<strong>QuantumVariable</strong>’ and returns the decoded
-                result.</li>
-            <li>‘<strong>most_likely’</strong> – Returns the most probable measurement outcome of the
-                ‘<strong>QuantumVariable</strong>’.</li>
-            <li>‘<strong>reduce’</strong> – Removes selected qubits from the ‘<strong>QuantumVariable</strong>’ and
-                deallocates them.</li>
-            <li>‘<strong>template’</strong> – Returns a template representation of the
-                ‘<strong>QuantumVariable</strong>’ for symbolic execution</li>
-            <li>‘<strong>uncompute’</strong> – Performs automatic uncomputation of the
-                ‘<strong>QuantumVariable</strong>’</li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The ‘<strong>QuantumVariable</strong>’ class contains static attributes and methods (better known as class
-            methods and global attributes in python), which are underscored. The class also contains many dunder
-            methods, which are divided into multiple categories:<br>&lt;<operation&gt;>: methods that alter the way
-                Qrisp uses operations such as OR, which typically return a bool or a new object of its kind</p>
-        <p>&lt;<indexing&gt;>: methods that operate on containers and collection</p>
-        <p>&lt;<representation&gt;>: methods that alter the way Qrisp represents objects</p>
-        <p>The class is the parent class of the following classes:</p>
-        <ul>
-            <li>‘<strong>QuantumBool</strong>’</li>
-            <li>‘<strong>QuantumColor</strong>’</li>
-            <li>‘<strong>CustomQuantumVariable</strong>’</li>
-            <li>‘<strong>QuantumChar</strong>’</li>
-            <li>‘<strong>QuantumFloat</strong>’</li>
-            <li>‘<strong>OHQInt</strong>’</li>
-        </ul>
-        <h3 id="quantumbool">QuantumBool</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>The ‘<strong>QuantumBool</strong>’ class is described in the official Qrisp documentation [33]:</p>
-        <p>“<strong>QuantumBools are the quantum type, which represents boolean truth values. They are the return type
-                of comparison operators like the equality ==.</strong></p>
-        <p><strong>Apart from their behavior as a QuantumVariable, they can also be treated like <a
-                    href="https://www.qrisp.eu/reference/Quantum%20Environments/ControlEnvironment.html&quot;%20\l%20&quot;controlenvironment">ControlEnvironments</a>.</strong>”
-        </p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The class constructor optionally receives two parameters:</p>
-        <ul>
-            <li><strong>qs: QuantumSession</strong> - this ‘<strong>QuantumSession</strong>’ is optionally used to
-                instantiate the parent class constructor</li>
-            <li><strong>name: String</strong> – this string is optionally used to instantiate the parent class
-                constructor</li>
-        </ul>
-        <p>The class attribute are:</p>
-        <ul>
-            <li><strong>env: ClControlEnvironment | ControlEnvironment</strong> – this attribute is instantiated in the
-                __enter__ method. ‘<strong>QuantumBool</strong>’ objects can be used as environments.</li>
-            <li><strong>qfloat_comparison: bool</strong> - this bool is instantiated as false. It is unclear when this
-                attribute is used.</li>
-            <li><strong>size</strong>: int – this attribute is actually a method with the property decorator, making it
-                an immutable size attribute, constantly being 1</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>Many of the methods of this class are dunder methods. In the following the dunder methods will be listed
-            separated from the non-dunder methods.</p>
-        <p>The dunder methods are as follows:</p>
-        <ul>
-            <li>‘<strong>__and__</strong>’ – Implements quantum logical AND using a multi-controlled X (mcx) gate and
-                returns a new ‘<strong>QuantumBool</strong>’</li>
-            <li><strong>‘__or__</strong>’ – Implements quantum logical OR via De Morgan-style construction using mcx and
-                x gates, returning a new ‘<strong>QuantumBool</strong>’</li>
-            <li>‘<strong>__xor__</strong>’ – Implements quantum logical XOR using controlled-X (cx) gates and returns a
-                new ‘<strong>QuantumBool</strong>’</li>
-            <li>‘<strong>__invert__</strong>’ – Implements quantum logical NOT by copying the qubit via cx and flipping
-                the result, returning a new inverted ‘<strong>QuantumBool</strong>’</li>
-            <li>‘<strong>__enter__</strong>’ – This method is called by the ‘<strong>with</strong>’ statement and enters
-                a quantum control environment controlled by the first qubit</li>
-            <li>‘<strong>__exit__</strong>’ – Exits the control environment and automatically uncomputes the
-                ‘<strong>QuantumBool</strong>’</li>
-            <li>‘<strong>__bool__</strong>’ – This prevents conversion to classical bools</li>
-            <li>‘<strong>__len__</strong>’ – This method returns the length of the ‘<strong>QuantumBool</strong>’ which
-                is always 1</li>
-        </ul>
-        <p>The non-dunder methods are as follows:</p>
-        <ul>
-            <li>‘<strong>encoder</strong>’ – Converts a classical bool or integer value into its encoded integer
-                representation for the quantum register</li>
-            <li>‘<strong>decoder</strong>’ – Converts a measured integer value back into a classical bool (or a JAX bool
-                array in tracing mode)</li>
-            <li>‘<strong>flip</strong>’ – This method flips the truth value of a ‘<strong>QuantumBool</strong>’ object
-            </li>
-            <li>‘<strong>jdecoder</strong>’ – Returns a JAX bool array representation of a decoded measurement result
-            </li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>This class has multiple dunder methods and can be used as an environment. The dunder methods are labelled
-            with ‘<strong>&lt;&lt;&gt;&gt;</strong>’ notation. Furthermore the class has a
-            ‘<strong>ControlEnvironment</strong>’ or ‘<strong>ClControlEnvironment</strong>’ composition (the
-            ‘<strong>env</strong>’ attribute can be either). The class inherits from the
-            ‘<strong>QuantumVariable</strong>’ class.</p>
-        <h3 id="quantumcolor">QuantumColor</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>The ‘<strong>QuantumBool</strong>’ class is described in the code of its implementation [34]:</p>
-        <p>“The QuantumColor is a custom QuantumVariable implemented with tackling the Max-k-Colorable-Subgraph problem
-            and other coloring optimization problems in mind. It provides flexibility in choosing encoding methods and
-            leverages efficient data structures like QuantumArrays to enhance computational performance.</p>
-        <p>&nbsp;The QuantumColor class takes as input a list of colors and a flag indicating the preferred encoding
-            method - binary or one-hot encoding. The choice of encoding method has implications for how colors are
-            represented in the quantum computation.</p>
-        <p>In binary encoding, each color is represented by a unique binary number. For instance, if there are four
-            colors, Red, Green, Blue, and Yellow, they can be represented, for example, as [0,0], [0,1], [1,0], and
-            [1,1] respectively.</p>
-        <p>In contrast, one-hot encoding represents each color as an array where only one element is 1 and the rest are
-            0. Using the same four-color example, red can be represented as [1,0,0,0], green as [0,1,0,0], blue as
-            [0,0,1,0], and yellow as [0,0,0,1].</p>
-        <p>Another key feature of the QuantumColor class is its use of QuantumArrays. QuantumArrays are data structures
-            designed for efficient quantum computation. They allow for compact representation and manipulation of
-            quantum states and operators.”</p>
-        <h4 id="class-constructor-">Class constructor:</h4>
-        <p>The class constructor receives two parameters, which get instantiated:</p>
-        <ul>
-            <li><strong>list_of_colors: List&lt;Integer&gt; -</strong> “The list of colors to be used in the coloring
-                problem instance” [34]</li>
-            <li><strong>one_hot_enc: bool</strong> – “The flag to indicate whether to use one-hot encoding. If False,
-                binary encoding is used. Default is True.“ [34]</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has one method ‘<strong>decoder</strong>’, which returns the decoded color, if existing.</p>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class inherits from the ‘<strong>QuantumVariable</strong>’ class.</p>
-        <h3 id="customquantumvariable">CustomQuantumVariable</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>This class is embedded in a function ‘<strong>custom_qv</strong>’ that can be found in the
-            ‘<strong>utility.py</strong>’ file. The class provides a decoder function to return a specified label.</p>
-        <h4 id="class-constructor-">Class constructor:</h4>
-        <p>The class constructor receives two parameters:</p>
-        <ul>
-            <li><strong>qs: QuantumSession</strong> – this parameter is used to instantiate the parent constructor</li>
-            <li><strong>name: String</strong> – this parameter is used to instantiate the parent constructor</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The only class is the decoder class, that returns a label.</p>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class is within a function of the utility.py file. It inherits from the
-            ‘<strong>QuantumVariable</strong>’ class.</p>
-        <h3 id="quantumchar">QuantumChar</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>The ‘<strong>QuantumChar</strong>’ class is described in the code of its implementation [34]:</p>
-        <p>“<strong>A QuantumVariable which represents characters. By default, the QuantumChar is initialized in NISQ
-                mode, meaning that instead of 256 characters it can only hold 32, saving almost 40% in qubit
-                cost</strong>.”</p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The class constructor receives three parameters:</p>
-        <ul>
-            <li><strong>qs: QuantumSession</strong> – this parameter is used for the parent constructor and is by
-                default null</li>
-            <li><strong>name: String</strong> - this parameter is used for the parent constructor and is by default null
-            </li>
-            <li><strong>nisq_char: bool</strong> – this parameter is instantiated by default as true and marks whether
-                the ‘<strong>QuantumChar</strong>’ is initialized in NISQ mode</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has a single method decoder, that returns the according char to an integer.</p>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class inherits from the parent class ‘<strong>QuantumVariable</strong>’.</p>
-        <h3 id="quantumfloat">QuantumFloat</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>As described in the official Qrisp documentation [35]:</p>
-        <p>“<strong>This subclass of <a
-                    href="https://www.qrisp.eu/reference/Core/QuantumVariable.html&quot;%20\l%20&quot;quantumvariable">QuantumVariable</a>
-                can represent floating point numbers (signed and unsigned) up to an arbitrary precision.</strong></p>
-        <p><strong>The technical details of the employed arithmetic can be found in this <a
-                    href="https://ieeexplore.ieee.org/document/9815035&quot;%20\t%20&quot;_blank">article</a>.</strong>”
-        </p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The class receives 5 parameters:</p>
-        <ul>
-            <li><strong>‘msize: int’</strong> – The amount of qubits the ‘<strong>QuantumFloat</strong>’ holds. The size
-                depends on the sign of the ‘<strong>QuantumFloat</strong>’. It becomes instantiated by a method with the
-                ‘<strong>@attribute</strong>’ decorator, converting the method into an attribute.</li>
-            <li><strong>exponent: int</strong> – This integer determines the precision and value range of the
-                ‘<strong>QuantumFloat</strong>’. It is by default 0 and becomes instantiated.</li>
-            <li><strong>qs: QuantumSession –</strong> This ‘<strong>QuantumSession</strong>’ is the session in which the
-                ‘<strong>QuantumFloat</strong>’ gets embedded in. This parameter is used for the parent constructor.
-            </li>
-            <li><strong>name: String</strong> – “A name which uniquely identifies the QuantumVariable. If ended with a
-                *, name is allowed to be updated if a naming collision arises. By default, Qrisp will try to infer the
-                name of the Python variable - otherwise a generic name is given“ [35]. It is by default null and is used
-                in the parent constructor.</li>
-            <li><strong>Signed: bool</strong> – this bool determines if the ‘<strong>QuantumFloat</strong>’ is able to
-                represent negative integers. It is by default false and becomes instantiated.</li>
-        </ul>
-        <p>The class attributes are:</p>
-        <ul>
-            <li><strong>static_attributes: List&lt;String&gt;</strong> - This attribute defines object attributes that
-                are treated as constant for JAX-Tracing.</li>
-            <li><strong>mshape</strong>: (int, int) – This attribute describes the significance range of the mantissa in
-                powers of 2</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has many dunder methods that alter the functionality Qrisp uses on arithmetics, representations and
-            other operations on a ‘<strong>QuantumFloat</strong>’ object. In the following there is differentiation in
-            dunder methods and standard methods:</p>
-        <p>Dunder methods:</p>
-        <ul>
-            <li>‘<strong>__add__</strong>’ – this dunder method changes the logic of the addition operation for
-                ‘<strong>QuantumFloat</strong>’. It enables quantum addition between two ‘<strong>QuantumFloat</strong>’
-                objects or between a ‘<strong>QuantumFloat</strong>’ and a classical number.</li>
-            <li><strong>‘__sub__</strong>’ – this dunder method changes the logic of the subtraction operation. It
-                performs quantum subtraction between two ‘<strong>QuantumFloat</strong>’ objects or between a
-                ‘<strong>QuantumFloat</strong>’ and a classical value.</li>
-            <li>‘<strong>__mul__</strong>’ – this dunder method changes the logic of the multiplication operation. It
-                allows multiplication between two ‘<strong>QuantumFloat</strong>’ objects or between a
-                ‘<strong>QuantumFloat</strong>’ and an integer.</li>
-            <li><strong>‘__truediv__</strong>’ – this dunder method changes the logic of the division operation. It
-                performs quantum division using the internal quantum division algorithm.</li>
-            <li>‘<strong>__floordiv__</strong>’ – this dunder method changes the logic of the floor division operation.
-                It performs integer division for unsigned ‘<strong>QuantumFloat</strong>’ values.</li>
-            <li><strong>‘__pow__</strong>’ – this dunder method changes the logic of the power operation. It enables
-                exponentiation of a ‘<strong>QuantumFloat</strong>’, including inversion when the exponent is -1.</li>
-            <li>‘<strong>__radd__</strong>’ – this dunder method implements right-side addition so that addition works
-                when a ‘<strong>QuantumFloat</strong>’ appears on the right side of the + operator.</li>
-            <li><strong>‘__rmul__</strong>’ – this dunder method implements right-side multiplication so multiplication
-                works when a ‘<strong>QuantumFloat</strong>’ appears on the right side of *.</li>
-            <li>
-                <p>‘<strong>__rsub__</strong>’ – this dunder method implements right-side subtraction, allowing
-                    expressions where the ‘<strong>QuantumFloat</strong>’ appears on the right side of -.</p>
-            </li>
-            <li>
-                <p>‘<strong>__iadd__</strong>’ – this dunder method changes the logic of the in-place addition operation
-                    (+=). It modifies the current ‘<strong>QuantumFloat</strong>’ directly instead of creating a new
-                    one.</p>
-            </li>
-            <li>‘<strong>__isub__</strong>’ – this dunder method changes the logic of the in-place subtraction operation
-                (-=). It subtracts a value directly from the existing ‘<strong>QuantumFloat</strong>’.</li>
-            <li>‘<strong>__imul__</strong>’ – this dunder method changes the logic of the in-place multiplication
-                operation (*=). It multiplies the ‘<strong>QuantumFloat</strong>’ by a classical value directly in the
-                same register.</li>
-            <li>‘<strong>__ilshift__</strong>’ – this dunder method changes the logic of the left bit shift operation
-                (&lt;&lt;=). It increases the exponent of the ‘<strong>QuantumFloat</strong>’.</li>
-            <li>‘<strong>__irshift__</strong>’ – this dunder method changes the logic of the right bit shift operation
-                (&gt;&gt;=). It decreases the exponent of the ‘<strong>QuantumFloat</strong>’.</li>
-            <li>‘<strong>__lt__</strong>’ – this dunder method changes the logic of the less-than comparison between
-                ‘<strong>QuantumFloat</strong>’ values or classical numbers and returns a
-                ‘<strong>QuantumBool</strong>’.</li>
-            <li>‘<strong>__gt__</strong>’ – this dunder method changes the logic of the greater-than comparison and
-                returns a ‘<strong>QuantumBool’</strong>.</li>
-            <li>‘<strong>__le__</strong>’ – this dunder method changes the logic of the less-than-or-equal comparison.
-            </li>
-            <li>‘<strong>__ge__</strong>’ – this dunder method changes the logic of the greater-than-or-equal
-                comparison.</li>
-            <li><strong>‘__eq__</strong>’ – this dunder method changes the logic of the equality compariso between
-                ‘<strong>QuantumFloat</strong>’ objects or classical values and returns a
-                ‘<strong>QuantumBool</strong>’.</li>
-            <li>‘<strong>__ne__</strong>’ – this dunder method changes the logic of the inequality comparison.</li>
-            <li><strong>‘__hash__</strong>’ – this dunder method defines the hash value of the object, allowing
-                ‘<strong>QuantumFloat</strong>’ instances to be used in hashed data structures such as dictionaries or
-                sets.</li>
-        </ul>
-        <p>Normal methods:</p>
-        <ul>
-            <li>‘<strong>decoder</strong>’ – this method converts a basis state index into the classical number
-                represented by the <strong>‘QuantumFloat’</strong>. For signed numbers it applies the signed integer
-                isomorphism and then scales the result by the exponent.</li>
-            <li>‘<strong>jdecoder’</strong> – this method provides a JAX-compatible version of the decoder, returning
-                the decoded value during tracing or JIT execution.</li>
-            <li>‘<strong>encoder</strong>’ – this method converts a classical numeric value into the integer basis state
-                index used internally by the ‘<strong>QuantumFloat</strong>’ representation.</li>
-            <li>‘<strong>sb_poly</strong>’ – Described in the code [34]: ‘<strong>Returns the semi-boolean polynomial of
-                    this ‘QuantumFloat’ where ‘m’ specifies the image extension parameter.</strong>’</li>
-            <li>‘<strong>encode</strong>’ – this method initializes the ‘<strong>QuantumFloat</strong>’ with a given
-                classical value. If rounding is enabled, the value is first rounded to the closest representable number
-                before encoding.</li>
-            <li>‘<strong>exp_shift</strong>’ – described in the code [34]: ‘<strong>Performs an internal bit shift. Note
-                    that this method doesn&#39;t cost any quantum gates. […]</strong>‘</li>
-            <li>‘<strong>add_sign</strong>’ – described in the code [34]: ‘<strong>Turns an unsigned QuantumFloat into
-                    its signed version.</strong>’</li>
-            <li>‘<strong>sign</strong>’ – described in the code [34]: ‘R<strong>eturns the sign qubit. This qubit is in
-                    state |1&gt; if the QuantumFloat holds a negative value and in state |0&gt; otherwise.</strong>’
-            </li>
-            <li>’<strong>init_from</strong>’ – this method initializes the ‘<strong>QuantumFloat</strong>’ with the
-                value stored in another ‘<strong>QuantumFloat</strong>’, copying the encoded state between registers
-                while checking for overflow or rounding issues.</li>
-            <li>‘<strong>incr</strong>’ – this method increments the ‘<strong>QuantumFloat</strong>’ object depending on
-                the exponent or a given value x using a quantum increment operation.</li>
-            <li>‘<strong>significant</strong>’ – described in the code [34]: ‘<strong>Returns the qubit with
-                    significance k</strong>’</li>
-            <li>‘<strong>truncate</strong>’ – described in the code [34]: ‘<strong>Receives a regular float and returns
-                    the float that is closest to the input but can still be encoded.</strong>’</li>
-            <li>‘<strong>get_ev</strong>’ – described in the code [34]: ‘<strong>Retrieves the expectation value of
-                    self.</strong></li>
-            <li>‘<strong>quantum_bit_shift</strong>’ – described in the code [34]: ‘<strong>Performs a bit shift in the
-                    quantum device. While ‘exp_shift’ performs a bit shift in the compiler (thus costing no quantum
-                    gates) this method performs the bitshift on the hardware. This has the advantage, that it can be
-                    controlled if called within a ‘ControlEnvironment’ and furthermore admits bit shifts based on the
-                    state of a ‘QuantumFloat’</strong>.</li>
-        </ul>
-        <h4 id="_details-and-design-decisions-_"><em>Details and design decisions:</em></h4>
-        <p>This class has many dunder methods, which also have the ’<strong>@gate_wrap</strong>’ annotation. For these
-            methods the &lt;&lt;&gt;&gt; notation holds multiple terms to describe the behavior. The class has two
-            methods ‘<strong>msize</strong>’ and ‘<strong>mshape’</strong> that are declared with the
-            ‘<strong>@property</strong>’ declaration. These attributes are shown in the diagram as normal attributes,
-            though they are methods that implement a special logic for the attributes. ‘<strong>QuantumFloat</strong>’
-            inherits from the parent class ‘<strong>QuantumVariable</strong>’.</p>
-        <h3 id="ohqint">OHQInt</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>‘<strong>OHQInt</strong>’ is a specialized quantum integer type used internally for optimized high-level
-            quantum arithmetic</p>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has the following methods:</p>
-        <ul>
-            <li>‘<strong>decoder</strong>’ – this method takes an integer i and checks if it is to the power of two. If
-                yes it will return the log of base 2 of the integer as a integer, otherwise it will return the integer
-                -3.</li>
-            <li>‘<strong>__eq__</strong>’ – this dunder method changes the == operation for ‘<strong>OHQInt</strong>’
-                objects and returns a ‘<strong>QuantumBool</strong>’ that is controlled via CNOT with the specified
-                Qubit ‘<strong>other</strong>’. (in case other is not a int, the method raises an exception)</li>
-            <li>‘<strong>__hash__</strong>’ – this method is a copy of the ‘<strong>hash</strong>’ of the parent class
-                ‘<strong>QuantumVariable</strong>’</li>
-            <li>‘<strong>is_even</strong>’ – this method returns a ‘<strong>QuantumBool</strong>’ that is controlled via
-                CNOT and the even Qubits from the ‘<strong>OHQInt</strong>’ object.</li>
-            <li>‘i<strong>s_odd</strong>’ – this method returns a ‘<strong>QuantumBool</strong>’ that is controlled via
-                CNOT and the odd Qubits from the ‘<strong>OHQInt</strong>’ object.</li>
-            <li>‘<strong>__lt__</strong>’ – this method returns a ‘<strong>QuantumBool</strong>’ that is controlled via
-                CNOT and the Qubits of the ‘<strong>OHQInt</strong>’ that have a smaller order than the specified
-                ‘<strong>other</strong>’ integer. (If ‘<strong>other</strong>’ is not a integer the method raises a
-                exception)</li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>This class does not have unique attributes or a constructor. It has dunder methods that alter the behavior of
-            representations and operations on the object. They are noted with the &lt;&lt;&gt;&gt; notation. The class
-            inherits from the parent class ‘<strong>QuantumVariable</strong>’.</p>
-        <h3 id="quantumarray">QuantumArray</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>As described in the official Qrisp documentation [36]:</p>
-        <p>“This class allows the convenient management of multiple ‘<strong>QuantumVariable</strong>’ objects of one
-            type. Inspired by the well known numpy ndarray, the ‘<strong>QuantumArray</strong>’ supports many convenient
-            array manipulation methods.”</p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The ‘<strong>QuantumArray</strong>’ class constructor has 3 parameters:</p>
-        <ul>
-            <li>‘<strong>qtype: QuantumVariable</strong>’ – this parameter is central to this class and becomes
-                instantiated. It needs to be defined inside a tracing context. It is defined as an attribute with the
-                ‘<strong>@property</strong>’ annotation and can be a List of ‘<strong>QuantumVariable</strong>’ objects
-                too, if outside of a tracing context.</li>
-            <li>‘<strong>shape: int | np.integer</strong>’ – this attribute can be a normal integer or a numpy integer.
-                It determines the shape of the ‘<strong>QuantumArray</strong>’ object. It is defined as an attribute
-                with the ‘<strong>@property</strong>’ annotation and is a tuple of integers.</li>
-            <li>‘<strong>qs: QuantumSession</strong>’ – this is the ‘<strong>QuantumSession</strong>’ object in which
-                the ‘<strong>QuantumArray</strong>’ object becomes embedded in. ‘<strong>qs</strong>’ gets instantiated
-                within the constructor and is optional.</li>
-        </ul>
-        <p>The attributes of the class are:</p>
-        <ul>
-            <li>‘<strong>ind_array: jnp.array</strong>’ – a jax numpy array used as a central data structure to enable
-                fast compilation to the ‘<strong>QuantumArray</strong>’.</li>
-            <li>‘<strong>qtype_template: QuantumVariableTemplate</strong>’ – a template used to construct the
-                ‘<strong>qtype</strong>’ with a ‘<strong>DynamicQubitArray</strong>’</li>
-            <li>‘<strong>qs: QuantumSession</strong>’ – this ‘<strong>QuantumSession</strong>’ object is important for
-                handling session data, such as tracing qubits.</li>
-            <li>‘<strong>qb_array: DynamicQubitArray</strong>’ – this ‘<strong>DynamicQubitArray</strong>’ is used to
-                construct the ‘<strong>qtype</strong>’ and is used for tracing</li>
-            <li>‘<strong>qv_list: List&lt;QuantumVariable&gt;</strong>’ – this List of
-                ‘<strong>QuantumVariable</strong>’ objects is used for indexing the ‘<strong>QuantumVariables</strong>’
-                the ‘<strong>QuantumArray</strong>’ holds.</li>
-            <li>‘<strong>size: int</strong>’ – This is the size of the ‘<strong>QuantumArray</strong>’ object.</li>
-            <li>‘<strong>ndim: int</strong>’ – This is how many dimensions the ‘<strong>ind_array</strong>’ object has.
-            </li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has many dunder methods that alter the functionality how Qrisp uses arithmetics, representation and
-            other operations on a ‘<strong>QuantumArray</strong>’ object. Furthermore, this class contains internal
-            helper methods that support the implementation of arithmetic operations. In the following is a
-            differentiation in dunder methods, standard methods and internal helper methods:</p>
-        <p>Dunder methods:</p>
-        <ul>
-            <li>‘<strong>__getitem__</strong>’ – this dunder method changes the logic of the indexing operation. It
-                allows retrieving either a single ‘<strong>QuantumVariable</strong>’ or a sliced
-                ‘<strong>QuantumArray</strong>’. The method also supports quantum indexing, where a
-                ‘<strong>QuantumFloat</strong>’ can be used as an index, returning a
-                ‘<strong>QuantumEnvironment</strong>’ containing the selected array element.</li>
-            <li>‘<strong>__setitem__</strong>’ – this dunder method changes the logic of assignment to array elements.
-                It encodes classical values into the selected slice or element of the ‘<strong>QuantumArray</strong>’.
-            </li>
-            <li>‘<strong>__matmul__</strong>’ – this dunder method changes the logic of the matrix multiplication
-                operator (@). It performs quantum matrix multiplication between two ‘<strong>QuantumArray</strong>’
-                objects or between a ‘<strong>QuantumArray</strong>’ and a classical NumPy matrix.</li>
-            <li>‘<strong>__rmatmul__</strong>’ – this dunder method implements right-side matrix multiplication so that
-                multiplication works when a ‘<strong>QuantumArray</strong>’ appears on the right side of the @ operator.
-            </li>
-            <li>‘<strong>__iter__</strong>’ – this dunder method enables iteration over the elements of the
-                ‘<strong>QuantumArray</strong>’, returning a ‘<strong>QuantumArrayIterator</strong>’ that iterates
-                through the flattened array elements.</li>
-            <li>‘<strong>__array_ufunc__</strong>’ – this dunder method integrates the ‘<strong>QuantumArray</strong>’
-                with NumPy’s universal function system. It intercepts operations such as np.matmul and redirects them to
-                the corresponding ‘<strong>QuantumArray</strong>’ implementation.</li>
-            <li>‘<strong>__len__</strong>’ – this dunder method defines the length of the
-                ‘<strong>QuantumArray</strong>’. It returns the length of the first dimension of the internal index
-                array.</li>
-            <li>‘<strong>__str__</strong>’ – this dunder method defines the string representation of the
-                ‘<strong>QuantumArray</strong>’. In normal mode it returns the measurement results of the array, while
-                in tracing mode it returns a placeholder string describing the array shape.</li>
-            <li><strong>‘_<em>add</em>_’</strong> – this dunder method changes the logic of the addition operation. It
-                performs element-wise quantum addition between two ‘<strong>QuantumArray</strong>’ objects or between a
-                ‘<strong>QuantumArray</strong>’ and a classical scalar or array.</li>
-            <li>‘<strong>__sub__</strong>’ – this dunder method changes the logic of the subtraction operation. It
-                performs element-wise quantum subtraction between two arrays or between a
-                ‘<strong>QuantumArray</strong>’ and classical values.</li>
-            <li>‘<strong>__mul__</strong>’ – this dunder method changes the logic of the multiplication operation. It
-                performs element-wise quantum multiplication between arrays or between a ‘<strong>QuantumArray</strong>’
-                and classical values.</li>
-            <li>‘<strong>__eq__</strong>’ – this dunder method changes the logic of the equality comparison. It performs
-                element-wise comparison between arrays or classical values and returns a ‘<strong>QuantumArray</strong>’
-                of ‘<strong>QuantumBool</strong>’.</li>
-            <li>‘<strong>__ne__</strong>’ – this dunder method changes the logic of the inequality comparison. It
-                returns a ‘<strong>QuantumArray</strong>’ containing the result of element-wise inequality tests.</li>
-            <li><strong>‘__gt__</strong>’ – this dunder method changes the logic of the greater-than comparison. It
-                returns a ‘<strong>QuantumArray</strong>’ of ‘<strong>QuantumBool</strong>’ values.</li>
-            <li><strong>‘__ge__</strong>’ – this dunder method changes the logic of the greater-than-or-equal
-                comparison.</li>
-            <li><strong>‘__lt__</strong>’ – this dunder method changes the logic of the less-than comparison.</li>
-            <li>‘<strong>__le__</strong>’ – this dunder method changes the logic of the less-than-or-equal comparison.
-            </li>
-            <li>‘<strong>__iadd__</strong>’ – this dunder method changes the logic of the in-place addition operation.
-                It performs element-wise quantum addition and updates the array directly.</li>
-            <li>‘<strong>__isub__</strong>’ – this dunder method changes the logic of the in-place subtraction
-                operation. It subtracts values from the existing ‘<strong>QuantumArray</strong>’.</li>
-            <li>‘<strong>__imul__</strong>‘– this dunder method changes the logic of the in-place multiplication
-                operation. It multiplies the current ‘<strong>QuantumArray</strong>’ by another array or classical value
-                in place.</li>
-            <li>‘<strong>__lshift__</strong>’ – this dunder method changes the logic of the left shift operator
-                (&lt;&lt;). It allows injecting a quantum function into the array so the function operates on each
-                element.</li>
-            <li>‘<strong>__lshift_o__</strong>’ – this method is a variant of the injection operator that redirects
-                quantum functions to operate on the entire ‘<strong>QuantumArray</strong>’.</li>
-        </ul>
-        <p>Normal methods:</p>
-        <ul>
-            <li>‘<strong>encode</strong>’ – this method initializes the ‘<strong>QuantumArray</strong>’ with classical
-                values by encoding them into the quantum registers. It sets the array into the corresponding
-                computational basis state.</li>
-            <li>‘<strong>reshape</strong>’ – this method changes the shape of the ‘<strong>QuantumArray</strong>’
-                without allocating new qubits. It returns a view with the specified shape, similar to NumPy’s reshape.
-            </li>
-            <li>‘<strong>flatten</strong>’ – this method flattens the ‘<strong>QuantumArray</strong>’ into a
-                one-dimensional array view without allocating new qubits.</li>
-            <li>‘<strong>ravel</strong>’ – this method ravels the array into a one-dimensional view, similar to NumPy’s
-                ravel.</li>
-            <li>‘<strong>transpose</strong>’ – this method rearranges the axes of the ‘<strong>QuantumArray</strong>’,
-                returning a view with the axes permuted. The method can receive multiple integers (thus n*int)</li>
-            <li>‘<strong>swapaxes</strong>’ – this method swaps two axes of the ‘<strong>QuantumArray</strong>’,
-                returning a new view of the array.</li>
-            <li>‘<strong>concatenate’</strong> – this method concatenates two ‘<strong>QuantumArray</strong>’ objects
-                along a specified axis. The arrays must have compatible ‘<strong>qtype</strong>’ definitions.</li>
-            <li>‘<strong>delete</strong>’ – this method deletes all ‘<strong>QuantumVariables</strong>’ contained in the
-                array by releasing their qubits. Optionally, it can verify that the qubits are in the |0⟩ state.</li>
-            <li>‘<strong>duplicate</strong>’ – this method creates a fresh ‘<strong>QuantumArray</strong>’ with the same
-                ‘<strong>qtype</strong>’ and shape. If the ‘<strong>init</strong>’ parameter is set to True, the values
-                from the original array are copied into the new one.</li>
-            <li>‘<strong>measure</strong>’ – this method measures each element of the ‘<strong>QuantumArray</strong>’
-                and returns a classical array containing the measurement results.</li>
-            <li>‘<strong>get_measurement</strong>’ – this method executes the ‘<strong>QuantumCircuit</strong>’ and
-                retrieves the measurement distribution of the entire array. The results are returned as a dictionary
-                mapping ‘<strong>OutcomeArray</strong>’ objects to probabilities.</li>
-            <li>‘<strong>decoder</strong>’ – this method converts a measurement result (represented as an integer basis
-                state index) into a classical ‘<strong>OutcomeArray</strong>’ representing the measured values of the
-                ‘<strong>QuantumArray</strong>’.</li>
-            <li>‘<strong>most_likely</strong>’ – this method performs a measurement and returns the most probable
-                outcome state of the array.</li>
-        </ul>
-        <p>Internal helper methods:</p>
-        <ul>
-            <li>‘<strong>_element_wise_out_of_place_injection</strong>’ – this internal method applies a function
-                element-wise and returns a new ‘<strong>QuantumArray</strong>’ containing the results.</li>
-            <li>‘<strong>_element_wise_in_place_call</strong>’ – this internal method applies a function element-wise
-                directly on the existing ‘<strong>QuantumArray</strong>’.</li>
-            <li>‘<strong>_validate_arithmetic</strong>’ – this internal method validates the compatibility of operands
-                for element-wise arithmetic operations, checking both type and shape.</li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class features many different types of dunder and helper methods, they come as <strong>&lt;<helper&gt;>
-            </strong>, <strong>&lt;<operation&gt;></strong>, <strong>&lt;<arithmetic&gt;></strong> and
-            <strong>&lt;<indexing&gt;></strong>. The ‘<strong>@lifted</strong>’ annotation is described in the diagram
-            as <strong>&lt;<lifted&gt;></strong>. The class has 2 aggregations: ‘<strong>QuantumSession</strong>’ and a
-            List of ‘<strong>QuantumVariable</strong>’ objects, as they can exist outside a
-            ‘<strong>QuantumArray</strong>’ object. Additionally the class has 4 Aggregations to
-            ‘<strong>jnp.array</strong>’, ‘<strong>QuantumVariableTemplate</strong>’,
-            ‘<strong>DynamicQubitArray</strong>’ and a (list of) ‘<strong>QuantumVariable</strong>’ object(s).
-        </p>
-        <h3 id="quantumarrayiterator">QuantumArrayIterator</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>This class supplies a ‘<strong>QuantumArrayIterator</strong>’ that can be used for traversing a
-            ‘<strong>QuantumArray</strong>’. It is implemented like a classical Iterator class.</p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The class constructor receives a ‘<strong>QuantumArray</strong>’ for traversal. The counter is instantiated
-            in the class constructor as a integer.</p>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The only method of this class is the ‘<strong>__next__</strong>’ method, used to obtain the next element and
-            to increase the counter</p>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class has one method labelled with ‘<strong>&lt;<iterator&gt;></strong>’ to imply this method is used for
-            iteration.</p>
-        <h3 id="outcomearray">OutcomeArray</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>This class supplies a custom immutable NumPy array type with hashing support.</p>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class only consists of dunder methods:</p>
-        <ul>
-            <li>‘<strong>__new__</strong>’ – Constructs the array by normalizing input, enforcing int32 dtype, copying
-                values, and making it immutable.</li>
-            <li>‘<strong>__hash__</strong>’ – Computes a hash based on the array’s raw byte representation so it can be
-                used in sets and dictionaries.</li>
-            <li>‘<strong>__eq__</strong>’ – Compares two arrays for equality by checking if all their elements are
-                identical.</li>
-            <li>‘<strong>__repr__</strong>’ – Returns a cleaner string representation by removing the explicit int32
-                dtype from NumPy’s default output.</li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class has dunder methods label with the &lt;&lt;&gt;&gt; notation. ‘<strong>&lt;<create&gt;></strong>’ is
-            used for the supplier method ‘<strong>__new__</strong>’. ‘<strong>&lt;<representation&gt;></strong>’ and
-            ‘<strong>&lt;<operation&gt;></strong>’ are self-describing.</p>
-        <h3 id="quantumvariabletemplate">QuantumVariableTemplate</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>As described in the code of ‘<strong>qv_flattening.py</strong>’ [34]:</p>
-        <p>“<strong>This class has two purposes</strong></p>
-        <p><strong>1. enable flattening of typed QuantumVariables. The flattening/unflattening process needs to track
-                the type of the QuantumVariable for reconstruction. For this matter, the QuantumVariableTemplate keeps a
-                copy of the type and reconstructs it when unflattening.</strong></p>
-        <p><strong>2. The second usecase is for passing quantum type information to kernelized functions. This is a
-                problem because passing the QuantumVariable itself to .duplicate results in an error because the
-                quantum_kernel interprets this as a passed quantum value.</strong></p>
-        <p><strong>The QuantumVariable template doesn&#39;t carry the register information (only the size) and can
-                therefore be passed around like a classical value.</strong>”</p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The constructor receives two parameters:</p>
-        <ul>
-            <li>‘<strong>qv: QuantumVariable</strong>’ – the ‘<strong>QuantumVariable</strong>’ type that needs to be
-                tracked for reconstruction. It becomes instantiated.</li>
-            <li>‘<strong>size_tracked: bool</strong>’ – this bool is by default set to true and decides if the
-                ‘<strong>qv_size</strong>’ is set. It becomes instantiated.</li>
-        </ul>
-        <p>The class attributes are:</p>
-        <ul>
-            <li>‘<strong>qv_size: int</strong>’ – This integer is needed to allocate the
-                ‘<strong>QuantumVariabe</strong>’ in the ‘<strong>QuantumSession</strong>’</li>
-            <li>‘<strong>duplication_counter: int</strong>’ – This counter gets increased everytime a
-                ‘<strong>QuantumVariableTemplate</strong>’ object gets constructed. It is used for the name of the
-                ‘<strong>QuantumVariable</strong>’ duplicate that is returned in the ‘<strong>construct</strong>’
-                method.</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has 3 methods:</p>
-        <ul>
-            <li>‘<strong>construct</strong>’ – this method returns a duplicate of the ‘<strong>QuantumVariable</strong>’
-                the object holds, optionally with a new register of Qubits.</li>
-            <li>‘<strong>__hash__</strong>’ – this method returns a integer hash value associated with the
-                ‘<strong>QuantumVariableTemplate</strong>’</li>
-            <li>‘<strong>__eq__</strong>’ – this dunder method makes it so the comparison operation compares the types
-                of the ‘<strong>qv</strong>’ of two ‘<strong>QuantumVariableTemplate</strong>’ objects, returning a
-                ‘<strong>QuantumBool</strong>’.</li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The dunder methods are labelled with the &lt;&lt;&gt;&gt; notation. The class is an composition of the
-            ‘<strong>QuantumArray</strong>’ class.</p>
-        <h3 id="dynamicqubitarray">DynamicQubitArray</h3>
-        <h4 id="class-functionality-">Class functionality:</h4>
-        <p>As described in the Code [34]:</p>
-        <p>“<strong>A Jasp-compatible dynamic array of qubits.</strong>”</p>
-        <h4 id="class-constructor-and-attributes-">Class constructor and attributes:</h4>
-        <p>The class constructor is receives a ‘<strong>TracingQuantumSession</strong>’ ‘<strong>tracer’</strong>, which
-            gets instantiated.</p>
-        <p>The class attributes are:</p>
-        <ul>
-            <li>‘<strong>size: int</strong>’ – this attribute is instantiated via the ‘<strong>@property</strong>’
-                annotation and returns the size of the ‘<strong>tracer</strong>’ as a integer</li>
-            <li>‘<strong>reg: DynamicQubitArray</strong>’ – This is attribute is instantiated via the
-                ‘<strong>@property</strong>’ annotation and returns the ‘<strong>DynamicQubitArray</strong>’ object
-                itself.</li>
-        </ul>
-        <h4 id="class-methods-">Class methods:</h4>
-        <p>The class has 3 dunder methods and 1 normal method:</p>
-        <p>The dunder methods are:</p>
-        <ul>
-            <li>‘<strong>__getitem__</strong>’ – This dunder method provides indexing capabilities for the
-                ‘<strong>DynamicQubitArray</strong>’.</li>
-            <li>‘<strong>__additem__</strong>’ – This dunder method provides the ability to add another
-                ‘<strong>DynamicQubitArray</strong>’ or List of ‘<strong>Qubit</strong>’ objects to the
-                ‘<strong>DynamicQubitArray</strong>’.</li>
-            <li>‘<strong>__radd__</strong>’ – This dunder method provides the ability to add another
-                ‘<strong>DynamicQubitArray</strong>’ or List of ‘<strong>Qubit</strong>’ objects to the
-                ‘<strong>DynamicQubitArray</strong>’ to the right side of the ‘<strong>other’</strong>.</li>
-        </ul>
-        <p>The remaining method:</p>
-        <ul>
-            <li>‘<strong>measure</strong>’ – this returns the measured result of the object.</li>
-        </ul>
-        <h4 id="details-and-design-decisions-">Details and design decisions:</h4>
-        <p>The class has self-explaining descriptions of the dunder methods with the &lt;&lt;&gt;&gt; notation. It is a
-            composition of ‘<strong>QuantumArray</strong>’.</p>
         <h3>
-            QuantumString
+            <a name="_Toc226031238">Information about classes and methods</a>
+        </h3>
+        <p>
+            The ‘<strong>QuantumVariables</strong>’ diagram is named after the central
+            class of the diagram. It unites the different Quantum Variables with its
+            descendants, outlining the class hierarchy. Different implementations of
+            ‘<strong>QuantumVariable</strong>’ can be found in this diagram.
+        </p>
+        <h3>
+            <a name="_Toc226031239">QuantumVariable</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the Qrisp Documentation [32]:
+        </p>
+        <p>
+            “<strong>The QuantumVariable is the quantum equivalent of a regular variable
+                in classical programming languages. All</strong><a
+                href="https://www.qrisp.eu/reference/Quantum%20Types/index.html#quantumtypes"><strong>quantum
+                    types</strong></a><strong>inherit from this class. The QuantumVariable
+                allows many automizations and quality of life improvements such as hidden
+                qubit management, de/encoding to human readable labels or typing.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor has 3 parameters: an integer that tracks the amount of
+            qubits the ‘<strong>QuantumVariable</strong>’ object holds named ‘<strong>cond_eval_function</strong>’
+            [32], a ‘<strong>QuantumSession</strong>’ named ‘<strong>qs</strong>’, where
+            the ‘<strong>QuantumVariable</strong>’ is registered and a string ‘<strong>name</strong>’,
+            which uniquely identifies the ‘<strong>QuantumVariable</strong>’. The class
+            attributes, excluding previously listed ones, are:
+        </p>
+        <p>
+            - ‘<strong>creation_counter: ndarray</strong>’ - This attribute is
+            a global (static) counter that increases with each created ‘<strong>QuantumVariable</strong>’
+            instance.
+        </p>
+        <p>
+            - ‘ <strong>live_qvs: List&lt;QuantumVariable&gt;</strong> - this
+            static attribute tracks all currently alive ‘<strong>QuantumVariable</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>name_tracker: Map&lt;String, Integer&gt;</strong>’ –
+            this attribute ensures globally unique names across all ‘<strong>QuantumVariable</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>qubit_cache: Map&lt;Object, Qubit&gt;’</strong>– this
+            attribute caches qubit objects during the JAX tracing mode
+        </p>
+        <p>
+            - ‘<strong>reg: List&lt;Qubit&gt;</strong>’ - this attribute stores
+            the qubits backing the variable
+        </p>
+        <p>
+            - ‘<strong>traced_attributes: List&lt;Object&gt;</strong>‘ – this
+            attribute declares which attributes should be tracked during the JAX tracing
+        </p>
+        <p>
+            - ‘<strong>user_given_name: bool</strong>‘ – this attribute
+            indicates whether the name was explicitly supplied by the user
+        </p>
+        <p>
+            - ‘ <strong>creation_time: Time’</strong> - this attribute provides
+            a stable hash identity for the ‘<strong>QuantumVariable</strong>’ object, in
+            form of a time object
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            Many of the methods of this class are dunder methods. In the following the
+            dunder methods will be listed separated from the non-dunder methods.
+        </p>
+        <p>
+            The dunder methods are as follows:
+        </p>
+        <p>
+            - <strong>‘__or__’</strong> – Implements a bitwise OR–like quantum operation
+            between two ‘<strong>QuantumVariable</strong>’, returning a new variable
+            holding the result.
+        </p>
+        <p>
+            - <strong>‘__and__</strong> ‘– Implements a bitwise AND–like quantum
+            operation between two ‘<strong>QuantumVariable</strong>’, returning a new
+            variable holding the result.
+        </p>
+        <p>
+            - <strong>‘__xor__’</strong> – Implements a bitwise XOR–like quantum
+            operation between two ‘<strong>QuantumVariable</strong>’, returning a new
+            variable holding the result.
+        </p>
+        <p>
+            - <strong>‘__eq__’</strong>– Creates a quantum equality comparison between
+            two ‘<strong>QuantumVariable</strong>’, returning a ‘<strong>QuantumBool</strong>’.
+        </p>
+        <p>
+            - <strong>‘__ne__’</strong> – Creates a quantum inequality comparison
+            between two ‘<strong>QuantumVariable</strong>’, returning a ‘<strong>QuantumBool</strong>’.
+        </p>
+        <p>
+            - <strong>‘__hash__’</strong> – Returns a stable hash based on the
+            variable’s creation time, allowing use in hashed Python containers.
+        </p>
+        <p>
+            - <strong>‘__lshift__’</strong> – Injects this ‘<strong>QuantumVariable</strong>’
+            as the target argument of a quantum function via function redirection.
+        </p>
+        <p>
+            - <strong>‘__del__’</strong> – Removes the variable from the global
+            live-variable registry upon garbage collection.
+        </p>
+        <p>
+            - <strong>‘__len__’</strong> – Returns the number of qubits contained in the
+            ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <p>
+            - <strong>‘__getitem__’</strong> – Returns the qubit (or qubit slice) at the
+            given index from the variable’s register.
+        </p>
+        <p>
+            - <strong>‘__setitem__’</strong> – Encodes a value, state dictionary, or
+            another ‘<strong>QuantumVariable</strong>’ into this variable using slice
+            assignment.
+        </p>
+        <p>
+            - <strong>‘__str__’</strong> – Returns a string representation of the
+            variable’s measurement results (or symbolic form in tracing mode).
+        </p>
+        <p>
+            - <strong>‘__repr__’</strong> – Returns a concise developer-oriented
+            representation including the variable type and name.
+        </p>
+        <p>
+            - <strong>‘__iter__’ –</strong> Enables iteration over the qubits of a
+            statically sized ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <p>
+            The non-dunder methods are as follows:
+        </p>
+        <p>
+            -
+            <code>        <strong>‘delete’</strong>
+</code>
+            – Deletes the ‘<strong>QuantumVariable</strong>’ and releases its qubits,
+            optionally verifying their state and enabling recomputation.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>app_phase_function’</strong>
+</code>
+            – Applies a classical phase function to all basis states of the ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>append’</strong>
+</code>
+            – Appends a ‘<strong>Operation</strong>’ acting on this variable to the
+            active ‘<strong>QuantumSession</strong>’.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>custom’</strong>
+</code>
+            – Creates a ‘<strong>QuantumVariable</strong>’ with user-defined measurement
+            labels and optional decoding logic.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>decoder’</strong>
+</code>
+            – Converts a measured integer outcome into a human-readable label.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>is_deleted’</strong>
+</code>
+            – Checks whether the ‘<strong>QuantumVariable</strong>’ has already been
+            deallocated.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>duplicate’</strong>
+</code>
+            – Creates a new ‘<strong>QuantumVariable</strong>’ of the same type and
+            size, optionally initializing it.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>encode’</strong>
+</code>
+            – Initializes the ‘<strong>QuantumVariable</strong>’ into a specific
+            computational basis state.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>encoder</strong>
+</code>
+            ’– Encodes a human-readable value into its corresponding integer
+            representation.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>ensure_reg’</strong>
+</code>
+            – Returns the underlying qubit register, ensuring it is initialized.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>extend’</strong>
+</code>
+            – Extends the quantum variable by adding additional qubits.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>get_measurement’</strong>
+</code>
+            – Executes circuit compilation and measurement and returns the resulting
+            outcome statistics.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>get_unique_name’</strong>
+</code>
+            – Generates a globally unique name for the ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>init_from’</strong>
+</code>
+            – Initializes the ‘<strong>QuantumVariable</strong>’ coherently from another
+            ‘<strong>QuantumVariable<u>’</u></strong>.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>init_state’</strong>
+</code>
+            – Initializes the ‘<strong>QuantumVariable</strong>’ into an arbitrary
+            quantum state.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>jdecoder’</strong>
+</code>
+            – Returns the raw measurement result without label decoding.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>measure’</strong>
+</code>
+            – Measures the ‘<strong>QuantumVariable</strong>’ and returns the decoded
+            result.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>most_likely’</strong>
+</code>
+            – Returns the most probable measurement outcome of the ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>reduce’</strong>
+</code>
+            – Removes selected qubits from the ‘<strong>QuantumVariable</strong>’ and
+            deallocates them.
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>template’</strong>
+</code>
+            – Returns a template representation of the ‘<strong>QuantumVariable</strong>’
+            for symbolic execution
+        </p>
+        <p>
+            - ‘
+            <code>        <strong>uncompute’</strong>
+</code>
+            – Performs automatic uncomputation of the ‘<strong>QuantumVariable</strong>’
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The ‘<strong>QuantumVariable</strong>’ class contains static attributes and
+            methods (better known as class methods and global attributes in python),
+            which are underscored. The class also contains many dunder methods, which
+            are divided into multiple categories: <br />
+            &lt;&lt;operation&gt;&gt;: methods that alter the way Qrisp uses operations
+            such as OR, which typically return a bool or a new object of its kind
+        </p>
+        <p>
+            &lt;&lt;indexing&gt;&gt;: methods that operate on containers and collection
+        </p>
+        <p>
+            &lt;&lt;representation&gt;&gt;: methods that alter the way Qrisp represents
+            objects
+        </p>
+        <p>
+            The class is the parent class of the following classes:
+        </p>
+        <p>
+            - ‘<strong>QuantumBool</strong>’
+        </p>
+        <p>
+            - ‘<strong>QuantumColor</strong>’
+        </p>
+        <p>
+            - ‘<strong>CustomQuantumVariable</strong>’
+        </p>
+        <p>
+            - ‘<strong>QuantumChar</strong>’
+        </p>
+        <p>
+            - ‘<strong>QuantumFloat</strong>’
+        </p>
+        <p>
+            - ‘<strong>OHQInt</strong>’
+        </p>
+        <h3>
+            <a name="_Toc226031240">QuantumBool</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            The ‘<strong>QuantumBool</strong>’ class is described in the official Qrisp
+            documentation [33]:
+        </p>
+        <p>
+            “
+            <strong>
+                QuantumBools are the quantum type, which represents boolean truth
+                values. They are the return type of comparison operators like the
+                equality ==.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                Apart from their behavior as a QuantumVariable, they can also be treated
+                like
+            </strong>
+            <a
+                href="https://www.qrisp.eu/reference/Quantum%20Environments/ControlEnvironment.html#controlenvironment"><strong>ControlEnvironments</strong></a><strong>.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor optionally receives two parameters:
+        </p>
+        <p>
+            - <strong>qs: QuantumSession</strong>- this ‘<strong>QuantumSession</strong>’
+            is optionally used to instantiate the parent class constructor
+        </p>
+        <p>
+            - <strong>name: String</strong> – this string is optionally used to
+            instantiate the parent class constructor
+        </p>
+        <p>
+            The class attribute are:
+        </p>
+        <p>
+            - <strong>env: ClControlEnvironment | ControlEnvironment</strong> – this
+            attribute is instantiated in the __enter__ method. ‘<strong>QuantumBool</strong>’
+            objects can be used as environments.
+        </p>
+        <p>
+            - <strong>qfloat_comparison: bool</strong> - this bool is instantiated as
+            false. It is unclear when this attribute is used.
+        </p>
+        <p>
+            - <strong>size</strong>: int – this attribute is actually a method with the
+            property decorator, making it an immutable size attribute, constantly being
+            1
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            Many of the methods of this class are dunder methods. In the following the
+            dunder methods will be listed separated from the non-dunder methods.
+        </p>
+        <p>
+            The dunder methods are as follows:
+        </p>
+        <p>
+            - ‘<strong>__and__</strong>’ – Implements quantum logical AND using
+            a multi-controlled X (mcx) gate and returns a new ‘<strong>QuantumBool</strong>’
+        </p>
+        <p>
+            - <strong>‘__or__</strong>’ – Implements quantum logical OR via De
+            Morgan-style construction using mcx and x gates, returning a new ‘<strong>QuantumBool</strong>’
+        </p>
+        <p>
+            - ‘<strong>__xor__</strong>’ – Implements quantum logical XOR using
+            controlled-X (cx) gates and returns a new ‘<strong>QuantumBool</strong>’
+        </p>
+        <p>
+            - ‘<strong>__invert__</strong>’ – Implements quantum logical NOT by
+            copying the qubit via cx and flipping the result, returning a new inverted
+            ‘<strong>QuantumBool</strong>’
+        </p>
+        <p>
+            - ‘<strong>__enter__</strong>’ – This method is called by the
+            ‘<strong>with</strong>’ statement and enters a quantum control environment
+            controlled by the first qubit
+        </p>
+        <p>
+            - ‘<strong>__exit__</strong>’ – Exits the control environment and
+            automatically uncomputes the ‘<strong>QuantumBool</strong>’
+        </p>
+        <p>
+            - ‘<strong>__bool__</strong>’ – This prevents conversion to
+            classical bools
+        </p>
+        <p>
+            - ‘<strong>__len__</strong>’ – This method returns the length of
+            the ‘<strong>QuantumBool</strong>’ which is always 1
+        </p>
+        <p>
+            The non-dunder methods are as follows:
+        </p>
+        <p>
+            - ‘<strong>encoder</strong>’ – Converts a classical bool or integer
+            value into its encoded integer representation for the quantum register
+        </p>
+        <p>
+            - ‘<strong>decoder</strong>’ – Converts a measured integer value
+            back into a classical bool (or a JAX bool array in tracing mode)
+        </p>
+        <p>
+            - ‘<strong>flip</strong>’ – This method flips the truth value of a
+            ‘<strong>QuantumBool</strong>’ object
+        </p>
+        <p>
+            - ‘<strong>jdecoder</strong>’ – Returns a JAX bool array
+            representation of a decoded measurement result
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class has multiple dunder methods and can be used as an environment.
+            The dunder methods are labelled with ‘<strong>&lt;&lt;&gt;&gt;</strong>’
+            notation. Furthermore the class has a ‘<strong>ControlEnvironment</strong>’
+            or ‘<strong>ClControlEnvironment</strong>’ composition (the ‘<strong>env</strong>’
+            attribute can be either). The class inherits from the ‘<strong>QuantumVariable</strong>’
+            class.
+        </p>
+        <h3>
+            <a name="_Toc226031241">QuantumColor</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            The ‘<strong>QuantumBool</strong>’ class is described in the code of its
+            implementation [34]:
+        </p>
+        <p>
+            “The QuantumColor is a custom QuantumVariable implemented with tackling the
+            Max-k-Colorable-Subgraph problem and other coloring optimization problems in
+            mind. It provides flexibility in choosing encoding methods and leverages
+            efficient data structures like QuantumArrays to enhance computational
+            performance.
+        </p>
+        <p>
+            The QuantumColor class takes as input a list of colors and a flag indicating
+            the preferred encoding method - binary or one-hot encoding. The choice of
+            encoding method has implications for how colors are represented in the
+            quantum computation.
+        </p>
+        <p>
+            In binary encoding, each color is represented by a unique binary number. For
+            instance, if there are four colors, Red, Green, Blue, and Yellow, they can
+            be represented, for example, as [0,0], [0,1], [1,0], and [1,1] respectively.
+        </p>
+        <p>
+            In contrast, one-hot encoding represents each color as an array where only
+            one element is 1 and the rest are 0. Using the same four-color example, red
+            can be represented as [1,0,0,0], green as [0,1,0,0], blue as [0,0,1,0], and
+            yellow as [0,0,0,1].
+        </p>
+        <p>
+            Another key feature of the QuantumColor class is its use of QuantumArrays.
+            QuantumArrays are data structures designed for efficient quantum
+            computation. They allow for compact representation and manipulation of
+            quantum states and operators.”
+        </p>
+        <h4>
+            Class constructor:
+        </h4>
+        <p>
+            The class constructor receives two parameters, which get instantiated:
+        </p>
+        <p>
+            - <strong>list_of_colors: List&lt;Integer&gt; -</strong>“The list of colors
+            to be used in the coloring problem instance” [34] <strong></strong>
+        </p>
+        <p>
+            - <strong>one_hot_enc: bool</strong>– “The flag to indicate whether to use
+            one-hot encoding. If False, binary encoding is used. Default is True.“ [34]
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has one method ‘<strong>decoder</strong>’, which returns the
+            decoded color, if existing.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class inherits from the ‘<strong>QuantumVariable</strong>’ class.
+        </p>
+        <h3>
+            <a name="_Toc226031242">CustomQuantumVariable</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is embedded in a function ‘<strong>custom_qv</strong>’ that can
+            be found in the ‘<strong>utility.py</strong>’ file. The class provides a
+            decoder function to return a specified label.
+        </p>
+        <h4>
+            Class constructor:
+        </h4>
+        <p>
+            The class constructor receives two parameters:
+        </p>
+        <p>
+            - <strong>qs: QuantumSession</strong> – this parameter is used to
+            instantiate the parent constructor
+        </p>
+        <p>
+            - <strong>name: String</strong>– this parameter is used to instantiate the
+            parent constructor <strong></strong>
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The only class is the decoder class, that returns a label.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class is within a function of the utility.py file. It inherits from the
+            ‘<strong>QuantumVariable</strong>’ class.
+        </p>
+        <h3>
+            <a name="_Toc226031243">QuantumChar</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            The ‘<strong>QuantumChar</strong>’ class is described in the code of its
+            implementation [34]:
+        </p>
+        <p>
+            “<strong>A QuantumVariable which represents characters. By default, the
+                QuantumChar is initialized in NISQ mode, meaning that instead of 256
+                characters it can only hold 32, saving almost 40% in qubit cost</strong>.”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor receives three parameters:
+        </p>
+        <p>
+            - <strong>qs: QuantumSession</strong>– this parameter is used for the parent
+            constructor and is by default null
+        </p>
+        <p>
+            - <strong>name: String</strong> - this parameter is used for the parent
+            constructor and is by default null
+        </p>
+        <p>
+            - <strong>nisq_char: bool</strong>– this parameter is instantiated by
+            default as true and marks whether the ‘<strong>QuantumChar</strong>’ is
+            initialized in NISQ mode
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has a single method decoder, that returns the according char to an
+            integer.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class inherits from the parent class ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <h3>
+            <a name="_Toc226031244">QuantumFloat</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the official Qrisp documentation [35]:
+        </p>
+        <p>
+            “<strong>This subclass of</strong><a
+                href="https://www.qrisp.eu/reference/Core/QuantumVariable.html#quantumvariable"><strong>QuantumVariable</strong></a>
+            <strong>
+                can represent floating point numbers (signed and unsigned) up to an
+                arbitrary precision.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                The technical details of the employed arithmetic can be found in this
+            </strong>
+            <a href="https://ieeexplore.ieee.org/document/9815035"
+                target="_blank"><strong>article</strong></a><strong>.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class receives 5 parameters:
+        </p>
+        <p>
+            - <strong>‘msize: int’</strong> – The amount of qubits the ‘<strong>QuantumFloat</strong>’
+            holds. The size depends on the sign of the ‘<strong>QuantumFloat</strong>’.
+            It becomes instantiated by a method with the ‘<strong>@attribute</strong>’
+            decorator, converting the method into an attribute.
+        </p>
+        <p>
+            - <strong>exponent: int</strong> – This integer determines the precision and
+            value range of the ‘<strong>QuantumFloat</strong>’. It is by default 0 and
+            becomes instantiated.
+        </p>
+        <p>
+            - <strong>qs: QuantumSession –</strong>This ‘<strong>QuantumSession</strong>’
+            is the session in which the ‘<strong>QuantumFloat</strong>’ gets embedded
+            in. This parameter is used for the parent constructor. <strong></strong>
+        </p>
+        <p>
+            - <strong>name: String</strong> – “A name which uniquely identifies the
+            QuantumVariable. If ended with a *, name is allowed to be updated if a
+            naming collision arises. By default, Qrisp will try to infer the name of the
+            Python variable - otherwise a generic name is given“ [35]. It is by default
+            null and is used in the parent constructor.
+        </p>
+        <p>
+            - <strong>Signed: bool</strong> – this bool determines if the ‘<strong>QuantumFloat</strong>’
+            is able to represent negative integers. It is by default false and becomes
+            instantiated.
+        </p>
+        <p>
+            The class attributes are:
+        </p>
+        <p>
+            - <strong>static_attributes: List&lt;String&gt;</strong>- This attribute
+            defines object attributes that are treated as constant for JAX-Tracing.
+        </p>
+        <p>
+            - <strong>mshape</strong>: (int, int) – This attribute describes the
+            significance range of the mantissa in powers of 2
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has many dunder methods that alter the functionality Qrisp uses on
+            arithmetics, representations and other operations on a ‘<strong>QuantumFloat</strong>’
+            object. In the following there is differentiation in dunder methods and
+            standard methods:
+        </p>
+        <p>
+            Dunder methods:
+        </p>
+        <p>
+            - ‘<strong>__add__</strong>’ – this dunder method changes the logic
+            of the addition operation for ‘<strong>QuantumFloat</strong>’. It enables
+            quantum addition between two ‘<strong>QuantumFloat</strong>’ objects or
+            between a ‘<strong>QuantumFloat</strong>’ and a classical number.
+        </p>
+        <p>
+            - <strong>‘__sub__</strong>’ – this dunder method changes the logic of the
+            subtraction operation. It performs quantum subtraction between two
+            ‘<strong>QuantumFloat</strong>’ objects or between a ‘<strong>QuantumFloat</strong>’
+            and a classical value.
+        </p>
+        <p>
+            - ‘<strong>__mul__</strong>’ – this dunder method changes the logic
+            of the multiplication operation. It allows multiplication between two
+            ‘<strong>QuantumFloat</strong>’ objects or between a ‘<strong>QuantumFloat</strong>’
+            and an integer.
+        </p>
+        <p>
+            - <strong>‘__truediv__</strong>’ – this dunder method changes the logic of
+            the division operation. It performs quantum division using the internal
+            quantum division algorithm.
+        </p>
+        <p>
+            - ‘<strong>__floordiv__</strong>’ – this dunder method changes the
+            logic of the floor division operation. It performs integer division for
+            unsigned ‘<strong>QuantumFloat</strong>’ values.
+        </p>
+        <p>
+            - <strong>‘__pow__</strong>’ – this dunder method changes the logic of the
+            power operation. It enables exponentiation of a ‘<strong>QuantumFloat</strong>’,
+            including inversion when the exponent is -1.
+        </p>
+        <p>
+            - ‘<strong>__radd__</strong>’ – this dunder method implements
+            right-side addition so that addition works when a ‘<strong>QuantumFloat</strong>’
+            appears on the right side of the + operator.
+        </p>
+        <p>
+            - <strong>‘__rmul__</strong>’ – this dunder method implements right-side
+            multiplication so multiplication works when a ‘<strong>QuantumFloat</strong>’
+            appears on the right side of *.
+        </p>
+        <p>
+            - ‘<strong>__rsub__</strong>’ – this dunder method implements
+            right-side subtraction, allowing expressions where the ‘<strong>QuantumFloat</strong>’
+            appears on the right side of -.
+        </p>
+        <p>
+            - ‘<strong>__iadd__</strong>’ – this dunder method changes the
+            logic of the in-place addition operation (+=). It modifies the current
+            ‘<strong>QuantumFloat</strong>’ directly instead of creating a new one.
+        </p>
+        <p>
+            - ‘<strong>__isub__</strong>’ – this dunder method changes the
+            logic of the in-place subtraction operation (-=). It subtracts a value
+            directly from the existing ‘<strong>QuantumFloat</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__imul__</strong>’ – this dunder method changes the
+            logic of the in-place multiplication operation (*=). It multiplies the
+            ‘<strong>QuantumFloat</strong>’ by a classical value directly in the same
+            register.
+        </p>
+        <p>
+            - ‘<strong>__ilshift__</strong>’ – this dunder method changes the
+            logic of the left bit shift operation (&lt;&lt;=). It increases the exponent
+            of the ‘<strong>QuantumFloat</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__irshift__</strong>’ – this dunder method changes the
+            logic of the right bit shift operation (&gt;&gt;=). It decreases the
+            exponent of the ‘<strong>QuantumFloat</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__lt__</strong>’ – this dunder method changes the logic
+            of the less-than comparison between ‘<strong>QuantumFloat</strong>’ values
+            or classical numbers and returns a ‘<strong>QuantumBool</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__gt__</strong>’ – this dunder method changes the logic
+            of the greater-than comparison and returns a ‘<strong>QuantumBool’</strong>.
+        </p>
+        <p>
+            - ‘<strong>__le__</strong>’ – this dunder method changes the logic
+            of the less-than-or-equal comparison.
+        </p>
+        <p>
+            - ‘<strong>__ge__</strong>’ – this dunder method changes the logic
+            of the greater-than-or-equal comparison.
+        </p>
+        <p>
+            - <strong>‘__eq__</strong>’ – this dunder method changes the logic of the
+            equality compariso between ‘<strong>QuantumFloat</strong>’ objects or
+            classical values and returns a ‘<strong>QuantumBool</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__ne__</strong>’ – this dunder method changes the logic
+            of the inequality comparison.
+        </p>
+        <p>
+            - <strong>‘__hash__</strong>’ – this dunder method defines the hash value of
+            the object, allowing ‘<strong>QuantumFloat</strong>’ instances to be used
+            in hashed data structures such as dictionaries or sets.
+        </p>
+        <p>
+            Normal methods:
+        </p>
+        <p>
+            - ‘<strong>decoder</strong>’ – this method converts a basis state
+            index into the classical number represented by the<strong>‘QuantumFloat’</strong>.
+            For signed numbers it applies the signed integer isomorphism and then scales
+            the result by the exponent.
+        </p>
+        <p>
+            - ‘<strong>jdecoder’</strong>– this method provides a
+            JAX-compatible version of the decoder, returning the decoded value during
+            tracing or JIT execution.
+        </p>
+        <p>
+            - ‘<strong>encoder</strong>’ – this method converts a classical
+            numeric value into the integer basis state index used internally by the
+            ‘<strong>QuantumFloat</strong>’ representation.
+        </p>
+        <p>
+            - ‘<strong>sb_poly</strong>’ – Described in the code [34]:
+            ‘<strong>Returns the semi-boolean polynomial of this ‘QuantumFloat’ where
+                ‘m’ specifies the image extension parameter.</strong>’
+        </p>
+        <p>
+            - ‘<strong>encode</strong>’ – this method initializes the ‘<strong>QuantumFloat</strong>’
+            with a given classical value. If rounding is enabled, the value is first
+            rounded to the closest representable number before encoding.
+        </p>
+        <p>
+            - ‘<strong>exp_shift</strong>’ – described in the code [34]:
+            ‘<strong>Performs an internal bit shift.</strong><strong>Note that this
+                method doesn't cost any quantum gates. […]</strong>‘
+        </p>
+        <p>
+            - ‘<strong>add_sign</strong>’ – described in the code [34]:
+            ‘<strong>Turns an unsigned QuantumFloat into its signed version.</strong>’
+            <strong></strong>
+        </p>
+        <p>
+            - ‘<strong>sign</strong>’ – described in the code [34]: ‘R<strong>eturns
+                the sign qubit. This qubit is in state |1&gt; if the QuantumFloat holds a
+                negative value and in state |0&gt; otherwise.</strong>’ <strong></strong>
+        </p>
+        <p>
+            - ’<strong>init_from</strong>’ – this method initializes the
+            ‘<strong>QuantumFloat</strong>’ with the value stored in another ‘<strong>QuantumFloat</strong>’,
+            copying the encoded state between registers while checking for overflow or
+            rounding issues.
+        </p>
+        <p>
+            - ‘<strong>incr</strong>’ – this method increments the ‘<strong>QuantumFloat</strong>’
+            object depending on the exponent or a given value x using a quantum
+            increment operation.
+        </p>
+        <p>
+            - ‘<strong>significant</strong>’ – described in the code [34]:
+            ‘<strong>Returns the qubit with significance k</strong>’
+        </p>
+        <p>
+            - ‘<strong>truncate</strong>’ – described in the code [34]:
+            ‘<strong>Receives a regular float and returns the float that is closest to
+                the input but can still be encoded.</strong>’
+        </p>
+        <p>
+            - ‘<strong>get_ev</strong>’ – described in the code [34]: ‘
+            <strong>Retrieves the expectation value of self.</strong>
+        </p>
+        <p>
+            - ‘<strong>quantum_bit_shift</strong>’ – described in the code
+            [34]: ‘<strong>Performs a bit shift in the quantum device. While
+                ‘exp_shift’ performs a bit shift in the compiler (thus costing no quantum
+                gates) this method performs the bitshift on the hardware. This has the
+                advantage, that it can be controlled if called within a ‘ControlEnvironment’
+                and furthermore admits bit shifts based on the state of a ‘QuantumFloat’</strong>.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class has many dunder methods, which also have the ’<strong>@gate_wrap</strong>’
+            annotation. For these methods the &lt;&lt;&gt;&gt; notation holds multiple
+            terms to describe the behavior. The class has two methods ‘<strong>msize</strong>’
+            and ‘ <strong>mshape’</strong> that are declared with the ‘<strong>@property</strong>’
+            declaration. These attributes are shown in the diagram as normal attributes,
+            though they are methods that implement a special logic for the attributes.
+            ‘<strong>QuantumFloat</strong>’ inherits from the parent class ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <h3>
+            <a name="_Toc226031245">QuantumModulus</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the code [34]:
+        </p>
+        <p>
+            “<strong>This class is a subtype of `QuantumFloat`, which can be used to
+                model and process `modular arithmetic
+                &lt;https://en.wikipedia.org/wiki/Modular_arithmetic&gt;`_. Modular
+                arithmetic plays an important role in many cryptographical applications,
+                especially in Shor's algorithm. The QuantumModulus allows users convenient
+                access to modular arithmetic, which for many gate based frameworks is rather
+                complicated due to the intricacies of the reduction process.</strong>“
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor receives three parameters:
+        </p>
+        <p>
+            - ‘<strong>modulus: int | BigInteger</strong>’ – this parameter
+            decides the appropriate modulus for the object. It becomes instantiated
+        </p>
+        <p>
+            - ‘<strong>inpl_adder: Cuccaro_adder | Gidney_ader | fourrier_adder</strong>’
+            – this optional parameter is specifies the quantum addition algorithm used
+            for modular arithmetic operations. It becomes instantiated
+        </p>
+        <p>
+            - ‘<strong>qs: QuantumSession</strong>’ – this ‘<strong>QuantumSession</strong>’
+            is used for managing the object and gets used for the parent constructor
+        </p>
+        <p>
+            Other class attributes:
+        </p>
+        <p>
+            - ‘<strong>m: int</strong>’ – this integer is the (rounded) binary
+            logarithm of the modulus. It is the mantissa size of the ‘<strong>QuantumModulus</strong>’
+            object.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            In the following we distinguish between conventional methods and dunder
+            methods
+        </p>
+        <p>
+            The conventional methods are as follows:
+        </p>
+        <p>
+            - ‘<strong>decoder</strong>’ – this decoder returns a integer or
+            ‘<strong>BigInteger</strong>’ for a given measurement result
+        </p>
+        <p>
+            - ‘<strong>jdecoder</strong>’ – this decoder uses a jasp compatible
+            decoder to to return a measurement result in a standard integer or ‘<strong>BigInteger</strong>’
+            representation
+        </p>
+        <p>
+            - ‘<strong>measure</strong>’ – this method measures the ‘<strong>QuantumModulus</strong>’
+            object.
+        </p>
+        <p>
+            - ‘<strong>encoder</strong>’ – this returns a input value encoded
+            in “<em>Montgomery form</em>”
+        </p>
+        <p>
+            The dunder methods are as follows:
+        </p>
+        <p>
+            - ‘<strong>__mul__</strong>’ – This method changes the
+            functionality used for the multiplication of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__rmul__</strong>’ – This method is identical to
+            ‘<strong>__mul__</strong>’
+        </p>
+        <p>
+            - ‘<strong>__imul__</strong>’ – This method changes the
+            functionality used for the in-place multiplication of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__add__</strong>‘ – This method changes the
+            functionality used for the addition of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__radd__</strong>‘ – This method is identical to
+            ‘<strong>__mul__</strong>’
+        </p>
+        <p>
+            - ‘<strong>__iadd__</strong>‘ – This method changes the
+            functionality used for the in-place addition of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__sub__</strong>‘ – This method changes the
+            functionality used for the subtraction of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__rsub__</strong>‘ – This method changes the
+            functionality used for the right hand subtraction of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__isub__</strong>‘ – This method changes the
+            functionality used for the in-place subtraction of ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__lt__</strong>‘ – This method changes the functionality
+            used of the “<strong>&lt;</strong>” operation for ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__gt__</strong>‘ – This method changes the functionality
+            used of the “<strong>&gt;</strong>” operation for ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__le__</strong>‘ – This method changes the functionality
+            used of the “<strong>&lt;=</strong>” operation for ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__ge__</strong>‘ – This method changes the functionality
+            used of the “<strong>&gt;=</strong>” operation for ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__eq__</strong>‘ – This method changes the functionality
+            used of the “<strong>==</strong>” operation for ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__ne__</strong>’ – This method changes the functionality
+            used of the “<strong>!=</strong>” operation for ‘<strong>QuantumModulus</strong>’
+            objects.
+        </p>
+        <p>
+            - ‘<strong>__hash__</strong>’ – This method returns a hash value of
+            the ‘<strong>QuantumModulus</strong>’ in form of an integer
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class contains multiple dunder methods, which are declared with the
+            &lt;&lt;&gt;&gt; notation. The attribute ‘<strong>inpl_adder</strong>’ can
+            be either of these types (as noted in the diagram):
+        </p>
+        <p>
+            - ‘ <strong>Cuccaro_adder’</strong>
+        </p>
+        <p>
+            - ‘<strong>Gidney_adder</strong>’
+        </p>
+        <p>
+            - ‘<strong>fourrier_adder</strong>’
+        </p>
+        <p>
+            The class inherits from the parent class ‘<strong>QuantumFloat</strong>’.
+        </p>
+        <h3>
+            <a name="_Toc226031246">OHQInt</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            ‘<strong>OHQInt</strong>’ is a specialized quantum integer type used
+            internally for optimized high-level quantum arithmetic
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has the following methods:
+        </p>
+        <p>
+            - ‘<strong>decoder</strong>’ – this method takes an integer i and
+            checks if it is to the power of two. If yes it will return the log of base 2
+            of the integer as a integer, otherwise it will return the integer -3.
+        </p>
+        <p>
+            - ‘<strong>__eq__</strong>’ – this dunder method changes the ==
+            operation for ‘<strong>OHQInt</strong>’ objects and returns a ‘<strong>QuantumBool</strong>’
+            that is controlled via CNOT with the specified Qubit ‘<strong>other</strong>’.
+            (in case other is not a int, the method raises an exception)
+        </p>
+        <p>
+            - ‘<strong>__hash__</strong>’ – this method is a copy of the
+            ‘<strong>hash</strong>’ of the parent class ‘<strong>QuantumVariable</strong>’
+        </p>
+        <p>
+            - ‘<strong>is_even</strong>’ – this method returns a ‘<strong>QuantumBool</strong>’
+            that is controlled via CNOT and the even Qubits from the ‘<strong>OHQInt</strong>’
+            object.
+        </p>
+        <p>
+            - ‘i<strong>s_odd</strong>’ – this method returns a ‘<strong>QuantumBool</strong>’
+            that is controlled via CNOT and the odd Qubits from the ‘<strong>OHQInt</strong>’
+            object.
+        </p>
+        <p>
+            - ‘<strong>__lt__</strong>’ – this method returns a ‘<strong>QuantumBool</strong>’
+            that is controlled via CNOT and the Qubits of the ‘<strong>OHQInt</strong>’
+            that have a smaller order than the specified ‘<strong>other</strong>’
+            integer. (If ‘<strong>other</strong>’ is not a integer the method raises a
+            exception)
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class does not have unique attributes or a constructor. It has dunder
+            methods that alter the behavior of representations and operations on the
+            object. They are noted with the &lt;&lt;&gt;&gt; notation. The class
+            inherits from the parent class ‘<strong>QuantumVariable</strong>’.
+        </p>
+        <h3>
+            <a name="_Toc226031247">QuantumArray</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the official Qrisp documentation [36]:
+        </p>
+        <p>
+            “This class allows the convenient management of multiple ‘<strong>QuantumVariable</strong>’
+            objects of one type. Inspired by the well known numpy ndarray, the ‘<strong>QuantumArray</strong>’
+            supports many convenient array manipulation methods.”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The ‘<strong>QuantumArray</strong>’ class constructor has 3 parameters:
+        </p>
+        <p>
+            - ‘<strong>qtype: QuantumVariable</strong>’ – this parameter is
+            central to this class and becomes instantiated. It needs to be defined
+            inside a tracing context. It is defined as an attribute with the ‘<strong>@property</strong>’
+            annotation and can be a List of ‘<strong>QuantumVariable</strong>’ objects
+            too, if outside of a tracing context.
+        </p>
+        <p>
+            - ‘<strong>shape: int | np.integer</strong>’ – this attribute can
+            be a normal integer or a numpy integer. It determines the shape of the
+            ‘<strong>QuantumArray</strong>’ object. It is defined as an attribute with
+            the ‘<strong>@property</strong>’ annotation and is a tuple of integers.
+        </p>
+        <p>
+            - ‘<strong>qs: QuantumSession</strong>’ – this is the ‘<strong>QuantumSession</strong>’
+            object in which the ‘<strong>QuantumArray</strong>’ object becomes embedded
+            in. ‘<strong>qs</strong>’ gets instantiated within the constructor and is
+            optional.
+        </p>
+        <p>
+            The attributes of the class are:
+        </p>
+        <p>
+            - ‘<strong>ind_array: jnp.array</strong>’ – a jax numpy array used
+            as a central data structure to enable fast compilation to the ‘<strong>QuantumArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>qtype_template: QuantumVariableTemplate</strong>’ – a
+            template used to construct the ‘<strong>qtype</strong>’ with a ‘<strong>DynamicQubitArray</strong>’
+        </p>
+        <p>
+            - ‘<strong>qs: QuantumSession</strong>’ – this ‘<strong>QuantumSession</strong>’
+            object is important for handling session data, such as tracing qubits.
+        </p>
+        <p>
+            - ‘<strong>qb_array: DynamicQubitArray</strong>’ – this ‘<strong>DynamicQubitArray</strong>’
+            is used to construct the ‘<strong>qtype</strong>’ and is used for tracing
+        </p>
+        <p>
+            - ‘<strong>qv_list: List&lt;QuantumVariable&gt;</strong>’ – this
+            List of ‘<strong>QuantumVariable</strong>’ objects is used for indexing the
+            ‘<strong>QuantumVariables</strong>’ the ‘<strong>QuantumArray</strong>’
+            holds.
+        </p>
+        <p>
+            - ‘<strong>size: int</strong>’ – This is the size of the ‘<strong>QuantumArray</strong>’
+            object.
+        </p>
+        <p>
+            - ‘<strong>ndim: int</strong>’ – This is how many dimensions the
+            ‘<strong>ind_array</strong>’ object has.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has many dunder methods that alter the functionality how Qrisp
+            uses arithmetics, representation and other operations on a ‘<strong>QuantumArray</strong>’
+            object. Furthermore, this class contains internal helper methods that
+            support the implementation of arithmetic operations. In the following is a
+            differentiation in dunder methods, standard methods and internal helper
+            methods:
+        </p>
+        <p>
+            Dunder methods:
+        </p>
+        <p>
+            - ‘<strong>__getitem__</strong>’<strong></strong>– this dunder
+            method changes the logic of the indexing operation. It allows retrieving
+            either a single ‘<strong>QuantumVariable</strong>’ or a sliced ‘<strong>QuantumArray</strong>’.
+            The method also supports quantum indexing, where a ‘<strong>QuantumFloat</strong>’
+            can be used as an index, returning a ‘<strong>QuantumEnvironment</strong>’
+            containing the selected array element.
+        </p>
+        <p>
+            - ‘<strong>__setitem__</strong>’ – this dunder method changes the
+            logic of assignment to array elements. It encodes classical values into the
+            selected slice or element of the ‘<strong>QuantumArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__matmul__</strong>’ – this dunder method changes the
+            logic of the matrix multiplication operator (@). It performs quantum matrix
+            multiplication between two ‘<strong>QuantumArray</strong>’ objects or
+            between a ‘<strong>QuantumArray</strong>’ and a classical NumPy matrix.
+        </p>
+        <p>
+            - ‘<strong>__rmatmul__</strong>’ – this dunder method implements
+            right-side matrix multiplication so that multiplication works when a
+            ‘<strong>QuantumArray</strong>’ appears on the right side of the @ operator.
+        </p>
+        <p>
+            - ‘<strong>__iter__</strong>’ – this dunder method enables
+            iteration over the elements of the ‘<strong>QuantumArray</strong>’,
+            returning a ‘<strong>QuantumArrayIterator</strong>’ that iterates through
+            the flattened array elements.
+        </p>
+        <p>
+            - ‘<strong>__array_ufunc__</strong>’ – this dunder method
+            integrates the ‘<strong>QuantumArray</strong>’ with NumPy’s universal
+            function system. It intercepts operations such as np.matmul and redirects
+            them to the corresponding ‘<strong>QuantumArray</strong>’ implementation.
+        </p>
+        <p>
+            - ‘<strong>__len__</strong>’ – this dunder method defines the
+            length of the ‘<strong>QuantumArray</strong>’. It returns the length of the
+            first dimension of the internal index array.
+        </p>
+        <p>
+            - ‘<strong>__str__</strong>’ – this dunder method defines the
+            string representation of the ‘<strong>QuantumArray</strong>’. In normal mode
+            it returns the measurement results of the array, while in tracing mode it
+            returns a placeholder string describing the array shape.
+        </p>
+        <p>
+            -
+            <code>        <strong>‘__add__’</strong>
+</code>
+            – this dunder method changes the logic of the addition operation. It
+            performs element-wise quantum addition between two ‘
+            <code>        <strong>QuantumArray</strong>
+</code>
+            ’ objects or between a ‘
+            <code>        <strong>QuantumArray</strong>
+</code>
+            <code>’</code>
+            and a classical scalar or array.
+        </p>
+        <p>
+            -
+            <code>‘        <strong>__sub__</strong>
+’</code>
+            – this dunder method changes the logic of the subtraction operation. It
+            performs element-wise quantum subtraction between two arrays or between a ‘
+            <code>        <strong>QuantumArray</strong>
+</code>
+            <code>’</code>
+            and classical values.
+        </p>
+        <p>
+            -
+            <code>‘        <strong>__mul__</strong>
+’</code>
+            – this dunder method changes the logic of the multiplication operation. It
+            performs element-wise quantum multiplication between arrays or between a ‘
+            <code>        <strong>QuantumArray</strong>
+</code>
+            <code>’</code>
+            and classical values.
+        </p>
+        <p>
+            - ‘<strong>__eq__</strong>’ – this dunder method changes the logic
+            of the equality comparison. It performs element-wise comparison between
+            arrays or classical values and returns a ‘<strong>QuantumArray</strong>’ of
+            ‘<strong>QuantumBool</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__ne__</strong>’ – this dunder method changes the logic
+            of the inequality comparison. It returns a ‘<strong>QuantumArray</strong>’
+            containing the result of element-wise inequality tests.
+        </p>
+        <p>
+            - <strong>‘__gt__</strong>’ – this dunder method changes the logic of the
+            greater-than comparison. It returns a ‘<strong>QuantumArray</strong>’ of
+            ‘<strong>QuantumBool</strong>’ values.
+        </p>
+        <p>
+            - <strong>‘__ge__</strong>’ – this dunder method changes the logic of the
+            greater-than-or-equal comparison.
+        </p>
+        <p>
+            - <strong>‘__lt__</strong>’ – this dunder method changes the logic of the
+            less-than comparison.
+        </p>
+        <p>
+            - ‘<strong>__le__</strong>’ – this dunder method changes the logic
+            of the less-than-or-equal comparison.
+        </p>
+        <p>
+            - ‘<strong>__iadd__</strong>’ – this dunder method changes the
+            logic of the in-place addition operation. It performs element-wise quantum
+            addition and updates the array directly.
+        </p>
+        <p>
+            - ‘<strong>__isub__</strong>’ – this dunder method changes the
+            logic of the in-place subtraction operation. It subtracts values from the
+            existing ‘<strong>QuantumArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__imul__</strong>‘– this dunder method changes the logic
+            of the in-place multiplication operation. It multiplies the current
+            ‘<strong>QuantumArray</strong>’ by another array or classical value in
+            place.
+        </p>
+        <p>
+            - ‘<strong>__lshift__</strong>’ – this dunder method changes the
+            logic of the left shift operator (&lt;&lt;). It allows injecting a quantum
+            function into the array so the function operates on each element.
+        </p>
+        <p>
+            - ‘<strong>__lshift_o__</strong>’ – this method is a variant of the
+            injection operator that redirects quantum functions to operate on the entire
+            ‘<strong>QuantumArray</strong>’.
+        </p>
+        <p>
+            Normal methods:
+        </p>
+        <p>
+            - ‘<strong>encode</strong>’ – this method initializes the ‘<strong>QuantumArray</strong>’
+            with classical values by encoding them into the quantum registers. It sets
+            the array into the corresponding computational basis state.
+        </p>
+        <p>
+            - ‘<strong>reshape</strong>’ – this method changes the shape of the
+            ‘<strong>QuantumArray</strong>’ without allocating new qubits. It returns a
+            view with the specified shape, similar to NumPy’s reshape.
+        </p>
+        <p>
+            - ‘<strong>flatten</strong>’ – this method flattens the ‘<strong>QuantumArray</strong>’
+            into a one-dimensional array view without allocating new qubits.
+        </p>
+        <p>
+            - ‘<strong>ravel</strong>’ – this method ravels the array into a
+            one-dimensional view, similar to NumPy’s ravel.
+        </p>
+        <p>
+            - ‘<strong>transpose</strong>’ – this method rearranges the axes of
+            the ‘<strong>QuantumArray</strong>’, returning a view with the axes
+            permuted. The method can receive multiple integers (thus n*int)
+        </p>
+        <p>
+            - ‘<strong>swapaxes</strong>’ – this method swaps two axes of the
+            ‘<strong>QuantumArray</strong>’, returning a new view of the array.
+        </p>
+        <p>
+            - ‘ <strong>concatenate’</strong> – this method concatenates two
+            ‘<strong>QuantumArray</strong>’ objects along a specified axis. The arrays
+            must have compatible ‘<strong>qtype</strong>’ definitions.
+        </p>
+        <p>
+            - ‘<strong>delete</strong>’ – this method deletes all ‘<strong>QuantumVariables</strong>’
+            contained in the array by releasing their qubits. Optionally, it can verify
+            that the qubits are in the |0⟩ state.
+        </p>
+        <p>
+            - ‘<strong>duplicate</strong>’ – this method creates a fresh
+            ‘<strong>QuantumArray</strong>’ with the same ‘<strong>qtype</strong>’ and
+            shape. If the ‘<strong>init</strong>’ parameter is set to True, the values
+            from the original array are copied into the new one.
+        </p>
+        <p>
+            - ‘<strong>measure</strong>’ – this method measures each element of
+            the ‘<strong>QuantumArray</strong>’ and returns a classical array containing
+            the measurement results.
+        </p>
+        <p>
+            - ‘<strong>get_measurement</strong>’ – this method executes the
+            ‘<strong>QuantumCircuit</strong>’ and retrieves the measurement distribution
+            of the entire array. The results are returned as a dictionary mapping
+            ‘<strong>OutcomeArray</strong>’ objects to probabilities.
+        </p>
+        <p>
+            - ‘<strong>decoder</strong>’ – this method converts a measurement
+            result (represented as an integer basis state index) into a classical
+            ‘<strong>OutcomeArray</strong>’ representing the measured values of the
+            ‘<strong>QuantumArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>most_likely</strong>’ – this method performs a
+            measurement and returns the most probable outcome state of the array.
+        </p>
+        <p>
+            Internal helper methods:
+        </p>
+        <p>
+            - ‘<strong>_element_wise_out_of_place_injection</strong>’ – this
+            internal method applies a function element-wise and returns a new ‘<strong>QuantumArray</strong>’
+            containing the results.
+        </p>
+        <p>
+            - ‘<strong>_element_wise_in_place_call</strong>’ – this internal
+            method applies a function element-wise directly on the existing ‘<strong>QuantumArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>_validate_arithmetic</strong>’ – this internal method
+            validates the compatibility of operands for element-wise arithmetic
+            operations, checking both type and shape.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class features many different types of dunder and helper methods, they
+            come as <strong>&lt;&lt;helper&gt;&gt;</strong>,
+            <strong>
+                &lt;&lt;operation&gt;&gt;
+            </strong>
+            , <strong>&lt;&lt;arithmetic&gt;&gt;</strong> and
+            <strong>
+                &lt;&lt;indexing&gt;&gt;
+            </strong>
+            . The ‘<strong>@lifted</strong>’ annotation is described in the diagram as
+            <strong>&lt;&lt;lifted&gt;&gt;</strong>. The class has 2 aggregations:
+            ‘<strong>QuantumSession</strong>’ and a List of ‘<strong>QuantumVariable</strong>’
+            objects, as they can exist outside a ‘<strong>QuantumArray</strong>’ object.
+            Additionally the class has 4 Aggregations to ‘<strong>jnp.array</strong>’,
+            ‘<strong>QuantumVariableTemplate</strong>’, ‘<strong>DynamicQubitArray</strong>’
+            and a (list of) ‘<strong>QuantumVariable</strong>’ object(s).
+        </p>
+        <h3>
+            <a name="_Toc226031248">QuantumArrayIterator</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class supplies a ‘<strong>QuantumArrayIterator</strong>’ that can be
+            used for traversing a ‘<strong>QuantumArray</strong>’. It is implemented
+            like a classical Iterator class.
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor receives a ‘<strong>QuantumArray</strong>’ for
+            traversal. The counter is instantiated in the class constructor as a
+            integer.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The only method of this class is the ‘<strong>__next__</strong>’ method,
+            used to obtain the next element and to increase the counter
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class has one method labelled with ‘<strong>&lt;&lt;iterator&gt;&gt;</strong>’
+            to imply this method is used for iteration.
+        </p>
+        <h3>
+            <a name="_Toc226031249">OutcomeArray</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class supplies a custom immutable NumPy array type with hashing
+            support.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class only consists of dunder methods:
+        </p>
+        <p>
+            - ‘<strong>__new__</strong>’ – Constructs the array by normalizing
+            input, enforcing int32 dtype, copying values, and making it immutable.
+        </p>
+        <p>
+            - ‘<strong>__hash__</strong>’ – Computes a hash based on the
+            array’s raw byte representation so it can be used in sets and dictionaries.
+        </p>
+        <p>
+            - ‘<strong>__eq__</strong>’ – Compares two arrays for equality by
+            checking if all their elements are identical.
+        </p>
+        <p>
+            - ‘<strong>__repr__</strong>’ – Returns a cleaner string
+            representation by removing the explicit int32 dtype from NumPy’s default
+            output.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class has dunder methods label with the &lt;&lt;&gt;&gt; notation.
+            ‘<strong>&lt;&lt;create&gt;&gt;</strong>’ is used for the supplier method
+            ‘<strong>__new__</strong>’. ‘<strong>&lt;&lt;representation&gt;&gt;</strong>’
+            and ‘<strong>&lt;&lt;operation&gt;&gt;</strong>’ are self-describing.
+        </p>
+        <h3>
+            <a name="_Toc226031250">QuantumVariableTemplate</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the code of ‘<strong>qv_flattening.py</strong>’ [34]:
+        </p>
+        <p>
+            “ <strong>This class has two purposes</strong>
+        </p>
+        <p>
+            <strong>
+                1. enable flattening of typed QuantumVariables. The
+                flattening/unflattening process needs to track the type of the
+                QuantumVariable for reconstruction. For this matter, the
+                QuantumVariableTemplate keeps a copy of the type and reconstructs it
+                when unflattening.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                2. The second usecase is for passing quantum type information to
+                kernelized functions. This is a problem because passing the
+                QuantumVariable itself to .duplicate results in an error because the
+                quantum_kernel interprets this as a passed quantum value.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                The QuantumVariable template doesn't carry the register information
+                (only the size) and can therefore be passed around like a classical
+                value.
+            </strong>
+            ”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The constructor receives two parameters:
+        </p>
+        <p>
+            - ‘<strong>qv: QuantumVariable</strong>’ – the ‘<strong>QuantumVariable</strong>’
+            type that needs to be tracked for reconstruction. It becomes instantiated.
+        </p>
+        <p>
+            - ‘<strong>size_tracked: bool</strong>’ – this bool is by default
+            set to true and decides if the ‘<strong>qv_size</strong>’ is set. It becomes
+            instantiated.
+        </p>
+        <p>
+            The class attributes are:
+        </p>
+        <p>
+            - ‘<strong>qv_size: int</strong>’ – This integer is needed to
+            allocate the ‘<strong>QuantumVariabe</strong>’ in the ‘<strong>QuantumSession</strong>’
+        </p>
+        <p>
+            - ‘<strong>duplication_counter: int</strong>’ – This counter gets
+            increased everytime a ‘<strong>QuantumVariableTemplate</strong>’ object gets
+            constructed. It is used for the name of the ‘<strong>QuantumVariable</strong>’
+            duplicate that is returned in the ‘<strong>construct</strong>’ method.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has 3 methods:
+        </p>
+        <p>
+            - ‘<strong>construct</strong>’ – this method returns a duplicate of
+            the ‘<strong>QuantumVariable</strong>’ the object holds, optionally with a
+            new register of Qubits.
+        </p>
+        <p>
+            - ‘<strong>__hash__</strong>’ – this method returns a integer hash
+            value associated with the ‘<strong>QuantumVariableTemplate</strong>’
+        </p>
+        <p>
+            - ‘<strong>__eq__</strong>’ – this dunder method makes it so the
+            comparison operation compares the types of the ‘<strong>qv</strong>’ of two
+            ‘<strong>QuantumVariableTemplate</strong>’ objects, returning a ‘<strong>QuantumBool</strong>’.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The dunder methods are labelled with the &lt;&lt;&gt;&gt; notation. The
+            class is an composition of the ‘<strong>QuantumArray</strong>’ class.
+        </p>
+        <h3>
+            <a name="_Toc226031251">DynamicQubitArray</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the Code [34]:
+        </p>
+        <p>
+            “<strong>A Jasp-compatible dynamic array of qubits.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor is receives a ‘<strong>TracingQuantumSession</strong>’
+            ‘<strong>tracer’</strong>, which gets instantiated.
+        </p>
+        <p>
+            The class attributes are:
+        </p>
+        <p>
+            - ‘<strong>size: int</strong>’ – this attribute is instantiated via
+            the ‘<strong>@property</strong>’ annotation and returns the size of the
+            ‘<strong>tracer</strong>’ as a integer
+        </p>
+        <p>
+            - ‘<strong>reg: DynamicQubitArray</strong>’ – This is attribute is
+            instantiated via the ‘<strong>@property</strong>’ annotation and returns the
+            ‘<strong>DynamicQubitArray</strong>’ object itself.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has 3 dunder methods and 1 normal method:
+        </p>
+        <p>
+            The dunder methods are:
+        </p>
+        <p>
+            - ‘<strong>__getitem__</strong>’ – This dunder method provides
+            indexing capabilities for the ‘<strong>DynamicQubitArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__additem__</strong>’ – This dunder method provides the
+            ability to add another ‘<strong>DynamicQubitArray</strong>’ or List of
+            ‘<strong>Qubit</strong>’ objects to the ‘<strong>DynamicQubitArray</strong>’.
+        </p>
+        <p>
+            - ‘<strong>__radd__</strong>’ – This dunder method provides the
+            ability to add another ‘<strong>DynamicQubitArray</strong>’ or List of
+            ‘<strong>Qubit</strong>’ objects to the ‘<strong>DynamicQubitArray</strong>’
+            to the right side of the ‘<strong>other’</strong>.
+        </p>
+        <p>
+            The remaining method:
+        </p>
+        <p>
+            - ‘<strong>measure</strong>’ – this returns the measured result of
+            the object.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class has self-explaining descriptions of the dunder methods with the
+            &lt;&lt;&gt;&gt; notation. It is a composition of ‘<strong>QuantumArray</strong>’.
+        </p>
+        <h3>
+            <a name="_Toc226031252">QuantumString</a>
         </h3>
         <h4>
             Class functionality:
@@ -724,8 +1711,8 @@
         </p>
         <p>
             “<strong>The QuantumString is the quantum equivalent of a string. It is
-                implemented as a</strong><strong><a
-                    href="https://www.qrisp.eu/reference/Core/QuantumArray.html#quantumarray">QuantumArray</a></strong><strong>of</strong><a
+                implemented as a</strong><a
+                href="https://www.qrisp.eu/reference/Core/QuantumArray.html#quantumarray"><strong>QuantumArray</strong></a><strong>of</strong><a
                 href="https://www.qrisp.eu/reference/Quantum%20Types/QuantumChar.html#quantumchar"><strong>QuantumChars</strong></a><strong>.</strong>”
         </p>
         <h4>
@@ -742,74 +1729,52 @@
         <h4>
             Class methods:
         </h4>
-
-
         <p>
             The class methods are as follows:
         </p>
-
-
         <p>
             - ‘<strong>decoder</strong>’ – this method turns a measurement
             result into a human readable form
         </p>
-
-
         <p>
-            - ‘<strong>encode</strong>’ – this method encodes a String into
-            the ‘<strong>QuantumString</strong>’ object
+            - ‘<strong>encode</strong>’ – this method encodes a String into the
+            ‘<strong>QuantumString</strong>’ object
         </p>
-
-
         <p>
-            - ‘<strong>get_measurement</strong>’ – this returns the
-            measurement result for the specified keyword arguments.
+            - ‘<strong>get_measurement</strong>’ – this returns the measurement
+            result for the specified keyword arguments.
         </p>
-
-
         <p>
             - ‘<strong>__setitem__</strong>’ – this method sets a specific
             index of the ‘<strong>QuantumString</strong>’ with a value
         </p>
-
-
         <p>
-            - ‘<strong><u>quantize_string</u></strong>’ – this static
-            method uses the ‘<strong>__set_item__</strong>’ implementation to
-            convert a String into a new ‘<strong>QuantumString</strong>’ object
+            - ‘<strong><u>quantize_string</u></strong>’ – this static method
+            uses the ‘<strong>__set_item__</strong>’ implementation to convert a String
+            into a new ‘<strong>QuantumString</strong>’ object
         </p>
-
-
         <p>
-            - ‘<strong>__add__</strong>’ – this dunder method concatenates
-            the ‘ <strong>QuantumString’</strong> object with an ‘<strong>other</strong>’
-            ‘<strong>QuantumString</strong>’. It alters the arithmetic ‘+’ operation
-            of the class
+            - ‘<strong>__add__</strong>’ – this dunder method concatenates the
+            ‘ <strong>QuantumString’</strong> object with an ‘<strong>other</strong>’
+            ‘<strong>QuantumString</strong>’. It alters the arithmetic ‘+’ operation of
+            the class
         </p>
-
-
         <p>
             - ‘<strong>__iadd__</strong>’ – this method concatenates the ‘
             <strong>QuantumString’</strong> with either a different ‘<strong>QuantumString</strong>’
             or string.
         </p>
-
-
         <h4>
             Details and design decisions:
         </h4>
-
-
         <p>
             The class has no unique attributes. The method ‘<strong>quantize_string</strong>’
-            is a static method and thus designed underlined. The class features
-            multiple dunder methods, declared with the &lt;&lt;&gt;&gt; notation.
-            ‘<strong>QuantumString</strong>’ inherits from the parent class
-            ‘<strong>QuantumArray</strong>’.
+            is a static method and thus designed underlined. The class features multiple
+            dunder methods, declared with the &lt;&lt;&gt;&gt; notation. ‘<strong>QuantumString</strong>’
+            inherits from the parent class ‘<strong>QuantumArray</strong>’.
         </p>
-
-
         <p>
             This concludes the ‘<strong>QuantumVariables</strong>’ class diagram.
+        </p>
         </p>
     </div>
