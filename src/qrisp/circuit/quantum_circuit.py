@@ -1063,7 +1063,7 @@ class QuantumCircuit:
         qubits: QubitLike | None = None,
         clbits: ClbitLike | None = None,
         inplace: bool = True,
-    ) -> "QuantumCircuit | None":
+    ) -> QuantumCircuit | None:
         """
         Composes this QuantumCircuit with another QuantumCircuit by appending the other to self.
 
