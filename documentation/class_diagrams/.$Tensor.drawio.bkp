@@ -1,0 +1,132 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
+  <diagram name="Seite-1" id="ZNQBTSntF_GkusouQLcp">
+    <mxGraphModel dx="1107" dy="380" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="j_6IKZDsf0s4M6wLkfms-1" value="TensorFactor" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-400" y="1760" width="450" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="j_6IKZDsf0s4M6wLkfms-2" value="+ qubits: List&amp;lt;Qubit&amp;gt;&lt;div&gt;+ n: int&lt;/div&gt;&lt;div&gt;+ tensor_array: BiArray&lt;/div&gt;&lt;div&gt;&lt;u&gt;+ index_init: ndarray&amp;nbsp;&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;u&gt;+ data_init: ndarray&amp;nbsp;&lt;/u&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="j_6IKZDsf0s4M6wLkfms-1" vertex="1">
+          <mxGeometry y="26" width="450" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="j_6IKZDsf0s4M6wLkfms-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="j_6IKZDsf0s4M6wLkfms-1" vertex="1">
+          <mxGeometry y="110" width="450" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j_6IKZDsf0s4M6wLkfms-4" value="+ TensorFactor(&lt;div&gt;qubits: List&amp;lt;Qubit&amp;gt;,&lt;/div&gt;&lt;div&gt;init_tensor_array: BiArray = null&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ copy(): TensorFactor&lt;/div&gt;&lt;div&gt;+ swap(i: int, j: int )&lt;/div&gt;&lt;div&gt;+ apply_matrix(&lt;/div&gt;&lt;div&gt;matrix: ndarray,&lt;/div&gt;&lt;div&gt;qubits: List&amp;lt;Qubit&amp;gt;&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ entangle(other: TensorFactor): TensorFactor&lt;/div&gt;&lt;div&gt;+ measure(i: int): (float, TensorFactor, float, TensorFactor)&lt;/div&gt;&lt;div&gt;+ unravel()&lt;/div&gt;&lt;div&gt;+ multi_measure(&lt;/div&gt;&lt;div&gt;mes_qubits:&amp;nbsp;&lt;/div&gt;&lt;div&gt;return_res_tf: bool = true&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ disentangle(&lt;/div&gt;&lt;div&gt;qubit: Qubit,&lt;/div&gt;&lt;div&gt;warning: bool = false&lt;/div&gt;&lt;div&gt;): (TensorFactor, TensorFactor)&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="j_6IKZDsf0s4M6wLkfms-1" vertex="1">
+          <mxGeometry y="120" width="450" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-5" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt; BiArray&lt;/span&gt;&lt;/div&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-240" y="440" width="170" height="110" as="geometry">
+            <mxRectangle x="160" y="740" width="110" height="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-6" value="+ shape: (int, ...)&lt;div&gt;&lt;div&gt;+ size: int&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="M-nCEZRUKxbQHOft9Hw2-5" vertex="1">
+          <mxGeometry y="26" width="170" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="M-nCEZRUKxbQHOft9Hw2-5" vertex="1">
+          <mxGeometry y="70" width="170" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-8" value="+ v_dot(other: BiArray): float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="M-nCEZRUKxbQHOft9Hw2-5" vertex="1">
+          <mxGeometry y="78" width="170" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-9" value="SparseBiArray" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="160" y="840" width="440" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-10" value="+ nz_indices: ndarray&lt;div&gt;+ contraction_counter: int&lt;/div&gt;&lt;div&gt;+ data: ndarray&lt;/div&gt;&lt;div&gt;+ __dict__: Map&amp;lt;String, Object&amp;gt; [0..1]&lt;/div&gt;&lt;div&gt;+ sparsity: float&lt;/div&gt;&lt;div&gt;+ index_bit_permutation: List&amp;lt;Integer&amp;gt;&lt;/div&gt;&lt;div&gt;+ dtype: numpy.dtype&lt;/div&gt;&lt;div&gt;+ thread: Thread [0..1]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="M-nCEZRUKxbQHOft9Hw2-9" vertex="1">
+          <mxGeometry y="26" width="440" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-11" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="M-nCEZRUKxbQHOft9Hw2-9" vertex="1">
+          <mxGeometry y="150" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="M-nCEZRUKxbQHOft9Hw2-12" value="+ SparseBiArray(&lt;div&gt;init_object: ndarray | (ndarray, ndarray) | scipy.sparse.coo_matrix,&lt;/div&gt;&lt;div&gt;shape: (int, ...) = null,&lt;/div&gt;&lt;div&gt;contraction_counter: int = 0&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ copy(): SparseBiArray&lt;/div&gt;&lt;div&gt;+ catch_up()&lt;/div&gt;&lt;div&gt;+ reshape(shape: int): SparseBiArray&lt;/div&gt;&lt;div&gt;+ swapaxes(int i, int j): SparseBiArray&lt;br&gt;&lt;div&gt;+ apply_swaps()&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+ sum_duplicates()&lt;/div&gt;&lt;div&gt;+ elim_zeros()&lt;/div&gt;&lt;div&gt;+ build_sr_matrix(&lt;/div&gt;&lt;div&gt;shape: (int, ...),&amp;nbsp;&lt;/div&gt;&lt;div&gt;transpose: bool = false&lt;/div&gt;&lt;div&gt;):&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;spicy.sparse.coo_matrix&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ move_index_to_front(index: int)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ contract(other: SparseBiArray, axes_self: int, axes_other: int):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;SparseBiArray&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ to_array():&amp;nbsp;ndarray&lt;/div&gt;&lt;div&gt;+ ravel(): (int)&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __repr__(): String&lt;/div&gt;&lt;div&gt;+ split(): (lower_half, upper_half)&lt;/div&gt;&lt;div&gt;+ multi_measure(&lt;/div&gt;&lt;div&gt;indices: List&amp;lt;Integer&amp;gt;,&lt;/div&gt;&lt;div&gt;return_new_arrays: bool = true&lt;/div&gt;&lt;div&gt;): (List&amp;lt;SparseBiArray&amp;gt;, List&amp;lt;float&amp;gt;, List&amp;lt;ndarray&amp;gt;)&lt;/div&gt;&lt;div&gt;+ exclude_linear_independence&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(other: SparseBiArray): bool&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ squared_norm(): float&lt;/div&gt;&lt;div&gt;+ vdot(other: SparseBiArray): ndarray&lt;/div&gt;&lt;div&gt;+ to_dense(): DenseBiArray&lt;/div&gt;&lt;div&gt;+ to_sparse(): SparseBiArray&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="M-nCEZRUKxbQHOft9Hw2-9" vertex="1">
+          <mxGeometry y="158" width="440" height="482" as="geometry" />
+        </mxCell>
+        <mxCell id="M7ogQnv0io6GoRqurpbn-1" value="DenseBiArray" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-320" y="840" width="320" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="M7ogQnv0io6GoRqurpbn-2" value="&lt;div&gt;+ data: ndarray&lt;br&gt;&lt;div&gt;+ dtype: numpy.dtype&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ sparsity: float&lt;/div&gt;&lt;div&gt;+ index_bit_permutation: List&amp;lt;Integer&amp;gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+ thread: Thread [0..1]&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="M7ogQnv0io6GoRqurpbn-1" vertex="1">
+          <mxGeometry y="26" width="320" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="M7ogQnv0io6GoRqurpbn-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="M7ogQnv0io6GoRqurpbn-1" vertex="1">
+          <mxGeometry y="120" width="320" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="M7ogQnv0io6GoRqurpbn-4" value="+ DenseBiArray(&lt;div&gt;array: ndarray,&lt;/div&gt;&lt;div&gt;sparsity: int = null,&lt;/div&gt;&lt;div&gt;shape: (int, ...)&lt;/div&gt;&lt;div&gt;&lt;div&gt;)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+ copy(): DenseBiArray&lt;/div&gt;&lt;div&gt;+ catch_up()&lt;/div&gt;&lt;div&gt;+ reshape(shape: int): DenseBiArray&lt;/div&gt;&lt;div&gt;+ swapaxes(int i, int j): DenseBiArray&lt;/div&gt;&lt;div&gt;+ move_index_to_front(index: int)&lt;/div&gt;&lt;div&gt;+ apply_swaps()&lt;/div&gt;&lt;div&gt;+ ravel(): DenseBiArray&lt;/div&gt;&lt;div&gt;+ contract(&lt;/div&gt;&lt;div&gt;other: DenseBiArray,&lt;/div&gt;&lt;div&gt;axes_self: List&amp;lt;Integer&amp;gt;&lt;/div&gt;&lt;div&gt;axes_other: List&amp;lt;Integer&amp;gt;&lt;/div&gt;&lt;div&gt;): DenseBiArray&lt;/div&gt;&lt;div&gt;+ squared_norm(): float&lt;/div&gt;&lt;div&gt;+ vdot(other: DenseBiArray): ndarray&lt;/div&gt;&lt;div&gt;+ exclude_linear_indpendence(other: DenseBiArray): bool&lt;/div&gt;&lt;div&gt;+ to_array(): ndarray&lt;/div&gt;&lt;div&gt;+ to_spare(): SparseBiArray&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ __repr__(): String&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="M7ogQnv0io6GoRqurpbn-1" vertex="1">
+          <mxGeometry y="128" width="320" height="362" as="geometry" />
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=12;" parent="1" source="BNdFQPrWT3NF04BHvyAh-1" target="M-nCEZRUKxbQHOft9Hw2-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BNdFQPrWT3NF04BHvyAh-1" value="DummyBiArray" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-680" y="840" width="200" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="BNdFQPrWT3NF04BHvyAh-2" value="&lt;u&gt;+ current_memory: ndarray&lt;/u&gt;&lt;div&gt;&lt;u&gt;+ max_memory: ndarray&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;u&gt;+ flops: ndarray&lt;/u&gt;&lt;/div&gt;&lt;div&gt;+ sparsity: int&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="BNdFQPrWT3NF04BHvyAh-1" vertex="1">
+          <mxGeometry y="26" width="200" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="BNdFQPrWT3NF04BHvyAh-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="BNdFQPrWT3NF04BHvyAh-1" vertex="1">
+          <mxGeometry y="100" width="200" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="BNdFQPrWT3NF04BHvyAh-4" value="+ DummyBiArray(&lt;div&gt;data: ndarray = null,&lt;/div&gt;&lt;div&gt;shape: int = null,&lt;/div&gt;&lt;div&gt;sparsity: int = 1&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;+ reshape(shape: (int,...))&lt;/div&gt;&lt;div&gt;+ swapaxes(axis_0: int, axis_1: int)&lt;/div&gt;&lt;div&gt;+ contract(&lt;/div&gt;&lt;div&gt;other: DummyBiArray,&lt;/div&gt;&lt;div&gt;axes_self: List&amp;lt;Integer&amp;gt;,&lt;/div&gt;&lt;div&gt;axes_other. List&amp;lt;Integer&amp;gt;&lt;/div&gt;&lt;div&gt;): DummyBiArray&lt;/div&gt;&lt;div&gt;+ copy(): DummyBiArray&lt;/div&gt;&lt;div&gt;&lt;u&gt;+ reset_stat_counter()&lt;/u&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;rounded=1;" parent="BNdFQPrWT3NF04BHvyAh-1" vertex="1">
+          <mxGeometry y="108" width="200" height="232" as="geometry" />
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.515;exitY=-0.004;exitDx=0;exitDy=0;endArrow=block;endFill=0;endSize=12;exitPerimeter=0;" parent="1" source="M-nCEZRUKxbQHOft9Hw2-9" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385.22" y="850" as="sourcePoint" />
+            <mxPoint x="-70" y="490" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="385" y="837" />
+              <mxPoint x="385" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endArrow=block;endFill=0;endSize=12;" parent="1" source="M7ogQnv0io6GoRqurpbn-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-160" y="550" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-160" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.548;exitY=1;exitDx=0;exitDy=0;endArrow=diamondThin;endFill=0;exitPerimeter=0;endSize=12;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="M-nCEZRUKxbQHOft9Hw2-12" target="j_6IKZDsf0s4M6wLkfms-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="1760" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="401" y="1615" />
+              <mxPoint x="-63" y="1615" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;endSize=12;" parent="1" target="j_6IKZDsf0s4M6wLkfms-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-175" y="1330" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="-172" y="1349" />
+              <mxPoint x="-175" y="1349" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.503;exitY=1.003;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;endSize=12;exitPerimeter=0;" parent="1" source="BNdFQPrWT3NF04BHvyAh-4" target="j_6IKZDsf0s4M6wLkfms-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-590" y="1220" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="-579" y="1610" />
+              <mxPoint x="-287" y="1610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-10" value="tensor_array can be either one of the three BiArrays" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="160" y="1840" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dcuR02R-Gz9NtUN1eYvJ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;dashed=1;" parent="1" source="dcuR02R-Gz9NtUN1eYvJ-10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50" y="1870" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="80" y="1870" />
+              <mxPoint x="80" y="1870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
