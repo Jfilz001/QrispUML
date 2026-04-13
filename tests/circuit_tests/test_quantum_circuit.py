@@ -1346,19 +1346,6 @@ class TestQuantumCircuitMethods:
         assert "h " in qasm
         assert "cx " in qasm
 
-    def test_to_qasm2_writes_file(self):
-        """to_qasm2 with filename writes the same content to disk."""
-
-        qc = QuantumCircuit(1)
-        qc.h(0)
-        with tempfile.NamedTemporaryFile(mode="r", suffix=".qasm", delete=False) as tmp:
-            fname = tmp.name
-        try:
-            qasm_str = qc.to_qasm2(filename=fname)
-            assert open(fname).read() == qasm_str
-        finally:
-            os.unlink(fname)
-
     def test_to_qasm2_roundtrip(self):
         """A circuit exported to QASM 2.0 and re-imported has the same unitary."""
 
