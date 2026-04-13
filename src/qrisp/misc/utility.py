@@ -18,7 +18,6 @@
 
 import functools
 import traceback
-from typing import Dict
 
 import jax.numpy as jnp
 import numpy as np
@@ -132,7 +131,7 @@ def is_inv(x, bit):
 
 # TODO: This should be fixed/improved (for example, it should always return a dict
 # and the type hint should be updated accordingly).
-def get_depth_dic(qc, transpile_qc=True, depth_indicator=lambda x: 1) -> Dict:
+def get_depth_dic(qc, transpile_qc=True, depth_indicator=lambda x: 1) -> dict:
     if len(qc.qubits) == 0:
         return {}
 
@@ -1581,12 +1580,12 @@ def redirect_qfunction(function_to_redirect):
         else:
 
             qargs = [
-                    arg
-                    for arg in list(args) + [target]
-                    if isinstance(arg, (QuantumVariable, QuantumArray))
-                    ]
+                arg
+                for arg in list(args) + [target]
+                if isinstance(arg, (QuantumVariable, QuantumArray))
+            ]
             merge(qargs)
-                
+
             env = QuantumEnvironment()
             env.manual_allocation_management = True
             qs = target.qs

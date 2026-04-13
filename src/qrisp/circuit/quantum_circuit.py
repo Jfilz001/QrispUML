@@ -41,11 +41,16 @@ from qrisp.misc import (
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence, Set
+    from typing import TypeAlias
 
     from qrisp.circuit.operation import ControlledOperation, PTControlledOperation
     from qrisp.jasp.interpreter_tools.interpreters.qc_extraction_interpreter import (
         ParityHandle,
     )
+
+    # TODO: These should be moved into a separate module (which does not exist yet)
+    QubitLike: TypeAlias = Qubit | int | Sequence[Qubit | int]
+    ClbitLike: TypeAlias = Clbit | int | Sequence[Clbit | int]
 
 TO_GATE_COUNTER = np.zeros(1)
 
@@ -1055,8 +1060,8 @@ class QuantumCircuit:
     def compose(
         self,
         other: QuantumCircuit,
-        qubits: Sequence[Qubit] | None = None,
-        clbits: Sequence[Clbit] | None = None,
+        qubits: QubitLike | None = None,
+        clbits: ClbitLike | None = None,
         inplace: bool = True,
     ) -> "QuantumCircuit | None":
         """
@@ -1067,12 +1072,12 @@ class QuantumCircuit:
         other : QuantumCircuit
             The QuantumCircuit to be appended to self.
 
-        qubits : Sequence[Qubit], optional
+        qubits : QubitLike | None, optional
             The qubits to be used for the composition.
             If None, the qubits of self and other will be matched by their identifiers.
             The default is None.
 
-        clbits : Sequence[Clbit], optional
+        clbits : ClbitLike | None, optional
             The classical bits to be used for the composition.
             If None, the clbits of self and other will be matched by their identifiers.
             The default is None.
@@ -1093,9 +1098,9 @@ class QuantumCircuit:
             self.append(other.to_gate(), qubits, clbits)
             return None
 
-        res = self.copy()
-        res.append(other.to_gate(), qubits, clbits)
-        return res
+        qc = self.copy()
+        qc.append(other.to_gate(), qubits, clbits)
+        return qc
 
     def bind_parameters(self, subs_dic: dict) -> QuantumCircuit:
         """
@@ -1329,7 +1334,7 @@ class QuantumCircuit:
 
     def depth(
         self,
-        depth_indicator: Callable[[Operation], int] = lambda x: 1,
+        depth_indicator: Callable[[Operation], int] = lambda _: 1,
         transpile: bool = True,
     ) -> int:
         """
@@ -1520,10 +1525,10 @@ class QuantumCircuit:
 
         .. code-block:: none
 
-                              ┌───┐
-            qb_0: ──■─────────┤ X ├─────
-                  ┌─┴─┐┌───┐  └─┬─┘
-            qb_1: ┤ X ├┤ X ├──■──■──────
+                                 ┌───┐
+            qb_0: ──■────────────┤ X ├─────
+                  ┌─┴─┐┌───┐     └─┬─┘
+            qb_1: ┤ X ├┤ X ├──■────■───────
                   └───┘└───┘┌─┴─┐┌───┐
             qb_2: ──────────┤ X ├┤ Y ├──■──
                             └───┘└───┘┌─┴─┐
@@ -2325,8 +2330,8 @@ class QuantumCircuit:
 
     def measure(
         self,
-        qubits: Qubit | int | Sequence[Qubit | int],
-        clbits: Clbit | Sequence[Clbit] | None = None,
+        qubits: QubitLike,
+        clbits: ClbitLike | None = None,
     ) -> None:
         """
         Append a measurement instruction to the circuit.
@@ -2338,13 +2343,13 @@ class QuantumCircuit:
 
         Parameters
         ----------
-        qubits : Qubit, int, or Sequence[Qubit | int]
+        qubits : QubitLike
             The qubit(s) to measure.  A single :ref:`Qubit` object or
             integer index measures one qubit; any sequence (``list``,
             ``tuple``, ``range``, :ref:`QuantumVariable`, …) measures each
             element independently.
 
-        clbits : Clbit, Sequence[Clbit], or None, optional
+        clbits : ClbitLike or None, optional
             The classical bit(s) that receive the measurement results.  When
             ``None`` (default), fresh classical bits are created automatically
             (one per qubit being measured).
@@ -2394,6 +2399,7 @@ class QuantumCircuit:
 
         self.append(ops.Measurement(), [qubits], [clbits])
 
+    # TODO: Extend to accept integer indices for clbits as well
     def parity(
         self,
         clbits: Clbit | Sequence[Clbit],
