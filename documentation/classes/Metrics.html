@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors </a>
+        <a href="QEnv_QPrim.html">QEnv & QPrimitive</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a class="active" href="Metrics.html">Metrics</a>
+        <a href="References.html">References</a>
+
+    </div>
+
+    <div class="content">
+
+        <h2>
+            <a name="_Toc226031253">Metrics</a>
+        </h2>
+        <img alt="QuantumVariables" src="../class_diagrams/Metrics.png" />
+        <h3>
+            <a name="_Toc226031254">Information about classes and methods</a>
+        </h3>
+        <p>
+            The ‘ <strong>Metrics’</strong> diagram is named after the central class of
+            the diagram: ‘<strong>BaseMetric</strong>’. It unites the different Metrics
+            with its descendants, outlining the class hierarchy. Different
+            implementations of ‘ <strong>BaseMetric’</strong> can be found in this
+            diagram.
+        </p>
+        <h3>
+            BaseMetric
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As specified in the code [34]:
+        </p>
+        <p>
+            “<strong>Runtime-enforced base class for profiling metrics. Classes
+                inheriting from ‘BaseMetric’ must implement handler methods for all quantum
+                primitives, and define an ‘initial_metric’ property that specifies the
+                initial value of the metric before any primitives are executed.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The ‘<strong>BaseMetric</strong>’ class has a constructor, though the class
+            inherits from ‘<strong>ABC</strong>’, thus making it <em>abstract</em>. The
+            class constructor is used for sub-classes. The class has one attribute:
+            ‘<strong>meas_behavior</strong>’, a callable function, which is a parameter
+            given for the class constructor. It is the measurement behavior function, as
+            the name suggests.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class lays the blueprint for subclass by supplying many methods. They
+            are annotated with the ‘<strong>@abstractmethod</strong>’ decorator. The
+            class also implements internal helper methods and static methods.
+        </p>
+        <p>
+            The abstract methods are:
+        </p>
+        <p>
+            - ‘<strong>from_cache_key</strong>’ – “<strong>Reconstructs a
+                metric instance from a hashable cache key.</strong>” [34]. This method is
+            static and thus designed with a underlining.
+        </p>
+        <p>
+            - ‘<strong>initial_metric</strong>’ – “<strong>Return the initial
+                value of the metric before any primitives are executed.</strong>" [34]
+        </p>
+        <p>
+            - ‘<strong>cache_key</strong>’ – “<strong>Return a hashable
+                representation of this metric's configuration.</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_create_qubit’</strong>– “
+            <strong>
+                Handle the `jasp.create_qubits` primitive. The `create_qubits_p`
+                primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>- Invars: (size, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray, QuantumState)</strong>”[34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_qubit</strong>’ – “
+            <strong>
+                Handle the `jasp.get_qubit` primitive. The `get_qubit_p` primitive has
+                the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, index)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (Qubit)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_size</strong>’ – “
+            <strong>
+                Handle the `jasp.get_size` primitive. The `get_size_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (size)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_fuse</strong>’ – “
+            <strong>
+                Handle the `jasp.fuse` primitive. The `fuse_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, Qubit | QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_slice</strong>’ – “
+            <strong>
+                Handle the `jasp.slice` primitive. The `slice_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, start, stop)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>“ [34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_quantum_gate’ – “Handle the `jasp.quantum_gate` primitive. The
+                `quantum_gate_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o
+            <strong>
+                Invars: (Qubit 0, Qubit 1, ... , Param 0, Param 1 ... , QuantumState)
+            </strong>
+            <strong></strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)“</strong> [34] <strong></strong>
+        </p>
+        <p>
+            - ‘<strong>handle_measure</strong>’ – “
+            <strong>
+                Handle the `jasp.measure` primitive. The `measure_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (meas_result, QuantumState)</strong>“ [34]
+            <strong>
+            </strong>
+        </p>
+        <p>
+            - ‘<strong>handle_reset</strong>’ – “
+            <strong>
+                Handle the `jasp.reset` primitive. The `reset_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)</strong>“[34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_delete_qubits’ – “Handle the `jasp.delete_qubits` primitive. The
+                `delete_qubits_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)”</strong>[34] <strong></strong>
+        </p>
+        <p>
+            - <strong>‘handle_parity’ – “Handle the `jasp.parity`
+                primitive.”</strong>[34] <strong></strong>
+        </p>
+        <p>
+            The internal helper methods are:
+        </p>
+        <p>
+            - ‘<strong>_validate_measurement_result</strong>’ – "<strong>Validate
+                that measurement result is a boolean.</strong>" [34]
+        </p>
+        <p>
+            - ‘<strong>_measurement__body_fun</strong>’ – “<strong>Helper
+                function for measuring qubit arrays.</strong>” [34]
+        </p>
+        <p>
+            The normal methods are:
+        </p>
+        <p>
+            - ‘<strong>handle_create_quantum_kernel</strong>’ – “<strong>Handle
+                the `jasp.create_quantum_kernel` primitive.”</strong>[34] <strong></strong>
+        </p>
+        <p>
+            - ‘<strong>get_handlers</strong>’ – “<strong>Return a mapping from
+                primitive names to handler methods.</strong>” [34]
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class has internal helper methods, that are designed as
+            <em>protected<strong></strong></em>(#). The class is inheriting from
+            ‘<strong>ABC</strong>‘, thus its title is written in cursive, as well as all
+            of the subsequent abstract methods. Static methods (class methods) are
+            designed with a underlining. The handlers can return different datatypes,
+            this is done with the ‘<strong>Sequence</strong>’ datatype. It is not
+            possible to map certain datatypes. Its child classes are:
+        </p>
+        <p>
+            - ‘<strong>CountOpsMetric</strong>’
+        </p>
+        <p>
+            - ‘<strong>DepthMetric</strong>’
+        </p>
+        <p>
+            - ‘<strong>NumQubtisMetric</strong>’
+        </p>
+        <h3>
+            CountOpsMetric
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            “<strong>A metric implementation that counts quantum operations in a Jaspr.</strong>”
+            [34]
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor receives two parameters:
+        </p>
+        <p>
+            - ‘<strong>meas_behavior: Callable</strong>’ – this function
+            describes the measure function and is used for the parents constructor.
+        </p>
+        <p>
+            - ‘<strong>profiling_dic: Map&lt;String, int&gt;</strong>’ – this
+            map is described in the code [34]: “<strong>A dictionary mapping quantum
+                operation names to their profiling indices.</strong>”. This parameter is
+            instantiated with the ‘<strong>@property</strong>’ annotation.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class instantiates the abstract methods of its parent class ‘<strong>BaseMetric</strong>’.
+        </p>
+        <p>
+            All of the methods are:
+        </p>
+        <p>
+            - ‘<strong>from_cache_key</strong>’ – “<strong>Reconstructs a
+                metric instance from a hashable cache key.</strong>” [34]. This method is
+            static and thus designed with a underlining.
+        </p>
+        <p>
+            - ‘<strong>initial_metric</strong>’ – “<strong>Return the initial
+                value of the metric before any primitives are executed.</strong>" [34]
+        </p>
+        <p>
+            - ‘<strong>cache_key</strong>’ – “<strong>Return a hashable
+                representation of this metric's configuration.</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_create_qubit’</strong>– “
+            <strong>
+                Handle the `jasp.create_qubits` primitive. The `create_qubits_p`
+                primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>- Invars: (size, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray, QuantumState)</strong>”[34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_qubit</strong>’ – “
+            <strong>
+                Handle the `jasp.get_qubit` primitive. The `get_qubit_p` primitive has
+                the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, index)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (Qubit)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_size</strong>’ – “
+            <strong>
+                Handle the `jasp.get_size` primitive. The `get_size_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (size)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_fuse</strong>’ – “
+            <strong>
+                Handle the `jasp.fuse` primitive. The `fuse_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, Qubit | QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_slice</strong>’ – “
+            <strong>
+                Handle the `jasp.slice` primitive. The `slice_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, start, stop)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>“ [34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_quantum_gate’ – “Handle the `jasp.quantum_gate` primitive. The
+                `quantum_gate_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o
+            <strong>
+                Invars: (Qubit 0, Qubit 1, ... , Param 0, Param 1 ... , QuantumState)
+            </strong>
+            <strong></strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)“</strong> [34] <strong></strong>
+        </p>
+        <p>
+            - ‘<strong>handle_measure</strong>’ – “
+            <strong>
+                Handle the `jasp.measure` primitive. The `measure_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (meas_result, QuantumState)</strong>“ [34]
+            <strong>
+            </strong>
+        </p>
+        <p>
+            - ‘<strong>handle_reset</strong>’ – “
+            <strong>
+                Handle the `jasp.reset` primitive. The `reset_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)</strong>“[34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_delete_qubits’ – “Handle the `jasp.delete_qubits` primitive. The
+                `delete_qubits_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)”</strong>[34] <strong></strong>
+        </p>
+        <p>
+            - <strong>‘handle_parity’ – “Handle the `jasp.parity`
+                primitive.”</strong>[34] <strong></strong>
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class inherits from the abstract ‘<strong>BaseMetric</strong>’ class.
+            Static methods (class methods) are designed with a underlining. The handlers
+            can return different datatypes, this is done with the ‘<strong>Sequence</strong>’
+            datatype. It is not possible to map certain datatypes.
+        </p>
+        <h3>
+            DepthMetric
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the source code [34]:
+        </p>
+        <p>
+            “<strong>A metric implementation that computes the circuit depth of a Jaspr.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The constructor receives two parameters:
+        </p>
+        <p>
+            - ‘<strong>meas_behaviour: Callable</strong>’ – this function
+            describes the measure function and is used for the parents constructor.
+        </p>
+        <p>
+            - ‘<strong>max_qubits: int</strong>’ – This integer defines the
+            maximum number of qubits to track depth [34]. This attribute becomes
+            instantiated by a method with the ‘<strong>@property</strong>’ decorator
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class instantiates the abstract methods of its parent class ‘<strong>BaseMetric</strong>’.
+        </p>
+        <p>
+            All of the methods are:
+        </p>
+        <p>
+            - ‘<strong>from_cache_key</strong>’ – “<strong>Reconstructs a
+                metric instance from a hashable cache key.</strong>” [34]. This method is
+            static and thus designed with a underlining.
+        </p>
+        <p>
+            - ‘<strong>initial_metric</strong>’ – “<strong>Return the initial
+                value of the metric before any primitives are executed.</strong>" [34]
+        </p>
+        <p>
+            - ‘<strong>cache_key</strong>’ – “<strong>Return a hashable
+                representation of this metric's configuration.</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_create_qubit’</strong>– “
+            <strong>
+                Handle the `jasp.create_qubits` primitive. The `create_qubits_p`
+                primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>- Invars: (size, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray, QuantumState)</strong>”[34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_qubit</strong>’ – “
+            <strong>
+                Handle the `jasp.get_qubit` primitive. The `get_qubit_p` primitive has
+                the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, index)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (Qubit)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_size</strong>’ – “
+            <strong>
+                Handle the `jasp.get_size` primitive. The `get_size_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (size)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_fuse</strong>’ – “
+            <strong>
+                Handle the `jasp.fuse` primitive. The `fuse_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, Qubit | QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_slice</strong>’ – “
+            <strong>
+                Handle the `jasp.slice` primitive. The `slice_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, start, stop)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>“ [34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_quantum_gate’ – “Handle the `jasp.quantum_gate` primitive. The
+                `quantum_gate_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o
+            <strong>
+                Invars: (Qubit 0, Qubit 1, ... , Param 0, Param 1 ... , QuantumState)
+            </strong>
+            <strong></strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)“</strong> [34] <strong></strong>
+        </p>
+        <p>
+            - ‘<strong>handle_measure</strong>’ – “
+            <strong>
+                Handle the `jasp.measure` primitive. The `measure_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (meas_result, QuantumState)</strong>“ [34]
+            <strong>
+            </strong>
+        </p>
+        <p>
+            - ‘<strong>handle_reset</strong>’ – “
+            <strong>
+                Handle the `jasp.reset` primitive. The `reset_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)</strong>“[34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_delete_qubits’ – “Handle the `jasp.delete_qubits` primitive. The
+                `delete_qubits_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)”</strong>[34] <strong></strong>
+        </p>
+        <p>
+            - <strong>‘handle_parity’ – “Handle the `jasp.parity`
+                primitive.”</strong>[34] <strong></strong>
+        </p>
+        <h4>
+            Class details and design decisions:
+        </h4>
+        <p>
+            This class inherits from the abstract ‘<strong>BaseMetric</strong>’ class.
+            Static methods (class methods) are designed with a underlining. The handlers
+            can return different datatypes, this is done with the ‘<strong>Sequence</strong>’
+            datatype. It is not possible to map certain datatypes.
+        </p>
+        <h3>
+            NumQubitsMetric
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the source code [34]:
+        </p>
+        <p>
+            “<strong>A metric implementation that computes the number of qubits in a
+                Jaspr.</strong>”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The constructor receives two parameters:
+        </p>
+        <p>
+            - ‘<strong>meas_behaviour: Callable</strong>’ – this function
+            describes the measure function and is used for the parents constructor.
+        </p>
+        <p>
+            - ‘<strong>max_allocations: int</strong>’ – ”<strong>The maximum
+                number of qubit allocations/deallocations supported by the profiler.</strong>”
+            [34]. This attribute becomes instantiated by a method with the ‘<strong>@property</strong>’
+            decorator
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class instantiates the abstract methods of its parent class ‘<strong>BaseMetric</strong>’.
+        </p>
+        <p>
+            All of the methods are:
+        </p>
+        <p>
+            - ‘<strong>from_cache_key</strong>’ – “<strong>Reconstructs a
+                metric instance from a hashable cache key.</strong>” [34]. This method is
+            static and thus designed with a underlining.
+        </p>
+        <p>
+            - ‘<strong>initial_metric</strong>’ – “<strong>Return the initial
+                value of the metric before any primitives are executed.</strong>" [34]
+        </p>
+        <p>
+            - ‘<strong>cache_key</strong>’ – “<strong>Return a hashable
+                representation of this metric's configuration.</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_create_qubit’</strong>– “
+            <strong>
+                Handle the `jasp.create_qubits` primitive. The `create_qubits_p`
+                primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>- Invars: (size, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray, QuantumState)</strong>”[34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_qubit</strong>’ – “
+            <strong>
+                Handle the `jasp.get_qubit` primitive. The `get_qubit_p` primitive has
+                the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, index)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (Qubit)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_get_size</strong>’ – “
+            <strong>
+                Handle the `jasp.get_size` primitive. The `get_size_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (size)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_fuse</strong>’ – “
+            <strong>
+                Handle the `jasp.fuse` primitive. The `fuse_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, Qubit | QubitArray)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>” [34]
+        </p>
+        <p>
+            - ‘<strong>handle_slice</strong>’ – “
+            <strong>
+                Handle the `jasp.slice` primitive. The `slice_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, start, stop)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QubitArray)</strong>“ [34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_quantum_gate’ – “Handle the `jasp.quantum_gate` primitive. The
+                `quantum_gate_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o
+            <strong>
+                Invars: (Qubit 0, Qubit 1, ... , Param 0, Param 1 ... , QuantumState)
+            </strong>
+            <strong></strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)“</strong> [34] <strong></strong>
+        </p>
+        <p>
+            - ‘<strong>handle_measure</strong>’ – “
+            <strong>
+                Handle the `jasp.measure` primitive. The `measure_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (Qubit | QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (meas_result, QuantumState)</strong>“ [34]
+            <strong>
+            </strong>
+        </p>
+        <p>
+            - ‘<strong>handle_reset</strong>’ – “
+            <strong>
+                Handle the `jasp.reset` primitive. The `reset_p` primitive has the
+                following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState)</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)</strong>“[34] <strong></strong>
+        </p>
+        <p>
+            -
+            <strong>
+                ‘handle_delete_qubits’ – “Handle the `jasp.delete_qubits` primitive. The
+                `delete_qubits_p` primitive has the following semantics:
+            </strong>
+        </p>
+        <p>
+            o <strong>Invars: (QubitArray, QuantumState</strong>
+        </p>
+        <p>
+            o <strong>Outvars: (QuantumState)”</strong>[34] <strong></strong>
+        </p>
+        <p>
+            - <strong>‘handle_parity’ – “Handle the `jasp.parity`
+                primitive.”</strong>[34] <strong></strong>
+        </p>
+        <h4>
+            Class details and design decisions:
+        </h4>
+        <p>
+            This class inherits from the abstract ‘<strong>BaseMetric</strong>’ class.
+            Static methods (class methods) are designed with a underlining. The handlers
+            can return different datatypes, this is done with the ‘<strong>Sequence</strong>’
+            datatype. It is not possible to map certain datatypes.
+        </p>
+        <p>
+            This concludes the Metric Diagram.
+        </p>
+    </div>
