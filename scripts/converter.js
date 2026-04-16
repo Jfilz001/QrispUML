@@ -18,10 +18,12 @@ function extractSection(html, name) {
 
     //const sections = ["Backends", "Hamiltonian", "Metrics", "Operations","Permeability","QEnv_QPrim","QuantumManagement","References","Tensor"];
 
-    const sections = ["test"]
+    const sections = ["test"];
 
     sections.forEach(section => {
 
+        const template = fs.readFileSync(`./documentation/classes/${section}.html`, "utf8");
+        
         const content = extractSection(html, section);
 
         const output = template.replace(
