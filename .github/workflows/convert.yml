@@ -3,7 +3,7 @@ name: Convert DOCX
 on:
   push:
     paths:
-      - "docs/*.docx"
+      - "documentation/classes/*.docx"
 
 permissions:
   contents: write
