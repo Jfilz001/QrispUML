@@ -1,0 +1,32 @@
+name: Convert DOCX
+
+on:
+  push:
+    paths:
+      - "docs/*.docx"
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm init -y
+      - run: npm install docx-parser-converter
+
+      - run: node scripts/convert.js
+
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add content.html
+          git commit -m "Auto convert" || echo "No changes"
+          git push

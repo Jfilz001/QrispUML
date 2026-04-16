@@ -246,7 +246,7 @@ class BaseMetric(ABC):
     @abstractmethod
     def handle_parity(
         self, invalues: Sequence, eqn: JaxprEqn, context_dic: ContextDict
-    ) -> Sequence:1
+    ) -> Sequence:
         """
         Handle the `jasp.parity` primitive.
 
