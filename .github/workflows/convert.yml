@@ -20,7 +20,7 @@ jobs:
           node-version: 20
 
       - run: npm init -y
-      - run: npm install docx-parser-converter
+      - run: npm install github:omer-go/docx-parser-converter
 
       - run: node scripts/convert.js
 
