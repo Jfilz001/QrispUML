@@ -56,7 +56,7 @@
           <mxGeometry height="50" width="110" x="498" y="249" as="geometry" />
         </mxCell>
         <mxCell id="9GNdMy5nkoyI1TWEOEMZ-2" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="BigInteger" vertex="1">
-          <mxGeometry height="86" width="176" x="682" y="102" as="geometry" />
+          <mxGeometry height="145" width="176" x="682" y="102" as="geometry" />
         </mxCell>
         <mxCell id="9GNdMy5nkoyI1TWEOEMZ-3" parent="9GNdMy5nkoyI1TWEOEMZ-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ digits: jnp.ndarray" vertex="1">
           <mxGeometry height="26" width="176" y="26" as="geometry" />
@@ -65,7 +65,7 @@
           <mxGeometry height="8" width="176" y="52" as="geometry" />
         </mxCell>
         <mxCell id="9GNdMy5nkoyI1TWEOEMZ-5" parent="9GNdMy5nkoyI1TWEOEMZ-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ __call__(): jnp.ndarray | int" vertex="1">
-          <mxGeometry height="26" width="176" y="60" as="geometry" />
+          <mxGeometry height="85" width="176" y="60" as="geometry" />
         </mxCell>
         <mxCell id="9GNdMy5nkoyI1TWEOEMZ-6" parent="1" style="html=1;whiteSpace=wrap;" value="Exception" vertex="1">
           <mxGeometry height="50" width="110" x="498" y="141" as="geometry" />

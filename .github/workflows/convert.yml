@@ -22,11 +22,13 @@ jobs:
       - run: npm init -y
       - run: npm install github:omer-go/docx-parser-converter
 
-      - run: node scripts/convert.js
+      - run: node scripts/converter.js
+
+      - run: git status
 
       - run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add content.html
+          git add documentation/classes/*.html
           git commit -m "Auto convert" || echo "No changes"
           git push
