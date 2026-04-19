@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors</a>
+        <a href="QEnv_QPrim.html">QEnv &amp; QPrimitive</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a href="Metrics.html">Metrics</a>
+        <a class="active" href="AlgorithmsAndProblems.html">Algorithms &amp; Problems</a>
+        <a href="References.html">References</a>
+    </div>
+
+    <div class="content">
+        <h2>
+            <a name="AlgorithmsAndProblems">Algorithms and Problems</a>
+        </h2>
+        <p><img alt="Algorithms and Problems" src="../class_diagrams/Algorithms and Problems.png" /></p>
+
+        <h3>
+            <a name="info">Information about classes and methods</a>
+        </h3>
+        <p>
+            The '<strong>Algorithms and Problems</strong>' diagram collects the high-level problem and benchmark classes
+            that represent complete quantum algorithms. These classes act as entry points for users: they bundle a
+            problem Hamiltonian or cost structure together with the corresponding quantum circuit ansatz or operator, an
+            optional classical optimiser, and helper methods for running, training, and benchmarking. The diagram covers
+            three algorithm families &ndash; VQE, QAOA/QIRO, and DCQO &ndash; plus the quantum backtracking framework.
+        </p>
+
+        <!-- ==================== VQEProblem ==================== -->
+        <h3>
+            <a name="VQEProblem">VQEProblem</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the Qrisp documentation:
+        </p>
+        <p>
+            "<strong>Central structure to facilitate treatment of VQE problems. This class encapsulates the Hamiltonian,
+                the ansatz, and the initial state preparation function for a specific VQE problem instance.</strong>"
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>
+            The constructor receives the following parameters:
+        </p>
+        <p>
+            - '<strong>hamiltonian: QubitOperator | FermionicOperator</strong>' &ndash; the problem Hamiltonian. If a
+            '<strong>FermionicOperator</strong>' is supplied it is automatically converted to a
+            '<strong>QubitOperator</strong>'. The Hamiltonian is hermitized, ladder-conjugate-reduced and
+            threshold-filtered before storage.
+        </p>
+        <p>
+            - '<strong>ansatz_function: callable</strong>' &ndash; a function receiving a
+            '<strong>QuantumVariable</strong>' and an array of real parameters; it applies one layer of the variational
+            ansatz.
+        </p>
+        <p>
+            - '<strong>num_params: int</strong>' &ndash; the number of free parameters per ansatz layer.
+        </p>
+        <p>
+            - '<strong>init_function: callable = None</strong>' &ndash; optional function that prepares the initial
+            state from |0&rang;.
+        </p>
+        <p>
+            - '<strong>callback: bool = False</strong>' &ndash; if '<strong>True</strong>', the cost value of each
+            optimisation step is appended to '<strong>optimization_costs</strong>'.
+        </p>
+        <p>
+            All parameters are instantiated as class attributes. Two additional attributes track callback data:
+        </p>
+        <p>
+            - '<strong>optimization_params: List&lt;Object&gt;</strong>' &ndash; initialised as an empty list;
+            currently never populated (only '<strong>optimization_costs</strong>' is actively filled).
+        </p>
+        <p>
+            - '<strong>optimization_costs: List&lt;float&gt; | List&lt;jax.Array&gt;</strong>' &ndash; stores the cost
+            values of each optimisation step when callback is active.
+        </p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>set_callback</strong>' &ndash; sets '<strong>callback = True</strong>'.
+        </p>
+        <p>
+            - '<strong>set_init_function</strong>' &ndash; replaces the stored '<strong>init_function</strong>'.
+        </p>
+        <p>
+            - '<strong>compile_circuit</strong>' &ndash; compiles the parametrised VQE circuit for a given
+            '<strong>QuantumVariable</strong>' and depth and returns the '<strong>QuantumCircuit</strong>' together with
+            the list of '<strong>sympy.Symbol</strong>' parameters.
+        </p>
+        <p>
+            - '<strong>optimization_routine</strong>' &ndash; runs the classical parameter optimisation loop given a
+            state-preparation callable and measurement keyword arguments.
+        </p>
+        <p>
+            - '<strong>run</strong>' &ndash; executes the full VQE workflow for a given state-preparation callable,
+            depth, and optional solver settings; returns the optimised energy as a <code>float</code> or
+            <code>jax.Array</code> (in tracing mode).
+        </p>
+        <p>
+            - '<strong>train_function</strong>' &ndash; runs the same optimisation as '<strong>run</strong>', but
+            instead of returning the energy it returns a callable that can be applied to a
+            '<strong>QuantumVariable</strong>' to prepare the optimised ground state.
+        </p>
+        <p>
+            - '<strong>benchmark</strong>' &ndash; sweeps over depth, precision, and iteration ranges and returns a
+            '<strong>VQEBenchmark</strong>' object.
+        </p>
+        <p>
+            - '<strong>visualize_energy</strong>' &ndash; plots the energy convergence curve; optionally overlays the
+            exact ground-state energy.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class does not inherit from any Qrisp class. It has an aggregation to '<strong>QubitOperator</strong>'
+            (the stored Hamiltonian) because the operator can exist independently. The callable attributes
+            '<strong>ansatz_function</strong>' and '<strong>init_function</strong>' are treated as first-class objects
+            and are not shown as separate classes in the diagram.
+        </p>
+
+        <!-- ==================== VQEBenchmark ==================== -->
+        <h3>
+            <a name="VQEBenchmark">VQEBenchmark</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the source code: "<strong>This class is a wrapper for representing and evaluating the data
+                collected in the <code>benchmark</code> method.</strong>" It stores the raw performance measurements
+            from multiple VQE runs and exposes analysis utilities.
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>
+            The constructor receives a '<strong>benchmark_data</strong>' dictionary and two additional parameters:
+        </p>
+        <p>
+            - '<strong>optimal_energy: float</strong>' &ndash; the exact ground-state energy of the Hamiltonian, used
+            as the reference for the approximation-ratio metric.
+        </p>
+        <p>
+            - '<strong>hamiltonian: QubitOperator</strong>' &ndash; the problem Hamiltonian against which the runs were
+            benchmarked.
+        </p>
+        <p>
+            The class attributes extracted from '<strong>benchmark_data</strong>' are:
+        </p>
+        <p>- '<strong>layer_depth: List&lt;int&gt;</strong>' &ndash; VQE layer count for each run.</p>
+        <p>- '<strong>circuit_depth: List&lt;int&gt;</strong>' &ndash; compiled circuit depth for each run.</p>
+        <p>- '<strong>qubit_amount: List&lt;int&gt;</strong>' &ndash; qubit count of the compiled circuit for each run.</p>
+        <p>- '<strong>precision: List&lt;float&gt;</strong>' &ndash; Hamiltonian evaluation precision for each run.</p>
+        <p>- '<strong>iterations: List&lt;int&gt;</strong>' &ndash; number of backend calls for each run.</p>
+        <p>- '<strong>energy: List&lt;float&gt;</strong>' &ndash; optimised energy value for each run.</p>
+        <p>- '<strong>runtime: List&lt;float&gt;</strong>' &ndash; wall-clock time in seconds for each run.</p>
+        <p>- '<strong>optimal_energy: float</strong>' &ndash; as described above.</p>
+        <p>- '<strong>hamiltonian: QubitOperator</strong>' &ndash; as described above.</p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>evaluate</strong>' &ndash; evaluates the collected data with a configurable cost metric
+            (default: overall quantum volume) and gain metric (default: approximation ratio); returns two lists of
+            floats <code>(List&lt;float&gt;, List&lt;float&gt;)</code>.
+        </p>
+        <p>
+            - '<strong>visualize</strong>' &ndash; plots a cost-vs-gain scatter diagram using the selected metrics.
+        </p>
+        <p>
+            - '<strong>rank</strong>' &ndash; sorts the runs by a chosen metric; supports averaging across repeated
+            runs with identical parameters ('<strong>average_repetitions=True</strong>') and optional table printing
+            ('<strong>print_res=True</strong>').
+        </p>
+        <p>
+            - '<strong>print_rank_table</strong>' &ndash; prints a formatted table of ranked run data.
+        </p>
+        <p>
+            - '<strong>save</strong>' &ndash; serialises the benchmark object to a file using '<strong>dill</strong>'.
+        </p>
+        <p>
+            - '<strong>load</strong>' &ndash; class method that deserialises a '<strong>VQEBenchmark</strong>' object
+            from a file.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class does not inherit from any Qrisp class. It has an aggregation to '<strong>QubitOperator</strong>',
+            as the Hamiltonian can exist independently of the benchmark wrapper.
+        </p>
+
+        <!-- ==================== QAOAProblem ==================== -->
+        <h3>
+            <a name="QAOAProblem">QAOAProblem</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the Qrisp documentation: "<strong>Central structure to facilitate treatment of QAOA
+                problems. This class encapsulates the cost operator, mixer operator, and classical cost function for a
+                specific QAOA problem instance.</strong>"
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>
+            The constructor receives the following parameters:
+        </p>
+        <p>
+            - '<strong>cost_operator: callable</strong>' &ndash; a function that receives a
+            '<strong>QuantumVariable</strong>' or '<strong>QuantumArray</strong>' and a parameter &gamma; and applies
+            the cost operator.
+        </p>
+        <p>
+            - '<strong>mixer: callable</strong>' &ndash; a function that receives a '<strong>QuantumVariable</strong>'
+            or '<strong>QuantumArray</strong>' and a parameter &beta; and applies the mixer operator.
+        </p>
+        <p>
+            - '<strong>cl_cost_function: callable</strong>' &ndash; the classical cost function that takes a dictionary
+            of measurement results as input.
+        </p>
+        <p>
+            - '<strong>init_function: callable = None</strong>' &ndash; optional function for preparing the initial
+            state; default is the uniform superposition |+&rang;<sup>n</sup>.
+        </p>
+        <p>
+            - '<strong>callback: bool = False</strong>' &ndash; if '<strong>True</strong>', intermediate optimisation
+            results are stored.
+        </p>
+        <p>
+            All parameters become class attributes. Two additional callback attributes are initialised as empty lists:
+            '<strong>optimization_params: List&lt;Object&gt;</strong>' (currently never populated &ndash; only
+            '<strong>optimization_costs</strong>' is actively filled) and
+            '<strong>optimization_costs: List&lt;Float&gt;</strong>'.
+        </p>
+        <h4>Class methods:</h4>
+        <p>- '<strong>set_callback</strong>' &ndash; sets '<strong>callback = True</strong>'.</p>
+        <p>- '<strong>set_init_function</strong>' &ndash; replaces the stored '<strong>init_function</strong>'.</p>
+        <p>
+            - '<strong>computeParams</strong>' &ndash; computes TQA warm-start initial angles &gamma; and &beta; for a
+            given number of partitions and time step; returns a concatenated <code>ndarray | jax.Array</code>.
+        </p>
+        <p>
+            - '<strong>compile_circuit</strong>' &ndash; compiles the parametrised QAOA circuit for a given
+            '<strong>QuantumVariable</strong>' or '<strong>QuantumArray</strong>' and depth and returns the compiled
+            '<strong>QuantumCircuit</strong>' with parameter symbols.
+        </p>
+        <p>- '<strong>optimization_routine</strong>' &ndash; runs the classical optimisation loop.</p>
+        <p>
+            - '<strong>run</strong>' &ndash; executes the full QAOA workflow and returns the measurement results as a
+            <code>dict</code> or <code>jax.Array</code> (in tracing mode).
+        </p>
+        <p>
+            - '<strong>train_function</strong>' &ndash; runs the same optimisation as '<strong>run</strong>', but
+            returns a callable that applies the optimised QAOA circuit in-place to a given
+            '<strong>QuantumVariable</strong>', instead of returning measurement results.
+        </p>
+        <p>
+            - '<strong>benchmark</strong>' &ndash; sweeps over depth, shot, and iteration ranges and returns a
+            '<strong>QAOABenchmark</strong>' object.
+        </p>
+        <p>
+            - '<strong>visualize_cost</strong>' &ndash; plots the cost convergence curve from the callback data.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class does not inherit from any Qrisp class. It is the parent class of
+            '<strong>QIROProblem</strong>'. All operator arguments are callables stored as plain attributes.
+        </p>
+
+        <!-- ==================== QAOABenchmark ==================== -->
+        <h3>
+            <a name="QAOABenchmark">QAOABenchmark</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the source code: "<strong>This class is a wrapper for representing and evaluating the data
+                collected in the <code>benchmark</code> method.</strong>" It is the QAOA counterpart to
+            '<strong>VQEBenchmark</strong>'.
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>
+            The constructor receives a '<strong>benchmark_data</strong>' dictionary, an
+            '<strong>optimal_solution</strong>' and a '<strong>cost_function</strong>' callable. The class attributes
+            extracted from the dictionary are:
+        </p>
+        <p>- '<strong>layer_depth: List&lt;int&gt;</strong>' &ndash; QAOA layer count for each run.</p>
+        <p>- '<strong>circuit_depth: List&lt;int&gt;</strong>' &ndash; compiled circuit depth for each run.</p>
+        <p>- '<strong>qubit_amount: List&lt;int&gt;</strong>' &ndash; qubit count for each run.</p>
+        <p>- '<strong>shots: List&lt;int&gt;</strong>' &ndash; number of shots per backend call for each run.</p>
+        <p>- '<strong>iterations: List&lt;int&gt;</strong>' &ndash; number of backend calls for each run.</p>
+        <p>
+            - '<strong>counts: List&lt;Map&lt;String, Float&gt;&gt;</strong>' &ndash; measurement results of the
+            optimised circuit for each run, as a probability distribution mapping bitstrings to floats.
+        </p>
+        <p>- '<strong>runtime: List&lt;float&gt;</strong>' &ndash; wall-clock time in seconds for each run.</p>
+        <p>- '<strong>optimal_solution</strong>' &ndash; the known optimal solution; type depends on the problem.</p>
+        <p>
+            - '<strong>cost_function: callable</strong>' &ndash; the classical cost function of the benchmarked
+            problem.
+        </p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>evaluate</strong>' &ndash; evaluates performance using configurable cost and gain metrics
+            (default: overall quantum volume and approximation ratio); returns two lists
+            <code>(List&lt;int&gt; | List&lt;float&gt;, List&lt;float&gt;)</code>.
+        </p>
+        <p>- '<strong>visualize</strong>' &ndash; plots a cost-vs-gain scatter diagram.</p>
+        <p>
+            - '<strong>rank</strong>' &ndash; sorts the runs by a chosen metric; supports averaging across repeated
+            runs with identical parameters ('<strong>average_repetitions=True</strong>') and optional table printing
+            ('<strong>print_res=True</strong>').
+        </p>
+        <p>- '<strong>print_rank_table</strong>' &ndash; prints a formatted ranking table.</p>
+        <p>- '<strong>save</strong>' &ndash; serialises the object to a file using '<strong>dill</strong>'.</p>
+        <p>
+            - '<strong>load</strong>' &ndash; class method that deserialises a '<strong>QAOABenchmark</strong>' object
+            from a file.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class does not inherit from any Qrisp class. The '<strong>cost_function</strong>' callable is stored as
+            an attribute; it exists independently, hence it is an aggregation.
+        </p>
+
+        <!-- ==================== QIROProblem ==================== -->
+        <h3>
+            <a name="QIROProblem">QIROProblem</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the source code: "<strong>Central structure to run QIRO algorithms. A subclass of the
+                QAOAProblem class. The idea is based on the paper by J. Finzgar et al.</strong>" QIRO
+            (Quantum-Informed Recursive Optimization) extends QAOA by iteratively reducing the problem graph based on
+            quantum correlation measurements.
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>
+            The constructor receives the following parameters:
+        </p>
+        <p>
+            - '<strong>problem: Any</strong>' &ndash; the problem structure (e.g., a NetworkX graph for MaxClique); a
+            deep copy is stored.
+        </p>
+        <p>
+            - '<strong>replacement_routine: callable</strong>' &ndash; function that adjusts the problem after the
+            highest correlation value is identified.
+        </p>
+        <p>
+            - '<strong>cost_operator: callable</strong>' &ndash; function that receives a single list
+            '<strong>[problem, solutions, exclusions]</strong>' and returns a cost-operator function.
+        </p>
+        <p>
+            - '<strong>mixer: callable</strong>' &ndash; function that receives a single list
+            '<strong>[problem, solutions, exclusions]</strong>' and returns a mixer function.
+        </p>
+        <p>
+            - '<strong>cl_cost_function: callable</strong>' &ndash; the classical cost function for the problem.
+        </p>
+        <p>
+            - '<strong>init_function: callable</strong>' &ndash; a factory callable. In the constructor it is called
+            with no arguments &ndash; '<strong>init_function()</strong>' &ndash; to produce the default
+            initial-state preparation function. During '<strong>run_qiro</strong>' it is called with keyword arguments
+            '<strong>solutions</strong>' and '<strong>exclusions</strong>' to produce an updated preparation function
+            for each recursion step.
+        </p>
+        <p>
+            - '<strong>revert: bool = False</strong>' &ndash; accepted by the constructor but not stored or used;
+            likely a stub for future functionality.
+        </p>
+        <p>
+            The constructor calls the '<strong>QAOAProblem</strong>' parent constructor with the initial operators
+            derived from the problem. Additional unique class attributes are:
+        </p>
+        <p>- '<strong>problem: Any</strong>' &ndash; a deep copy of the problem structure; updated in-place by the replacement routine after each recursion.</p>
+        <p>- '<strong>qiro_cost_operator: callable</strong>' &ndash; the QIRO-specific cost operator generator.</p>
+        <p>- '<strong>qiro_mixer: callable</strong>' &ndash; the QIRO-specific mixer generator.</p>
+        <p>- '<strong>replacement_routine: callable</strong>' &ndash; as described above.</p>
+        <p>- '<strong>qiro_init_function: callable</strong>' &ndash; the stored init-function generator.</p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>run_qiro</strong>' &ndash; executes the full QIRO workflow: runs an initial QAOA pass, then for
+            '<strong>n_recursions</strong>' iterations calls the replacement routine (which identifies the
+            highest-correlation assignment and updates the problem), updates the cost operator, mixer, and init
+            function accordingly, and runs QAOA again. Returns the final measurement result as a <code>dict</code> or
+            <code>jax.Array</code> (in tracing mode).
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class inherits from '<strong>QAOAProblem</strong>' and extends it with additional mutable state: the
+            problem structure and the QIRO-specific callable generators. The '<strong>cost_operator</strong>',
+            '<strong>mixer</strong>', and '<strong>init_function</strong>' attributes inherited from
+            '<strong>QAOAProblem</strong>' are replaced on every recursion step during '<strong>run_qiro</strong>'.
+        </p>
+
+        <!-- ==================== DCQOProblem ==================== -->
+        <h3>
+            <a name="DCQOProblem">DCQOProblem</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the source code: "<strong>General structure to formulate Digitized Counterdiabatic Quantum
+                Optimization problems. This class is used to solve DCQO problems with the algorithms COLD
+                (counterdiabatic optimized local driving) or LCD (local counterdiabatic driving).</strong>"
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>
+            The constructor receives the following parameters (all are instantiated as class attributes):
+        </p>
+        <p>- '<strong>Q: ndarray</strong>' &ndash; the QUBO matrix.</p>
+        <p>- '<strong>H_init: QubitOperator</strong>' &ndash; the initial Hamiltonian at t = 0.</p>
+        <p>- '<strong>H_prob: QubitOperator</strong>' &ndash; the problem Hamiltonian at t = T.</p>
+        <p>
+            - '<strong>A_lam: QubitOperator | List&lt;QubitOperator&gt;</strong>' &ndash; operator approximating the
+            adiabatic gauge potential (AGP).
+        </p>
+        <p>
+            - '<strong>agp_coeffs: callable</strong>' &ndash; the AGP coefficients function; called as
+            <code>agp_coeffs(lam)</code> for LCD and as <code>agp_coeffs(lam, f, f_deriv)</code> for COLD, where
+            <code>f</code> and <code>f_deriv</code> are the control-pulse values.
+        </p>
+        <p>
+            - '<strong>lam_func: callable</strong>' &ndash; scheduling function &lambda;(t, T) mapping t &isin; [0, T]
+            to &lambda; &isin; [0, 1]; must return a sympy expression.
+        </p>
+        <p>
+            - '<strong>g_func: callable = None</strong>' &ndash; inverse of &lambda;(t, T); required only for COLD.
+        </p>
+        <p>
+            - '<strong>H_control: QubitOperator = None</strong>' &ndash; control-pulse Hamiltonian for COLD; if
+            omitted, LCD is used.
+        </p>
+        <p>
+            - '<strong>qarg_prep: callable = None</strong>' &ndash; optional initial-state preparation function; if
+            omitted, the ground state of the X operator |&minus;&rang;<sup>n</sup> is prepared by default.
+        </p>
+        <p>
+            Two further attributes are derived inside the constructor:
+        </p>
+        <p>- '<strong>J: ndarray</strong>' &ndash; 0.5 &times; Q (coupling matrix).</p>
+        <p>
+            - '<strong>h: ndarray</strong>' &ndash; bias vector derived from Q, computed as
+            <code>-0.5 * diag(Q) - 0.5 * rowsum(Q)</code>.
+        </p>
+        <p>
+            Two placeholder attributes are initialised to '<strong>None</strong>' and populated lazily by
+            '<strong>_precompute_timegrid</strong>':
+        </p>
+        <p>- '<strong>lam: ndarray | None</strong>' &ndash; &lambda; values on the time grid.</p>
+        <p>
+            - '<strong>lamdot: ndarray | List&lt;Float&gt; | None</strong>' &ndash; time-derivative &lambda;&#775;
+            values.
+        </p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>_precompute_timegrid</strong>' &ndash; computes the &lambda; and &lambda;&#775; arrays for a
+            given number of time steps, evolution time T, and algorithm method (LCD or COLD).
+        </p>
+        <p>
+            - '<strong>_precompute_opt_pulses</strong>' &ndash; precomputes the sin/cos pulse basis-function matrices
+            used by the COLD optimisation.
+        </p>
+        <p>
+            - '<strong>apply_lcd_hamiltonian</strong>' &ndash; applies the LCD Hamiltonian evolution to a
+            '<strong>QuantumVariable</strong>'.
+        </p>
+        <p>
+            - '<strong>apply_cold_hamiltonian</strong>' &ndash; applies the COLD Hamiltonian evolution to a
+            '<strong>QuantumVariable</strong>'.
+        </p>
+        <p>- '<strong>compile_U_cold</strong>' &ndash; compiles the COLD unitary circuit.</p>
+        <p>
+            - '<strong>optimization_routine</strong>' &ndash; runs the classical optimisation loop for COLD pulse
+            parameters; supports multiple objective functions (<code>"exp_value"</code> or
+            <code>"agp_coeff_magnitude"</code>).
+        </p>
+        <p>- '<strong>QUBO_cost</strong>' &ndash; evaluates the QUBO cost x<sup>T</sup> Q x for a given measurement result.</p>
+        <p>
+            - '<strong>run</strong>' &ndash; executes the full DCQO workflow (LCD or COLD) and returns a dictionary
+            mapping bitstrings to [probability, QUBO cost] pairs.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class does not inherit from any Qrisp class. It has aggregations to '<strong>QubitOperator</strong>'
+            for '<strong>H_init</strong>', '<strong>H_prob</strong>', '<strong>H_control</strong>', and to
+            '<strong>QubitOperator | List&lt;QubitOperator&gt;</strong>' for '<strong>A_lam</strong>', since these
+            operators can exist independently. The callable attributes are plain Python functions stored as first-class
+            objects.
+        </p>
+
+        <!-- ==================== QuantumBacktrackingTree ==================== -->
+        <h3>
+            <a name="QuantumBacktrackingTree">QuantumBacktrackingTree</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            As described in the Qrisp documentation: "<strong>This class describes the central data structure to run
+                backtracking algorithms in a quantum setting. Backtracking algorithms are a very general class of
+                algorithms which cover many problems of combinatorial optimization such as 3-SAT or
+                TSP.</strong>"
+        </p>
+        <p>
+            The quantum version of backtracking is based on the algorithm proposed by Montanaro and achieves a
+            quadratic speed-up over its classical counterpart. A backtracking problem is specified by a maximum
+            recursion depth and two predicate functions &ndash; '<strong>accept</strong>' and
+            '<strong>reject</strong>' &ndash; each returning a '<strong>QuantumBool</strong>'.
+        </p>
+        <p>
+            <strong>Node encoding:</strong> The height of a node (leaves have height 0, the root has height
+            <code>max_depth</code>) is stored in a one-hot '<strong>OHQInt</strong>' attribute
+            '<strong>h</strong>'. The path from the root is stored in reverse order in a
+            '<strong>QuantumArray</strong>' attribute '<strong>branch_qa</strong>'.
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>The constructor receives:</p>
+        <p>- '<strong>max_depth: int</strong>' &ndash; the maximum recursion depth of the tree.</p>
+        <p>
+            - '<strong>branch_qv: QuantumVariable</strong>' &ndash; a template
+            '<strong>QuantumVariable</strong>' whose size determines the branching degree (2<sup>size</sup> branches
+            per node).
+        </p>
+        <p>
+            - '<strong>accept: callable</strong>' &ndash; a function receiving the tree and returning a
+            '<strong>QuantumBool</strong>' indicating whether the current node satisfies the acceptance criterion.
+        </p>
+        <p>
+            - '<strong>reject: callable</strong>' &ndash; a function receiving the tree and returning a
+            '<strong>QuantumBool</strong>' indicating whether the current branch should be pruned.
+        </p>
+        <p>
+            - '<strong>subspace_optimization: bool = False</strong>' &ndash; enables a circuit optimisation that
+            exploits the structure of the non-algorithmic subspace to reduce gate count.
+        </p>
+        <p>The class attributes are:</p>
+        <p>- '<strong>max_depth: int</strong>' &ndash; as above.</p>
+        <p>- '<strong>degree: int</strong>' &ndash; the branching degree, equal to 2<sup>(size of branch_qv)</sup>.</p>
+        <p>- '<strong>branch_qa: QuantumArray</strong>' &ndash; the reversed path register of length '<strong>max_depth</strong>'.</p>
+        <p>- '<strong>h: OHQInt</strong>' &ndash; the one-hot height register of size '<strong>max_depth + 1</strong>'.</p>
+        <p>- '<strong>qs: QuantumSession</strong>' &ndash; the session shared by '<strong>h</strong>' and '<strong>branch_qa</strong>'.</p>
+        <p>- '<strong>accept_function: callable</strong>' &ndash; the stored accept predicate.</p>
+        <p>- '<strong>reject_function: callable</strong>' &ndash; the stored reject predicate.</p>
+        <p>- '<strong>subspace_optimization: bool</strong>' &ndash; as above.</p>
+        <h4>Class methods:</h4>
+        <p>- '<strong>accept</strong>' &ndash; calls '<strong>accept_function(self)</strong>' and returns its '<strong>QuantumBool</strong>' result.</p>
+        <p>- '<strong>reject</strong>' &ndash; calls '<strong>reject_function(self)</strong>' and returns its '<strong>QuantumBool</strong>' result.</p>
+        <p>- '<strong>qstep_diffuser</strong>' &ndash; performs the quantum walk operator R<sub>A</sub> or R<sub>B</sub> (diffuser) for nodes of even or odd height.</p>
+        <p>- '<strong>quantum_step</strong>' &ndash; applies one complete quantum walk step (R<sub>A</sub> followed by R<sub>B</sub>) to the tree state.</p>
+        <p>- '<strong>estimate_phase</strong>' &ndash; performs quantum phase estimation on the quantum walk operator and returns a '<strong>QuantumFloat</strong>' holding the phase estimate.</p>
+        <p>- '<strong>init_phi</strong><code>(path: List&lt;Integer&gt;)</code>' &ndash; initialises the tree into the equal superposition &Phi; state used by the quantum walk.</p>
+        <p>- '<strong>init_node</strong>' &ndash; initialises the tree into the state corresponding to a specific path from the root.</p>
+        <p>- '<strong>subtree</strong>' &ndash; returns a '<strong>Subtree</strong>' object representing the subtree rooted at the given path.</p>
+        <p>- '<strong>copy</strong>' &ndash; returns a deep copy of the tree as a '<strong>Subtree</strong>' object.</p>
+        <p>
+            - '<strong>find_solution</strong>' &ndash; classically traverses the tree by repeatedly calling the
+            quantum algorithm to determine which child node contains a solution; accepts an optional classical
+            <code>cl_accept</code> predicate and measurement kwargs; returns the solution path as a
+            <code>List&lt;Integer&gt;</code>.
+        </p>
+        <p>- '<strong>path_decoder</strong>' &ndash; decodes a measured height and branch-array state into a human-readable path list.</p>
+        <p>- '<strong>statevector</strong>' &ndash; returns a SymPy quantum state representing the tree's statevector with decoded node labels.</p>
+        <p>
+            - '<strong>statevector_graph</strong><code>(return_root: bool = False)</code>' &ndash; returns a NetworkX
+            <code>DiGraph</code> representing the quantum state as a tree; nodes carry a complex
+            <code>amplitude</code> attribute. If <code>return_root=True</code>, returns a tuple
+            <code>(DiGraph, QBTNode)</code> where the second element is the root node.
+        </p>
+        <p>- '<strong>visualize_statevector</strong>' &ndash; plots the statevector graph using matplotlib.</p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            The class does not inherit from any Qrisp class. It has a composition to
+            '<strong>QuantumArray</strong>' ('<strong>branch_qa</strong>') and to '<strong>OHQInt</strong>'
+            ('<strong>h</strong>'), since both quantum registers only exist in the context of a specific tree instance.
+            The '<strong>QuantumSession</strong>' is an aggregation, as it can exist independently. The callable
+            predicates '<strong>accept_function</strong>' and '<strong>reject_function</strong>' are stored as plain
+            Python functions.
+        </p>
+
+        <!-- ==================== Supporting Classes ==================== -->
+        <h3>
+            <a name="SupportingClasses">Supporting Classes</a>
+        </h3>
+
+        <h3>
+            <a name="Subtree">Subtree</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            '<strong>Subtree</strong>' is a subclass of '<strong>QuantumBacktrackingTree</strong>' that represents a
+            subtree of a larger tree rooted at a specific path. It allows the quantum backtracking algorithm to focus
+            on a subset of the search space from a given node downward.
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>The constructor receives:</p>
+        <p>
+            - '<strong>parent_tree: QuantumBacktrackingTree</strong>' &ndash; the full tree from which this subtree is
+            extracted.
+        </p>
+        <p>
+            - '<strong>root_path: List&lt;Integer&gt;</strong>' &ndash; the path from the root of
+            '<strong>parent_tree</strong>' to the root of this subtree.
+        </p>
+        <p>
+            The parent constructor is called internally to set up the standard
+            '<strong>QuantumBacktrackingTree</strong>' attributes, re-using the same accept/reject callables and depth
+            settings. Additional class attributes set during construction:
+        </p>
+        <p>- '<strong>root_path: List&lt;Integer&gt;</strong>' &ndash; as above.</p>
+        <p>
+            - '<strong>original_tree: QuantumBacktrackingTree</strong>' &ndash; reference to
+            '<strong>parent_tree</strong>'; set internally, not passed as a parameter.
+        </p>
+        <p>
+            - '<strong>max_depth: int</strong>' &ndash; adjusted depth:
+            <code>parent_tree.max_depth - len(root_path)</code>.
+        </p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>init_node</strong><code>(path)</code>' &ndash; initialises the subtree to the node at
+            <code>root_path + path</code>: sets '<strong>h</strong>' to <code>max_depth - len(path)</code> and writes
+            the combined path into '<strong>branch_qa</strong>' in reverse order (<code>path[::-1]</code>).
+        </p>
+        <p>
+            - '<strong>init_phi</strong><code>(path)</code>' &ndash; initialises the &Phi; superposition state: builds
+            '<strong>h_state</strong>' with amplitude &radic;<code>max_depth</code> at height
+            '<strong>max_depth</strong>' and alternating signs (-1)<sup>i</sup> at lower heights, then conditionally
+            encodes '<strong>root_path</strong>' and '<strong>path</strong>' into '<strong>branch_qa</strong>' for each
+            height level.
+        </p>
+        <p>
+            - '<strong>subtree</strong><code>(path: List&lt;Integer&gt;)</code>' &ndash; delegates to
+            '<strong>original_tree.subtree(path)</strong>' and returns a '<strong>Subtree</strong>'. Note: the current
+            '<strong>root_path</strong>' offset is <strong>not</strong> applied &mdash; the path is always interpreted
+            relative to the top-level tree's root.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            '<strong>Subtree</strong>' inherits from '<strong>QuantumBacktrackingTree</strong>' and overrides the
+            initialisation methods to account for the offset caused by the non-root starting position. The
+            '<strong>original_tree</strong>' reference allows the subtree to delegate to the top-level tree's registers
+            where appropriate.
+        </p>
+
+        <h3>
+            <a name="QBTNode">QBTNode</a>
+        </h3>
+        <h4>Class functionality:</h4>
+        <p>
+            '<strong>QBTNode</strong>' is a classical Python object that represents a single node in a
+            '<strong>QuantumBacktrackingTree</strong>'. It is used during the classical traversal phase
+            ('<strong>find_solution</strong>') to identify which child node contains a solution, based on quantum
+            amplitude estimation.
+        </p>
+        <h4>Class constructor and attributes:</h4>
+        <p>The constructor receives:</p>
+        <p>- '<strong>tree: QuantumBacktrackingTree</strong>' &ndash; the tree to which this node belongs.</p>
+        <p>- '<strong>path: List&lt;Integer&gt;</strong>' &ndash; the path from the root to this node as a list of branch indices.</p>
+        <p>
+            - '<strong>amplitude: numpy.complex128 = None</strong>' &ndash; the estimated quantum amplitude associated
+            with this node.
+        </p>
+        <p>The class attributes are:</p>
+        <p>
+            - '<strong>h: int</strong>' &ndash; the height of the node, computed internally as
+            <code>tree.max_depth - len(path)</code> (0 = leaf, <code>max_depth</code> = root).
+        </p>
+        <p>- '<strong>path: List&lt;Integer&gt;</strong>', '<strong>tree</strong>', '<strong>amplitude: numpy.complex128</strong>' &ndash; as above.</p>
+        <h4>Class methods:</h4>
+        <p>
+            - '<strong>sv_specifier</strong>' &ndash; returns a dictionary mapping quantum registers to classical
+            values encoding this node's position: <code>tree.h</code> &rarr; node height; each entry of
+            <code>tree.branch_qa</code> (in reversed index order) &rarr; the corresponding branch decision, padded
+            with <code>0</code> for levels beyond the path length. If the node belongs to a
+            '<strong>Subtree</strong>', '<strong>root_path</strong>' is prepended to the local path to form the global
+            path before encoding.
+        </p>
+        <p>
+            - '<strong>__hash__</strong>' &ndash; hashes the node based on <code>str(self.path)</code> only;
+            '<strong>tree</strong>' and '<strong>amplitude</strong>' are ignored, so nodes from different trees with
+            the same path will collide.
+        </p>
+        <p>- '<strong>__str__</strong>' &ndash; returns <code>"QBTNode(path = ..., amplitude = ...)"</code>.</p>
+        <p>- '<strong>__repr__</strong>' &ndash; delegates to '<strong>__str__</strong>'.</p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            '<strong>QBTNode</strong>' is a plain Python class with no Qrisp inheritance. The
+            '<strong>tree</strong>' reference is an aggregation. Instances are created transiently inside
+            '<strong>statevector_graph</strong>' to represent nodes in the statevector DiGraph; they are not stored in
+            the tree itself.
+        </p>
+
+        <p>
+            This concludes the '<strong>Algorithms and Problems</strong>' class diagram.
+        </p>
+
+    </div>
+</body>
+
+</html>
