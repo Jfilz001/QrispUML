@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { convertDocxToHtml } = require("docx-parser-converter");
+const { convertDocxToHtml } = require("../vendor/docx-parser-converter");
 
 function extractSection(html, name) {
     const regex = new RegExp(
