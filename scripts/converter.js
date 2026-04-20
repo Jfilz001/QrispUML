@@ -3,7 +3,7 @@ const { convertDocxToHtml } = require("../vendor/docx-parser-converter");
 
 function extractSection(html, name) {
     const regex = new RegExp(
-        `<!-- START: ${name} -->([\\s\\S]*?)<!-- END: ${name} -->`,
+        `START_${name.toUpperCase()}([\\s\\S]*?)END_${name.toUpperCase()}`,
         "i"
     );
     const match = html.match(regex);
@@ -26,10 +26,7 @@ function extractSection(html, name) {
         
         const content = extractSection(html, section);
 
-        const output = template.replace(
-            "<!-- DOCX_CONTENT -->",
-            content
-        );
+        const output = template.replace(/<!-- DOCX_CONTENT -->/g, content)
 
         fs.writeFileSync(`./documentation/classes/${section}.html`, output);
     });
