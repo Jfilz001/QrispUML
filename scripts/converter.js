@@ -26,7 +26,7 @@ function extractSection(html, name) {
         
         const content = extractSection(html, section);
 
-        const output = template.replace(/<!-- DOCX_CONTENT -->/g, content)
+        const output = template.replace(/<!-- DOCX_CONTENT -->/g, content);
 
         fs.writeFileSync(`./documentation/classes/${section}.html`, output);
     });
