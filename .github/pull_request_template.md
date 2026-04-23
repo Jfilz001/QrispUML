@@ -33,7 +33,6 @@ If yes, describe the impact and migration path:
 <!-- Bullet list of concrete changes -->
 -
 -
--
 
 ## How was it tested?
 
