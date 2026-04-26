@@ -21,7 +21,7 @@ import time
 import random
 import numpy as np
 
-from qrisp.core import QuantumSession, QuantumVariable
+from qrisp.core import QuantumSession, QuantumVariable, xxyy
 from qrisp.circuit import RYGate, RXGate, transpile, HGate, ZGate, PGate, XGate, MCXGate
 from sympy import Symbol, simplify
 
