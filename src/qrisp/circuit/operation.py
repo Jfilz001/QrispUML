@@ -282,8 +282,6 @@ class Operation:
             
             res.params = list(self.params)
             res.abstract_params = set(self.abstract_params)
-            res.permeability = dict(self.permeability)
-            res.is_qfree = self.is_qfree
 
         elif self.name == "qb_alloc":
             from qrisp.circuit import QubitDealloc

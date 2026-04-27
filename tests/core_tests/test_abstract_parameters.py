@@ -104,4 +104,4 @@ def test_abstract_parameters():
 
     inv_op = op.inverse()
 
-    assert len(inv_ops.params)
+    assert len(inv_op.params)
