@@ -78,7 +78,7 @@ def create_maxcut_cl_cost_function(G: nx.Graph) -> Callable[[dict], float]:
 
     Returns
     -------
-    cl_cost_function : function
+    cl_cost_function : Callable[[dict], float]
         The classical cost function for the problem instance, which takes a
         dictionary of measurement results as input.
 
@@ -115,7 +115,7 @@ def extract_boolean_digit(integer: Any, digit: Any) -> Any:
     return (integer >> digit) & 1
 
 
-def create_cut_computer(G: nx.Graph) -> Callable[[Any], Any]:
+def create_cut_computer(G: nx.Graph) -> Callable[[int], jnp.ndarray]:
     """
     Create a JIT-compiled function that computes the cut value for a given graph G.
 
@@ -126,14 +126,14 @@ def create_cut_computer(G: nx.Graph) -> Callable[[Any], Any]:
 
     Returns
     -------
-    cut_computer : function
+    cut_computer : Callable[[int], jnp.ndarray]
         A JIT-compiled function mapping an integer bitstring to its (negated) cut value.
 
     """
     edge_list = jnp.array(G.edges())
 
     @jit
-    def cut_computer(x: Any) -> Any:
+    def cut_computer(x: int) -> jnp.ndarray:
         x_uint = jnp.uint32(x)
         bools = extract_boolean_digit(x_uint, edge_list[:, 0]) != extract_boolean_digit(
             x_uint, edge_list[:, 1]
@@ -156,7 +156,7 @@ def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable[[Any], An
 
     Returns
     -------
-    post_processor : function
+    post_processor : Callable[[Any], Any]
         A function that takes a sample array and returns the mean cut value.
 
     """
@@ -184,7 +184,7 @@ def create_maxcut_cost_operator(
 
     Returns
     -------
-    maxcut_cost_operator : function
+    maxcut_cost_operator : Callable[[QuantumVariable, float], None]
         A function receiving a :ref:`QuantumVariable` and a real parameter $\gamma$.
         This function performs the application of the cost operator.
 
