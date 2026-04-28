@@ -18,7 +18,8 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Callable
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import jax.numpy as jnp
 import numpy as np
@@ -35,13 +36,13 @@ if TYPE_CHECKING:
     from qrisp.core import QuantumVariable
 
 
-def maxcut_obj(x: str, G: nx.Graph) -> int:
+def maxcut_obj(x: str, G: nx.Graph):
     """Compute the MaxCut objective value for a single bitstring and graph G."""
     return maxcut_obj_jitted(int(x[::-1], 2), list(G.edges()))
 
 
 @njit(cache=True)
-def maxcut_obj_jitted(x: int, edge_list: list[tuple[int, int]] | np.ndarray) -> int:
+def maxcut_obj_jitted(x, edge_list: list[tuple[int, int]] | np.ndarray):
     """JIT-compiled MaxCut objective: count edges crossing the cut encoded by integer x."""
     cut = 0
     for i, j in edge_list:
@@ -56,7 +57,7 @@ def maxcut_obj_jitted(x: int, edge_list: list[tuple[int, int]] | np.ndarray) -> 
 def maxcut_energy(
     outcome_array: np.ndarray,
     count_array: np.ndarray,
-    edge_list: np.ndarray,
+    edge_list: list[tuple[int, int]] | np.ndarray,
 ) -> float:
     """Compute the weighted sum of MaxCut objectives over all measurement outcomes."""
     res_array = np.zeros(len(outcome_array))
@@ -78,7 +79,7 @@ def create_maxcut_cl_cost_function(G: nx.Graph) -> Callable[[dict], float]:
 
     Returns
     -------
-    cl_cost_function : Callable[[dict], float]
+    Callable[[dict], float]
         The classical cost function for the problem instance, which takes a
         dictionary of measurement results as input.
 
@@ -86,7 +87,7 @@ def create_maxcut_cl_cost_function(G: nx.Graph) -> Callable[[dict], float]:
 
     def cl_cost_function(counts: dict) -> float:
 
-        edge_list = np.array(list(G.edges()), dtype=np.uint32)
+        edge_array = np.array(list(G.edges()), dtype=np.uint32)
 
         counts_keys = list(counts.keys())
 
@@ -104,13 +105,13 @@ def create_maxcut_cl_cost_function(G: nx.Graph) -> Callable[[dict], float]:
         counts_array = np.array(list(counts.values()))
         outcome_array = np.array(int_list, dtype=np.uint32)
 
-        return maxcut_energy(outcome_array, counts_array, edge_list)
+        return maxcut_energy(outcome_array, counts_array, edge_array)
 
     return cl_cost_function
 
 
 @jit
-def extract_boolean_digit(integer: Any, digit: Any) -> Any:
+def extract_boolean_digit(integer, digit):
     """Extract a single boolean digit from an integer at the given bit position."""
     return (integer >> digit) & 1
 
@@ -126,7 +127,7 @@ def create_cut_computer(G: nx.Graph) -> Callable[[int], jnp.ndarray]:
 
     Returns
     -------
-    cut_computer : Callable[[int], jnp.ndarray]
+    Callable[[int], jnp.ndarray]
         A JIT-compiled function mapping an integer bitstring to its (negated) cut value.
 
     """
@@ -145,7 +146,7 @@ def create_cut_computer(G: nx.Graph) -> Callable[[int], jnp.ndarray]:
     return cut_computer
 
 
-def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable[[Any], Any]:
+def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable:
     """
     Create a post-processor that computes the average cut value over a sample array.
 
@@ -156,13 +157,13 @@ def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable[[Any], An
 
     Returns
     -------
-    post_processor : Callable[[Any], Any]
+    Callable
         A function that takes a sample array and returns the mean cut value.
 
     """
     cut_computer = create_cut_computer(G)
 
-    def post_processor(sample_array: Any) -> Any:
+    def post_processor(sample_array):
         # Use vmap for automatic vectorization
         cut_values = vmap(cut_computer)(sample_array)
         average_cut = jnp.mean(cut_values)
@@ -171,9 +172,7 @@ def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable[[Any], An
     return post_processor
 
 
-def create_maxcut_cost_operator(
-    G: nx.Graph,
-) -> Callable[[QuantumVariable, float], None]:
+def create_maxcut_cost_operator(G: nx.Graph) -> Callable:
     r"""
     Creates the cost operator for an instance of the maximum cut problem for a given graph ``G``.
 
@@ -184,13 +183,13 @@ def create_maxcut_cost_operator(
 
     Returns
     -------
-    maxcut_cost_operator : Callable[[QuantumVariable, float], None]
-        A function receiving a :ref:`QuantumVariable` and a real parameter $\gamma$.
-        This function performs the application of the cost operator.
+    Callable[[QuantumVariable, float | sympy.Symbol], None]
+        A function receiving a :ref:`QuantumVariable` and a real parameter $\gamma$
+        or a symbolic parameter. This function performs the application of the cost operator.
 
     """
 
-    def maxcut_cost_operator(qv: QuantumVariable, gamma: float) -> None:
+    def maxcut_cost_operator(qv: QuantumVariable, gamma) -> None:
 
         if not check_for_tracing_mode():
             if len(G) != len(qv):
