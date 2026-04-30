@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
   <diagram name="Seite-1" id="hKLSbzFRI6iP0A3Vmtno">
-    <mxGraphModel dx="6303" dy="4205" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="851" dy="989" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -86,109 +86,109 @@
           <mxGeometry height="280" width="340" x="5790" y="330" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-24" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;QubitTerm&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;factor_dict: Map&amp;lt;Integer, String&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;hash_value: int&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ QubitTerm(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;factor_dict: Map&amp;lt;Integer, String&amp;gt;&amp;nbsp;= {}&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;update(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;update_dict: Map&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;lt;Integer, String&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;hash&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;__hash__(): int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;operation&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;__eq__(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;other: QubitTerm&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;): bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;copy():&amp;nbsp;QubitTerm&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;is_identity(): bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;binary_representation(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;n: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;): (np.ndarray, np.ndarray)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;serialize(): (int, int, int, int)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;to_pauli():&amp;nbsp;QubitOperator | int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;adjoint(): QubitTerm&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;custom_control&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;simulate(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;coeff:&amp;nbsp;float | sympy.Symbol,&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;qv: List&amp;lt;Qubit&amp;gt; | QuantumVariable,&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;ctrl: Qubit | None = null&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;__str__(): String&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;representation&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;__repr__(): String&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;non_trivial_indices(): Set&amp;lt;Integer&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;to_expr(): int |&amp;nbsp;sympy.Expr&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;operation&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;__pow__(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;e: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;):&amp;nbsp;QubitTerm&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;operation&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;__mul__(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;other: QubitTerm&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;): (QubitTerm, int | complex)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;subs(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;subs_dict: Map&amp;lt;int, int | float | complex&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;): (QubitTerm,&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;int | float | complex)&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;unitary(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;sign: bool = false&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): callable&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;apply_unitary(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;operand: QuantumVariable | List&amp;lt;Qubit&amp;gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;,&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;sign: bool = false&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;commutator(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;QubitOperator&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;commute(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;commute_pauli(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;commute_qw(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;intersect(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;ladders_agree(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;ladders_intersect(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;QubitTerm&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="1480" width="340" x="6850" y="330" as="geometry" />
+          <mxGeometry height="1480" width="340" x="6660" y="330" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-25" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;irdl_attr_definition&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;QubitType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;u&gt;+ name: String&lt;/u&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="70" width="340" x="7344" y="330" as="geometry" />
+          <mxGeometry height="70" width="340" x="7154" y="330" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-26" edge="1" parent="1" source="reybua-E5NZ5rw-S3tzq-25" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="reybua-E5NZ5rw-S3tzq-27" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="7429" y="300" as="sourcePoint" />
-            <mxPoint x="7429" y="160" as="targetPoint" />
+            <mxPoint x="7239" y="300" as="sourcePoint" />
+            <mxPoint x="7239" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-27" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;ParametrizedAttribute&lt;/b&gt;" vertex="1">
-          <mxGeometry height="50" width="160" x="7340" y="140" as="geometry" />
+          <mxGeometry height="50" width="160" x="7150" y="140" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-28" edge="1" parent="1" source="reybua-E5NZ5rw-S3tzq-25" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="reybua-E5NZ5rw-S3tzq-29" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="7738" y="330" as="sourcePoint" />
-            <mxPoint x="7644" y="189.9999999999999" as="targetPoint" />
+            <mxPoint x="7548" y="330" as="sourcePoint" />
+            <mxPoint x="7454" y="189.9999999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-29" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;TypeAttribute&lt;/b&gt;" vertex="1">
-          <mxGeometry height="50" width="110" x="7574" y="140" as="geometry" />
+          <mxGeometry height="50" width="110" x="7384" y="140" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-31" edge="1" parent="1" source="reybua-E5NZ5rw-S3tzq-33" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="reybua-E5NZ5rw-S3tzq-32" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="7922" y="330" as="sourcePoint" />
-            <mxPoint x="7837" y="160" as="targetPoint" />
+            <mxPoint x="7732" y="330" as="sourcePoint" />
+            <mxPoint x="7647" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-32" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;Exception&lt;/b&gt;" vertex="1">
-          <mxGeometry height="50" width="110" x="7867" y="140" as="geometry" />
+          <mxGeometry height="50" width="110" x="7677" y="140" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-33" parent="1" style="html=1;whiteSpace=wrap;" value="RemovedFunctionError" vertex="1">
-          <mxGeometry height="50" width="170" x="7837" y="330" as="geometry" />
+          <mxGeometry height="50" width="170" x="7647" y="330" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-34" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;irdl_op_definition&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;ResetOp&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;u&gt;+&amp;nbsp;name: String&lt;br&gt;&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;qubits:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;SSAValue&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;in_qst:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;SSAValue&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;out_qst:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;OpResult&amp;lt;QuantumStateType&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;u&gt;+&amp;nbsp;&lt;/u&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;u&gt;assembly_format: String&lt;/u&gt;&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="140" width="340" x="8140" y="330" as="geometry" />
+          <mxGeometry height="140" width="340" x="7950" y="330" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-35" edge="1" parent="1" source="reybua-E5NZ5rw-S3tzq-34" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="reybua-E5NZ5rw-S3tzq-36" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="8225" y="300" as="sourcePoint" />
-            <mxPoint x="8225" y="160" as="targetPoint" />
+            <mxPoint x="8035" y="300" as="sourcePoint" />
+            <mxPoint x="8035" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-36" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;IRDLOperation&lt;/b&gt;" vertex="1">
-          <mxGeometry height="50" width="110" x="8255" y="140" as="geometry" />
+          <mxGeometry height="50" width="110" x="8065" y="140" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-37" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;irdl_op_definition&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;SliceOp&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;u&gt;+&amp;nbsp;name: String&lt;br&gt;&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;qb_array:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;SSAValue&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;start:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;SSAValue&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ end:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;SSAValue&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ result:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;OpResult&amp;lt;QubitArrayType&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;u&gt;+&amp;nbsp;&lt;/u&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;u&gt;assembly_format: String&lt;/u&gt;&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="150" width="340" x="8600" y="330" as="geometry" />
+          <mxGeometry height="150" width="340" x="8410" y="330" as="geometry" />
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-38" edge="1" parent="1" source="reybua-E5NZ5rw-S3tzq-37" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="reybua-E5NZ5rw-S3tzq-39" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="8685" y="300" as="sourcePoint" />
-            <mxPoint x="8685" y="160" as="targetPoint" />
+            <mxPoint x="8495" y="300" as="sourcePoint" />
+            <mxPoint x="8495" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="reybua-E5NZ5rw-S3tzq-39" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;IRDLOperation&lt;/b&gt;" vertex="1">
-          <mxGeometry height="50" width="110" x="8715" y="140" as="geometry" />
+          <mxGeometry height="50" width="110" x="8525" y="140" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;StaticArg&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;val: Object&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;StaticArg(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;val: Object&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&amp;lt;&amp;lt;hash&amp;gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;__hash__(): int&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&amp;lt;&amp;lt;operation&amp;gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;__eq__(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;other: Object&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;): bool&lt;/span&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="230" width="340" x="9080" y="330" as="geometry" />
+          <mxGeometry height="230" width="340" x="8890" y="330" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-2" edge="1" parent="1" source="CpFfVPbHbds-YQ-v5_ED-4" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="CpFfVPbHbds-YQ-v5_ED-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="9615" y="330" as="sourcePoint" />
-            <mxPoint x="9530" y="160" as="targetPoint" />
+            <mxPoint x="9425" y="330" as="sourcePoint" />
+            <mxPoint x="9340" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-3" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;b&gt;np.ndarray&lt;/b&gt;" vertex="1">
-          <mxGeometry height="50" width="110" x="9910" y="100" as="geometry" />
+          <mxGeometry height="50" width="110" x="9720" y="100" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-4" parent="1" style="html=1;whiteSpace=wrap;" value="StimMeasurementHandles" vertex="1">
-          <mxGeometry height="50" width="170" x="9550" y="330" as="geometry" />
+          <mxGeometry height="50" width="170" x="9360" y="330" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-5" edge="1" parent="1" source="CpFfVPbHbds-YQ-v5_ED-6" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="CpFfVPbHbds-YQ-v5_ED-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="9845" y="330" as="sourcePoint" />
-            <mxPoint x="9845" y="190" as="targetPoint" />
+            <mxPoint x="9655" y="330" as="sourcePoint" />
+            <mxPoint x="9655" y="190" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-6" parent="1" style="html=1;whiteSpace=wrap;" value="StimDetectorHandles" vertex="1">
-          <mxGeometry height="50" width="170" x="9770" y="330" as="geometry" />
+          <mxGeometry height="50" width="170" x="9580" y="330" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-7" parent="1" style="html=1;whiteSpace=wrap;" value="StimObservableHandles" vertex="1">
-          <mxGeometry height="50" width="170" x="9990" y="330" as="geometry" />
+          <mxGeometry height="50" width="170" x="9800" y="330" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-8" edge="1" parent="1" source="CpFfVPbHbds-YQ-v5_ED-7" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="CpFfVPbHbds-YQ-v5_ED-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="10165" y="295.0344827586207" as="sourcePoint" />
-            <mxPoint x="9910" y="110" as="targetPoint" />
+            <mxPoint x="9975" y="295.0344827586207" as="sourcePoint" />
+            <mxPoint x="9720" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-9" parent="1" style="html=1;whiteSpace=wrap;" value="StimQubitIndices" vertex="1">
-          <mxGeometry height="50" width="170" x="10210" y="330" as="geometry" />
+          <mxGeometry height="50" width="170" x="10020" y="330" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-10" edge="1" parent="1" source="CpFfVPbHbds-YQ-v5_ED-9" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="CpFfVPbHbds-YQ-v5_ED-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="10400" y="295.0344827586207" as="sourcePoint" />
-            <mxPoint x="9960" y="150" as="targetPoint" />
+            <mxPoint x="10210" y="295.0344827586207" as="sourcePoint" />
+            <mxPoint x="9770" y="150" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-11" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TracingQuantumSession&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;u&gt;+&amp;nbsp;tr_qs_container: List&amp;lt;TracingQuantumSession&amp;gt;&lt;br&gt;&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;u&gt;+&amp;nbsp;abs_qst_stack: List&amp;lt;&lt;/u&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;u&gt;AbstractQuantumState&lt;/u&gt;&lt;/span&gt;&lt;u style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;gt;&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;u&gt;+&amp;nbsp;qubit_cache_stack: List&amp;lt;&lt;/u&gt;&lt;u style=&quot;background-color: transparent;&quot;&gt;Map&amp;lt;(int, int), Tracer&amp;gt;&amp;gt;&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;abs_qst:&amp;nbsp;AbstractQuantumState | None&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;qv_list: List&amp;lt;QuantumVariable&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;deleted_qv_list: List&amp;lt;QuantumVariable&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;qubit_cache:&amp;nbsp;Map&amp;lt;(int, int), Tracer&amp;gt; | None&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;qv_stack: List&amp;lt;(&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;List&amp;lt;QuantumVariable&amp;gt;,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;List&amp;lt;QuantumVariable&amp;gt;)&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;TracingQuantumSession()&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;start_tracing(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;abs_qst:&amp;nbsp;AbstractQuantumState&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;conclude_tracing():&amp;nbsp;AbstractQuantumState&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;append(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;operation: Operation,&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;qubits: List&amp;lt;QuantumVariable | DynamicQubitArray | QuantumArray | List&amp;lt;Tracer&amp;gt; | Tracer&amp;gt; = [],&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;clbits: List&amp;lt;Clbit&amp;gt; = [],&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;param_tracers: List&amp;lt;Tracer&amp;gt; = []&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;register_qv(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;qv: QuantumVariable,&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;size: int | None&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;request_qubits(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;amount: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;):&amp;nbsp;DynamicQubitArray&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;delete_qv(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;qv: QuantumVariable,&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;verify: bool = false&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;clear_qubits(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;qubits: DynamicQubitArray,&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;verify: bool = false&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;classmethod&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;release()&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;lt;&amp;lt;classmethod&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;get_instance():&amp;nbsp;TracingQuantumSession | None&lt;/p&gt;" vertex="1">
-          <mxGeometry height="730" width="530" x="10540" y="330" as="geometry" />
+          <mxGeometry height="730" width="530" x="10350" y="330" as="geometry" />
         </mxCell>
         <mxCell id="CpFfVPbHbds-YQ-v5_ED-12" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;VarTracker&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;var_to_int_dic: Map&amp;lt;Var, Integer&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;int_to_var_dic: Map&amp;lt;Integer, Var&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;eqn_invar_list: List&amp;lt;Integer&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;eqn_outvar_list: List&amp;lt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Integer&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;invar_eqn_index_tracker: List&amp;lt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Integer&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;outvar_eqn_index_tracker:&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;List&amp;lt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Integer&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;VarTracker(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;eqn_list:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;List&amp;lt;JaxprEqn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ append(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;eqn:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;JaxprEqn&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;slice_start(&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;starting_point: int&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;VarTracker&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;slice_end(&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;end_point: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;):&amp;nbsp;VarTracker&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;find_invars(): List&amp;lt;Var&amp;gt;&lt;/p&gt;" vertex="1">
           <mxGeometry height="390" width="340" x="11540" y="330" as="geometry" />
@@ -340,20 +340,20 @@
         <mxCell id="QuX8dQmtthqmXQzMviBv-18" edge="1" parent="1" source="QuX8dQmtthqmXQzMviBv-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;dashed=1;" target="reybua-E5NZ5rw-S3tzq-34" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points" />
-            <mxPoint x="8310" y="460.0000000000002" as="targetPoint" />
+            <mxPoint x="8120" y="460.0000000000002" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="QuX8dQmtthqmXQzMviBv-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;" value="xdsl_dialect.py" vertex="1">
-          <mxGeometry height="60" width="120" x="8250" y="600" as="geometry" />
+          <mxGeometry height="60" width="120" x="8060" y="600" as="geometry" />
         </mxCell>
         <mxCell id="QuX8dQmtthqmXQzMviBv-20" edge="1" parent="1" source="QuX8dQmtthqmXQzMviBv-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;dashed=1;" target="reybua-E5NZ5rw-S3tzq-37" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points" />
-            <mxPoint x="8780" y="470" as="targetPoint" />
+            <mxPoint x="8590" y="470" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="QuX8dQmtthqmXQzMviBv-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;" value="xdsl_dialect.py" vertex="1">
-          <mxGeometry height="60" width="120" x="8710" y="600" as="geometry" />
+          <mxGeometry height="60" width="120" x="8520" y="600" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-1" parent="1" style="html=1;whiteSpace=wrap;" value="QuantumSession" vertex="1">
           <mxGeometry height="50" width="120" x="2340" y="415" as="geometry" />
@@ -403,22 +403,22 @@
           <mxGeometry height="50" width="120" x="6430" y="350" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="6220" y="490" as="geometry" />
+          <mxGeometry height="30" width="60" x="6220" y="420" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
-          <mxGeometry height="30" width="60" x="6130" y="490" as="geometry" />
+          <mxGeometry height="30" width="60" x="6130" y="420" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-24" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;Operation&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="120" x="6280" y="495" as="geometry" />
+          <mxGeometry height="50" width="120" x="6280" y="425" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-25" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;endSize=12;" target="6ymsEfDAAEcElMQNdhLK-22">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="6240" y="520.5" />
-              <mxPoint x="6130" y="520.5" />
+              <mxPoint x="6240" y="450.5" />
+              <mxPoint x="6130" y="450.5" />
             </Array>
-            <mxPoint x="6280" y="520" as="sourcePoint" />
-            <mxPoint x="6190" y="520" as="targetPoint" />
+            <mxPoint x="6280" y="450" as="sourcePoint" />
+            <mxPoint x="6190" y="450" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-26" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;endSize=12;">
@@ -429,60 +429,60 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-27" parent="1" style="html=1;whiteSpace=wrap;" value="TracingQuantumSession" vertex="1">
-          <mxGeometry height="50" width="160" x="11220" y="355" as="geometry" />
+          <mxGeometry height="50" width="160" x="11030" y="355" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="11160" y="350" as="geometry" />
+          <mxGeometry height="30" width="60" x="10970" y="350" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-29" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="11070" y="350" as="geometry" />
+          <mxGeometry height="30" width="60" x="10880" y="350" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-30" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=diamondThin;endFill=0;" target="6ymsEfDAAEcElMQNdhLK-29">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="11120" y="380" />
-              <mxPoint x="11120" y="380" />
+              <mxPoint x="10930" y="380" />
+              <mxPoint x="10930" y="380" />
             </Array>
-            <mxPoint x="11211" y="380" as="sourcePoint" />
-            <mxPoint x="11121" y="381" as="targetPoint" />
+            <mxPoint x="11021" y="380" as="sourcePoint" />
+            <mxPoint x="10931" y="381" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-31" parent="1" style="html=1;whiteSpace=wrap;" value="AbstractQuantumState" vertex="1">
-          <mxGeometry height="50" width="160" x="11220" y="425" as="geometry" />
+          <mxGeometry height="50" width="160" x="11160" y="455" as="geometry" />
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="11160" y="420" as="geometry" />
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0..1" vertex="1">
+          <mxGeometry height="30" width="60" x="11100" y="450" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-33" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="11070" y="420" as="geometry" />
+          <mxGeometry height="30" width="60" x="10880" y="450" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-34" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=diamondThin;endFill=0;" target="6ymsEfDAAEcElMQNdhLK-33">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="11120" y="450" />
-              <mxPoint x="11120" y="450" />
+              <mxPoint x="10930" y="480" />
+              <mxPoint x="10930" y="480" />
             </Array>
-            <mxPoint x="11211" y="450" as="sourcePoint" />
-            <mxPoint x="11121" y="451" as="targetPoint" />
+            <mxPoint x="11021" y="480" as="sourcePoint" />
+            <mxPoint x="10931" y="481" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-35" parent="1" style="html=1;whiteSpace=wrap;" value="QuantumVariable" vertex="1">
-          <mxGeometry height="50" width="120" x="11220" y="495" as="geometry" />
+          <mxGeometry height="50" width="120" x="11160" y="655" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-36" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="11160" y="490" as="geometry" />
+          <mxGeometry height="30" width="60" x="11100" y="650" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-37" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
-          <mxGeometry height="30" width="60" x="11070" y="490" as="geometry" />
+          <mxGeometry height="30" width="60" x="10880" y="650" as="geometry" />
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-38" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=diamondThin;endFill=0;" target="6ymsEfDAAEcElMQNdhLK-37">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="11120" y="520" />
-              <mxPoint x="11120" y="520" />
+              <mxPoint x="10930" y="680" />
+              <mxPoint x="10930" y="680" />
             </Array>
-            <mxPoint x="11211" y="520" as="sourcePoint" />
-            <mxPoint x="11121" y="521" as="targetPoint" />
+            <mxPoint x="11021" y="680" as="sourcePoint" />
+            <mxPoint x="10931" y="681" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="6ymsEfDAAEcElMQNdhLK-40" parent="1" style="html=1;whiteSpace=wrap;" value="Jaspr" vertex="1">
@@ -504,52 +504,39 @@
             <mxPoint x="13331" y="401" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-44" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+ ctrl_jaspr" vertex="1">
-          <mxGeometry height="30" width="80" x="13370" y="370" as="geometry" />
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-44" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="+ ctrl_jaspr&lt;br&gt;+ inv_jaspr" vertex="1">
+          <mxGeometry height="40" width="80" x="13370" y="360" as="geometry" />
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-45" parent="1" style="html=1;whiteSpace=wrap;" value="Jaspr" vertex="1">
-          <mxGeometry height="50" width="120" x="13530" y="441.25" as="geometry" />
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-54" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="+ groups&lt;br&gt;+ measurement_operators" vertex="1">
+          <mxGeometry height="45" width="152.5" x="6207.5" y="330" as="geometry" />
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-46" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0..1" vertex="1">
-          <mxGeometry height="30" width="60" x="13470" y="438.75" as="geometry" />
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-56" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="+&amp;nbsp;qv_list&lt;div&gt;+&amp;nbsp;deleted_qv_list&lt;/div&gt;&lt;div&gt;+&amp;nbsp;qv_stack&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="10970" y="620" as="geometry" />
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-47" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="13280" y="438.75" as="geometry" />
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-58" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+&amp;nbsp;abs_qst" vertex="1">
+          <mxGeometry height="30" width="60" x="10990" y="450" as="geometry" />
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-48" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=diamondThin;endFill=0;" target="6ymsEfDAAEcElMQNdhLK-47">
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-59" parent="1" style="html=1;whiteSpace=wrap;" value="AbstractQuantumState" vertex="1">
+          <mxGeometry height="50" width="160" x="11160" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-60" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
+          <mxGeometry height="30" width="60" x="11100" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-61" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
+          <mxGeometry height="30" width="60" x="10880" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-62" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=diamondThin;endFill=0;" target="6ymsEfDAAEcElMQNdhLK-61">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="13330" y="468.75" />
-              <mxPoint x="13330" y="468.75" />
+              <mxPoint x="10930" y="575" />
+              <mxPoint x="10930" y="575" />
             </Array>
-            <mxPoint x="13421" y="468.75" as="sourcePoint" />
-            <mxPoint x="13331" y="469.75" as="targetPoint" />
+            <mxPoint x="11021" y="575" as="sourcePoint" />
+            <mxPoint x="10931" y="576" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-49" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+ inv_jaspr" vertex="1">
-          <mxGeometry height="30" width="80" x="13370" y="438.75" as="geometry" />
-        </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-50" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="*" vertex="1">
-          <mxGeometry height="30" width="60" x="6370" y="417.5" as="geometry" />
-        </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-51" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
-          <mxGeometry height="30" width="60" x="6130" y="417.5" as="geometry" />
-        </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-52" parent="1" style="html=1;whiteSpace=wrap;" value="&lt;span style=&quot;text-align: left;&quot;&gt;QubitOperator&lt;/span&gt;" vertex="1">
-          <mxGeometry height="50" width="120" x="6430" y="422.5" as="geometry" />
-        </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-53" edge="1" parent="1" source="6ymsEfDAAEcElMQNdhLK-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;endSize=12;">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points" />
-            <mxPoint x="6280" y="446.89" as="sourcePoint" />
-            <mxPoint x="6130" y="447.39" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-54" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+ groups" vertex="1">
-          <mxGeometry height="30" width="80" x="6243.75" y="345" as="geometry" />
-        </mxCell>
-        <mxCell id="6ymsEfDAAEcElMQNdhLK-55" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+ measurement_operators" vertex="1">
-          <mxGeometry height="30" width="167.5" x="6200" y="417.5" as="geometry" />
+        <mxCell id="6ymsEfDAAEcElMQNdhLK-63" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+&amp;nbsp;abs_qst_stack" vertex="1">
+          <mxGeometry height="30" width="100" x="10970" y="545" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
