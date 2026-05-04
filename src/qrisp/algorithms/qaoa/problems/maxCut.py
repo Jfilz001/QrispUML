@@ -32,6 +32,8 @@ from qrisp.jasp import check_for_tracing_mode
 
 if TYPE_CHECKING:
     import networkx as nx
+    from jax import Array
+    from jax.typing import ArrayLike
 
     from qrisp.core import QuantumVariable
 
@@ -116,7 +118,7 @@ def extract_boolean_digit(integer, digit):
     return (integer >> digit) & 1
 
 
-def create_cut_computer(G: nx.Graph) -> Callable[[int], jnp.ndarray]:
+def create_cut_computer(G: nx.Graph) -> Callable[[ArrayLike], Array]:
     """
     Create a JIT-compiled function that computes the cut value for a given graph G.
 
@@ -127,14 +129,14 @@ def create_cut_computer(G: nx.Graph) -> Callable[[int], jnp.ndarray]:
 
     Returns
     -------
-    Callable[[int], jnp.ndarray]
+    Callable[[ArrayLike], Array]
         A JIT-compiled function mapping an integer bitstring to its (negated) cut value.
 
     """
     edge_list = jnp.array(G.edges())
 
     @jit
-    def cut_computer(x: int) -> jnp.ndarray:
+    def cut_computer(x: ArrayLike) -> Array:
         x_uint = jnp.uint32(x)
         bools = extract_boolean_digit(x_uint, edge_list[:, 0]) != extract_boolean_digit(
             x_uint, edge_list[:, 1]
@@ -146,9 +148,17 @@ def create_cut_computer(G: nx.Graph) -> Callable[[int], jnp.ndarray]:
     return cut_computer
 
 
-def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable:
+def create_maxcut_sample_array_post_processor(
+    G: nx.Graph,
+) -> Callable[[ArrayLike], Array]:
     """
-    Create a post-processor that computes the average cut value over a sample array.
+    Creates the sample array post processor for the MaxCut problem for a given graph ``G``.
+
+    .. note::
+        This function is intended for use with :ref:`dynamic (Jasp) QAOA <JaspQAOA>` only.
+        In Jasp mode, quantum variables are decoded to integers rather than binary strings,
+        so repeated sampling yields an array of integers encoding bipartitions of ``G``.
+        For standard (non-Jasp) QAOA, use :func:`create_maxcut_cl_cost_function` instead.
 
     Parameters
     ----------
@@ -157,17 +167,22 @@ def create_maxcut_sample_array_post_processor(G: nx.Graph) -> Callable:
 
     Returns
     -------
-    Callable
-        A function that takes a sample array and returns the mean cut value.
+    Callable[[ArrayLike], jax.Array]
+        A JAX-traceable function that accepts an array of integer-encoded bitstrings
+        (bipartitions of ``G``) and returns the mean cut value as a 0-D ``jax.Array``
+        of float.
+
+    See Also
+    --------
+    :ref:`JaspQAOA` : How to use QAOA in Jasp.
 
     """
     cut_computer = create_cut_computer(G)
 
-    def post_processor(sample_array):
+    def post_processor(sample_array: ArrayLike) -> Array:
         # Use vmap for automatic vectorization
         cut_values = vmap(cut_computer)(sample_array)
-        average_cut = jnp.mean(cut_values)
-        return average_cut
+        return jnp.mean(cut_values)
 
     return post_processor
 
