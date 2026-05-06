@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <a href="../../index.html">Overview</a>
+        <a href="backends.html">Backends</a>
+        <a href="Hamiltonian.html">Hamiltonian</a>
+        <a href="Permeability.html">Permeability</a>
+        <a href="Operations.html">Operations</a>
+        <a href="QuantumManagement.html">QuantumManagement</a>
+        <a href="Tensors.html">Tensors</a>
+        <a href="QEnv_QPrim.html">QEnv &amp; QPrimitive</a>
+        <a href="QuantumVariables.html">QuantumVariables</a>
+        <a href="Metrics.html">Metrics</a>
+        <a href="AlgorithmsAndProblems.html">Algorithms &amp; Problems</a>
+        <a class="active" href="Other.html">Other</a>
+        <a href="References.html">References</a>
+    </div>
+
+    <div class="content">
+        <h2><a name="_Toc226031300">Other</a></h2>
+        <p><img alt="Other" src="../class_diagrams/other_ramon.png" /></p>
+        <h3><a name="_Toc226031301">Information about classes and methods</a></h3>
+        <p>
+            The '<strong>Other</strong>' diagram collects infrastructure and utility classes spanning five areas:
+            circuit primitives (<strong>Qubit</strong>, <strong>Clbit</strong>), the quantum data-loading helper
+            (<strong>QuantumDictionary</strong>), the Jasp/JAX expression layer (<strong>Jaspr</strong> and its
+            supporting classes), Pauli and fermionic operator types, and the xDSL/MLIR dialect used by the Jasp
+            compiler backend.
+        </p>
+
+        <!-- ═══════════════ CIRCUIT PRIMITIVES ═══════════════ -->
+        <h3><a name="_Toc226031302">Qubit</a></h3>
+        <h4>Class functionality and design decisions:</h4>
+        <p>
+            '<strong>Qubit</strong>' is the elementary unit of quantum information tracked by a
+            '<strong>QuantumSession</strong>'. It uses <code>__slots__</code> to reduce per-instance memory overhead,
+            important because large circuits can allocate thousands of qubits.
+        </p>
+        <p>
+            Hash identity is based on a module-level <code>np.zeros(1)</code> counter
+            (<code>hash_value = int(qubit_hash[0]); qubit_hash[0] += 1</code>), making it globally unique within a
+            Python process regardless of identifier string. '<strong>__eq__</strong>' compares
+            <strong>both</strong> '<strong>hash_value</strong>' and '<strong>bit_type</strong>', which distinguishes
+            '<strong>Qubit</strong>' (<code>bit_type = 0</code>) from '<strong>Clbit</strong>'
+            (<code>bit_type = 1</code>) even if counters collide between types.
+        </p>
+        <p>
+            The three boolean attributes '<strong>lock</strong>', '<strong>perm_lock</strong>', and
+            '<strong>recompute</strong>' govern the uncomputation engine. '<strong>lock</strong>' is a temporary
+            guard set during gate application to prevent the qubit from being freed mid-operation.
+            '<strong>perm_lock</strong>' is a permanent flag that blocks automatic uncomputation entirely.
+            '<strong>recompute</strong>' marks qubits that were uncomputed but can be reintroduced by replaying
+            their generating circuit - a technique that trades gate depth for qubit count.
+        </p>
+        <p>
+            <strong>Bug (source):</strong> The exception messages in '<strong>__add__</strong>' and
+            '<strong>__radd__</strong>' both read <em>"only list ist possible"</em>. '<strong>__add__</strong>'
+            actually accepts <code>list | Qubit</code>, so the message is wrong on two counts - wrong type set
+            and German typo <em>"ist"</em> instead of <em>"is"</em>.
+        </p>
+
+        <h3><a name="_Toc226031303">Clbit</a></h3>
+        <p>
+            '<strong>Clbit</strong>' is the classical-bit counterpart of '<strong>Qubit</strong>'. It uses the same
+            hash-counter mechanism (a class-level <code>clbit_hash: np.ndarray</code>) and the same
+            '<strong>__eq__</strong>' logic but sets <code>bit_type = 1</code>. Unlike '<strong>Qubit</strong>'
+            it does not use <code>__slots__</code>. '<strong>dtype</strong>' and '<strong>clbit_hash</strong>'
+            are class-level (static) attributes, shown underlined in the diagram.
+        </p>
+
+        <!-- ═══════════════ QUANTUM DICTIONARY ═══════════════ -->
+        <h3><a name="_Toc226031304">QuantumDictionary</a></h3>
+        <h4>Class functionality:</h4>
+        <p>
+            '<strong>QuantumDictionary</strong>' extends Python's built-in '<strong>dict</strong>' to support
+            '<strong>QuantumVariable</strong>' keys. When a quantum variable (or tuple thereof) is used as a key,
+            the lookup is synthesised as a quantum circuit via logic synthesis (default method: gray-code synthesis)
+            and the result is returned as a new '<strong>QuantumVariable</strong>' entangled with the key:
+        </p>
+        <p>
+            <em>U<sub>qd</sub> (∑<sub>x</sub> a<sub>x</sub> |x⟩) |0⟩ = ∑<sub>x</sub> a<sub>x</sub> |x⟩ |qd[x]⟩</em>
+        </p>
+        <p>
+            The '<strong>return_type</strong>' attribute controls which concrete
+            '<strong>QuantumVariable</strong>' subclass is allocated for the result. Without it a
+            '<strong>CustomQuantumVariable</strong>' is used; setting it to e.g. a
+            '<strong>QuantumFloat</strong>' instance allows arithmetic on the retrieved value.
+        </p>
+        <h4>Details and design decisions:</h4>
+        <p>
+            Because the lookup is realised through logic synthesis and not algorithmic generation, it
+            scales poorly with the number of dictionary entries - use sparingly in inner loops.
+            The '<strong>load</strong>' method is an explicit-target variant of '<strong>__getitem__</strong>'
+            that lets the caller provide the output register and choose the synthesis algorithm.
+        </p>
+        <p>
+            <strong>Bug (docstring):</strong> the '<strong>load</strong>' docstring names the key parameter
+            <em>"key_qv"</em> but the actual signature uses <em>"key"</em>.
+        </p>
+
+        <!-- ═══════════════ JASP / JAX LAYER ═══════════════ -->
+        <h3><a name="_Toc226031305">Jaspr</a></h3>
+        <h4>Class functionality:</h4>
+        <p>
+            '<strong>Jaspr</strong>' is the central data structure of Qrisp's Jasp compiler layer. As described
+            in the source documentation:
+        </p>
+        <p>
+            "<strong>The <code>Jaspr</code> class enables an efficient representation of a wide variety of
+            (hybrid) algorithms. For many applications the representation is agnostic to the scale of the problem,
+            implying function calls with 10 or 10 000 qubits can be represented by the same object. The actual
+            unfolding to a circuit-level description is outsourced to established, classical compilation
+            infrastructure, implying state-of-the-art compilation speed can be reached. As a subtype of
+            <code>jax.extend.core.ClosedJaxpr</code>, Jasprs are embedded into the well-matured JAX ecosystem.</strong>"
+        </p>
+        <p>
+            Similar to '<strong>ClosedJaxpr</strong>', a '<strong>Jaspr</strong>' represents a hybrid quantum
+            algorithm in SSA form. A defining invariant - enforced in the constructor - is that the
+            <strong>last invar must be of <code>QuantumState</code> type and the last outvar must also be of
+            <code>QuantumState</code> type</strong>. This means every '<strong>Jaspr</strong>' is always a
+            quantum operation; purely classical sub-expressions do not become '<strong>Jaspr</strong>'s.
+        </p>
+        <h4>Key attributes and design decisions:</h4>
+        <p>
+            - '<strong>hashvalue</strong>' is set to <code>id(self)</code> and '<strong>__eq__</strong>'
+            uses <code>id()</code> as well. This means two structurally identical but separately constructed
+            '<strong>Jaspr</strong>' objects are <em>not</em> equal. The <code>@lru_cache</code>-backed
+            classmethod '<strong>from_cache</strong>' is the intended constructor - it returns an existing
+            '<strong>Jaspr</strong>' for a given '<strong>ClosedJaxpr</strong>' if one already exists, keeping
+            the identity-equality semantics meaningful.
+        </p>
+        <p>
+            - '<strong>permeability</strong>' is a per-variable dict mapping each invar/outvar/constvar to
+            <code>True</code>, <code>False</code>, or <code>None</code>. A variable is <em>permeable</em> if
+            its quantum state passes through the Jaspr unchanged - the uncomputation engine uses this to avoid
+            unnecessary recomputation.
+        </p>
+        <p>
+            - '<strong>ctrl_jaspr</strong>' and '<strong>inv_jaspr</strong>' are lazily generated and cached
+            on the '<strong>Jaspr</strong>' itself. This avoids repeated costly transformation passes and is
+            the reason both attributes are shown as optional self-references in the diagram
+            (<code>0..1 → Jaspr</code>).
+        </p>
+        <p>
+            - '<strong>envs_flattened</strong>' guards against calling '<strong>flatten_environments</strong>'
+            more than once. Flattening turns nested environment annotations (e.g. <code>ControlEnvironment</code>
+            scopes) into a linear sequence of equations - a prerequisite for circuit export.
+        </p>
+        <h4>Compilation pipeline:</h4>
+        <p>
+            The export methods form a chain: '<strong>to_qc</strong>' produces a
+            '<strong>QuantumCircuit</strong>'; '<strong>to_mlir</strong>' / '<strong>to_catalyst_mlir</strong>'
+            lower to MLIR text; '<strong>to_qir</strong>' produces QIR via the Catalyst framework;
+            '<strong>to_qasm</strong>' produces OpenQASM. '<strong>qjit</strong>' wraps the full
+            Catalyst JIT pipeline.
+        </p>
+        <p>
+            <strong>Bug (docstring):</strong> '<strong>to_catalyst_jaxpr</strong>' is documented as returning
+            <code>jax.core.Jaxpr</code> but at runtime always returns <code>jax._src.core.ClosedJaxpr</code> -
+            two entirely unrelated classes.
+        </p>
+
+        <h3><a name="_Toc226031306">JaxprStats</a></h3>
+        <p>
+            '<strong>JaxprStats</strong>' is a <code>@dataclass</code> produced by
+            '<strong>analyze_call_graph</strong>'. It records how many equations a Jaxpr contains locally
+            ('<strong>local_eqn_count</strong>'), how many it would contain after full inlining of all
+            sub-expressions ('<strong>inlined_eqn_count</strong>'), and how many call sites reference it
+            ('<strong>call_count</strong>'). A '<strong>call_count</strong>' greater than one signals reuse;
+            the compiler uses this to decide whether to wrap the sub-expression in a
+            <code>jax.pure_callback</code> to prevent XLA's <em>flatten-call-graph</em> pass from duplicating
+            it at every call site - the root cause of superlinear HLO explosion on repeated gate patterns.
+        </p>
+        <p>
+            <strong>Bug (annotation):</strong> '<strong>jaxpr</strong>' is annotated as <code>object</code>;
+            the docstring says <code>Jaxpr | ClosedJaxpr</code>, but plain <code>Jaxpr</code> is structurally
+            unreachable - all JAX primitives (<code>cond</code>, <code>while</code>, <code>scan</code>,
+            <code>pjit</code>) store <code>ClosedJaxpr</code> in their equation params. The annotation should
+            be <code>ClosedJaxpr</code>.
+        </p>
+
+        <h3><a name="_Toc226031307">Jlist</a></h3>
+        <h4>Class functionality and design decisions:</h4>
+        <p>
+            '<strong>Jlist</strong>' is a JAX-compatible dynamic list backed by a fixed-size
+            <code>jnp.int64</code> array of length '<strong>max_size</strong>' (default 1 024). It is registered
+            as a JAX pytree node via <code>@jax.tree_util.register_pytree_node_class</code> so it can flow
+            through JIT-compiled functions while remaining mutable from the caller's perspective.
+        </p>
+        <p>
+            All mutating public methods follow the same pattern: call a private <code>@jax.jit</code>-compiled
+            helper (e.g. '<strong>_append</strong>'), then <em>manually assign</em> the returned arrays back to
+            <code>self.array</code> and <code>self.counter</code>. This is necessary because JAX's pytree
+            mechanism flattens the object into leaves before tracing and returns a <em>new</em> object after
+            tracing - the original is never mutated inside JIT.
+        </p>
+        <p>
+            <strong>Bug - <code>clear()</code>:</strong> the public '<strong>clear</strong>' method is decorated
+            directly with <code>@jax.jit</code> instead of delegating to a private helper. JAX flattens
+            '<strong>self</strong>' into <code>(array, counter)</code> leaves, traces the body, and returns a
+            <em>new</em> '<strong>Jlist</strong>' with <code>counter = 0</code> - but the original object's
+            counter is never updated. Every other mutating method avoids this by following the private-helper
+            pattern. Fix: remove <code>@jax.jit</code> from the public method and follow the same pattern.
+        </p>
+        <p>
+            <strong>Bug - <code>_slice</code>:</strong> this private method is dead code and broken at runtime.
+            Dynamic array slicing (<code>array[start:end]</code> with traced start/end) inside
+            <code>@jax.jit</code> raises an <code>IndexError</code>; <code>jax.lax.dynamic_slice</code> is
+            required instead. It is also missing the <code>@staticmethod</code> decorator.
+        </p>
+
+        <h3><a name="_Toc226031308">VarTracker</a></h3>
+        <p>
+            '<strong>VarTracker</strong>' maintains a bidirectional mapping between JAX '<strong>Var</strong>'
+            objects and integer indices, used during environment collection to track which variables enter and
+            leave quantum scopes inside a '<strong>Jaspr</strong>'.
+        </p>
+        <p>
+            <strong>Bug (docstring):</strong> '<strong>find_invars</strong>' documents its return type as
+            <code>list[Eqn]</code> but returns <code>list[Var]</code> - the values stored in
+            '<strong>int_to_var_dic</strong>' are '<strong>Var</strong>' objects, not equations.
+        </p>
+
+        <h3><a name="_Toc226031309">StaticArg</a></h3>
+        <p>
+            '<strong>StaticArg</strong>' wraps an object to prevent JAX from treating it as a traced dynamic
+            value. This is needed for non-array arguments (functions, types) that would otherwise cause JAX
+            tracing errors. The wrapper is transparent to JAX because it is registered as a pytree leaf with
+            custom flatten/unflatten logic that hides the content from the tracer.
+        </p>
+        <p>
+            <strong>Bug (<code>__eq__</code>):</strong> the implementation compares <code>self.val == other</code>
+            instead of <code>self.val == other.val</code>. This makes <code>StaticArg(x) == x</code> return
+            <code>True</code>, violating the standard Python convention that <code>__eq__</code> should only
+            return <code>True</code> when comparing two instances of the same type. The asymmetry also means
+            <code>x == StaticArg(x)</code> may return <code>False</code> - equality is not symmetric.
+            Fix: add an <code>isinstance(other, StaticArg)</code> guard and compare <code>self.val == other.val</code>.
+        </p>
+
+        <!-- ═══════════════ PAULI / FERMIONIC OPERATORS ═══════════════ -->
+        <h3><a name="_Toc226031310">QubitTerm</a></h3>
+        <h4>Class functionality and design decisions:</h4>
+        <p>
+            '<strong>QubitTerm</strong>' represents a single tensor-product term in a qubit operator, for
+            example <em>X₀Y₁Z₂</em>. It is stored as a <code>dict</code> mapping qubit indices
+            (integers) to operator labels (strings). Importantly, the operator set goes beyond plain Pauli
+            operators - '<strong>factor_dict</strong>' can contain:
+        </p>
+        <ul>
+            <li><code>"X"</code>, <code>"Y"</code>, <code>"Z"</code> - standard Pauli operators</li>
+            <li><code>"A"</code>, <code>"C"</code> - fermionic annihilation / creation (ladder) operators</li>
+            <li><code>"P0"</code>, <code>"P1"</code> - projectors onto |0⟩ and |1⟩</li>
+        </ul>
+        <p>
+            The full 8×8 multiplication table for these operators is hardcoded as a module-level
+            <code>PAULI_TABLE</code> dict, enabling O(1) term multiplication. The hash is computed as
+            <code>hash(tuple(sorted(factor_dict.items())))</code> - a canonical form that makes hash and
+            equality independent of insertion order.
+        </p>
+        <p>
+            The commutativity family ('<strong>commute</strong>', '<strong>commute_pauli</strong>',
+            '<strong>commute_qw</strong>') implements three different notions: full commutativity under operator
+            algebra, Pauli-only commutativity, and qubit-wise commutativity. These are used by
+            '<strong>QubitOperatorMeasurement</strong>' to group terms into simultaneously measurable sets,
+            reducing the number of circuit executions required to evaluate a Hamiltonian expectation value.
+        </p>
+        <p>
+            '<strong>simulate</strong>' is annotated <code>&lt;&lt;custom_control&gt;&gt;</code> because it
+            accepts an optional '<strong>ctrl: Qubit | None</strong>' parameter - it integrates with Qrisp's
+            custom control infrastructure to generate a controlled Hamiltonian simulation gate directly.
+        </p>
+
+        <h3><a name="_Toc226031311">QubitOperatorMeasurement</a></h3>
+        <p>
+            '<strong>QubitOperatorMeasurement</strong>' handles the full workflow of measuring the expectation
+            value of a '<strong>QubitOperator</strong>' (sum of '<strong>QubitTerm</strong>'s). The constructor
+            groups commuting terms using the '<strong>diagonalisation_method</strong>' (default
+            <code>"commuting_qw"</code> - qubit-wise commutativity), derives the change-of-basis circuit for
+            each group, and pre-allocates shot budgets ('<strong>shots_list</strong>') proportional to each
+            group's variance estimate ('<strong>stds</strong>'). '<strong>get_measurement</strong>' then runs
+            each group's circuit on the backend and accumulates the expectation value. This class is the
+            bridge between Qrisp's Hamiltonian objects and backend execution in VQE and QAOA.
+        </p>
+
+        <h3><a name="_Toc226031312">FermionicTerm</a></h3>
+        <p>
+            '<strong>FermionicTerm</strong>' represents a monomial in a second-quantised fermionic operator -
+            an ordered product of creation (<code>is_creator = True</code>) and annihilation
+            (<code>is_creator = False</code>) operators on specific modes, stored as
+            '<strong>ladder_list: List&lt;(int, bool)&gt;</strong>'. Order matters: fermionic operators
+            anti-commute, so '<strong>__mul__</strong>' concatenates ladder lists (right-to-left: <code>other.ladder_list + self.ladder_list</code>)
+            without simplification; simplification is deferred to '<strong>sort</strong>' / '<strong>order</strong>',
+            which sort the ladder list by mode index using the anti-commutation relations and track the sign
+            accumulation. '<strong>dagger</strong>' reverses the list and flips all creation flags. The mapping
+            to qubit space is done by '<strong>to_qubit_term</strong>', which applies a Jordan–Wigner or
+            similar transformation depending on '<strong>mapping_type</strong>'.
+        </p>
+
+        <h3><a name="_Toc226031313">X_, Y_, Z_, a_, c_</a></h3>
+        <p>
+            Five lightweight <code>sympy.Symbol</code> subclasses for building symbolic operator expressions.
+            '<strong>X_</strong>', '<strong>Y_</strong>', '<strong>Z_</strong>' represent indexed Pauli
+            operators; '<strong>a_</strong>' and '<strong>c_</strong>' represent fermionic annihilation and
+            creation operators. All override '<strong>__new__</strong>' (the sympy construction hook) to accept
+            an '<strong>index: String</strong>' parameter. They exist so that Hamiltonians can be written in
+            Python operator syntax and then processed by Qrisp's symbolic algebra layer before compilation.
+        </p>
+
+        <!-- ═══════════════ MLIR / xDSL DIALECT ═══════════════ -->
+        <h3><a name="_Toc226031314">Jasp Dialect - two parallel hierarchies</a></h3>
+        <p>
+            The Jasp compiler backend maps '<strong>Jaspr</strong>' expressions to MLIR through
+            <strong>two parallel class hierarchies</strong>:
+        </p>
+        <ul>
+            <li>
+                <strong>xDSL dialect</strong> (<code>xdsl_dialect.py</code>) - Python-native IR used for
+                construction, verification, and rewriting inside Qrisp. Operations inherit from
+                '<strong>IRDLOperation</strong>'; types inherit from both '<strong>ParametrizedAttribute</strong>'
+                and '<strong>TypeAttribute</strong>'. The dialect is registered via
+                '<strong>JaspDialect</strong>' (inherits from xDSL <strong>Dialect</strong>).
+            </li>
+            <li>
+                <strong>MLIR Python bindings</strong> (<code>_jasp_ops_gen.py</code>) - auto-generated from
+                TableGen, required for passing the IR to the C++ MLIR runtime used by PennyLane Catalyst.
+                Operations inherit from '<strong>OpView</strong>'; the dialect is registered via
+                '<strong>_Dialect</strong>' (inherits from MLIR Python bindings <strong>Dialect</strong>).
+            </li>
+        </ul>
+        <p>
+            Both hierarchies define the same nine operations: '<strong>QuantumGateOp</strong>',
+            '<strong>ResetOp</strong>', '<strong>SliceOp</strong>', '<strong>DeleteQubitsOp</strong>',
+            '<strong>FuseOp</strong>', '<strong>GetQubitOp</strong>', '<strong>GetSizeOp</strong>',
+            '<strong>MeasureOp</strong>', '<strong>ParityOp</strong>'. The xDSL versions carry
+            '<strong>verify_</strong>' and '<strong>print</strong>' methods for IR validation and
+            pretty-printing; the MLIR-bindings versions provide constructors with '<strong>loc</strong>' and
+            '<strong>ip</strong>' parameters for MLIR insertion-point management.
+        </p>
+        <p>
+            The type system consists of three attribute classes:
+            '<strong>QuantumStateType</strong>' (the whole quantum register flowing through SSA),
+            '<strong>QubitArrayType</strong>' (a sub-array of qubits), and
+            '<strong>QubitType</strong>' (a single qubit). Each carries only a static '<strong>name</strong>'
+            string and no constructor logic.
+        </p>
+        <p>
+            '<strong>HLOControlFlowReplacement</strong>' is an xDSL '<strong>RewritePattern</strong>' that
+            matches XLA/MLIR control-flow ops in the HLO expression tree and replaces them with
+            Jasp-compatible equivalents. '<strong>PJITEnvironment</strong>' is a
+            '<strong>QuantumEnvironment</strong>' that handles <code>pjit</code> equations during Jaspr
+            interpretation, compiling the sub-expression on demand.
+        </p>
+
+        <!-- ═══════════════ REMAINING CLASSES ═══════════════ -->
+        <h3><a name="_Toc226031315">Stim array wrappers</a></h3>
+        <p>
+            '<strong>StimMeasurementHandles</strong>', '<strong>StimDetectorHandles</strong>',
+            '<strong>StimObservableHandles</strong>', and '<strong>StimQubitIndices</strong>' are thin
+            <code>np.ndarray</code> subclasses that tag the output arrays of the Stim fault-tolerant simulation
+            backend. Subclassing '<strong>np.ndarray</strong>' rather than wrapping it preserves NumPy's full
+            slicing and indexing interface while enabling <code>isinstance</code>-based dispatch in
+            post-processing code.
+        </p>
+
+        <h3><a name="_Toc226031316">Remaining utility classes</a></h3>
+        <p>
+            '<strong>CompilationAccelerator</strong>' is a context manager that temporarily sets the XLA
+            compilation mode (saved in '<strong>original_xla_mode</strong>', restored on exit) to reduce
+            repeated JIT overhead during bulk circuit execution.
+        </p>
+        <p>
+            '<strong>QMLGateDescriptor</strong>' is a <code>@dataclass</code> pairing a gate constructor
+            ('<strong>gate_class</strong>') with a parameter-mapping function ('<strong>param_fn</strong>'),
+            used by the QML layer to describe ansatz layers.
+        </p>
+        <p>
+            '<strong>IntegerCircuit</strong>' is a compact integer-encoded representation of a
+            '<strong>QuantumCircuit</strong>' (qubits → indices, gates → integers) used by compiler passes
+            that benefit from cache-efficient data structures.
+        </p>
+        <p>
+            '<strong>MeasurementArray</strong>' is a <code>np.ndarray</code> subclass that carries a
+            '<strong>mark_as_processed</strong>' flag distinguishing raw from decoded measurement results.
+            '<strong>__array_finalize__</strong>' propagates the flag across NumPy views and copies.
+        </p>
+        <p>
+            '<strong>ParityHandle</strong>' binds a circuit '<strong>Instruction</strong>' to the classical
+            bits it writes into and the expected parity encoding, used in the Jasp post-processing pipeline
+            to match circuit instructions to observable evaluations.
+        </p>
+        <p>
+            '<strong>MetricSpec</strong>' (a '<strong>NamedTuple</strong>') bundles the three callables
+            needed to define a custom benchmark metric: profiler factory, value extractor, and simulation
+            fallback. '<strong>RemovedFunctionError</strong>' (extends '<strong>Exception</strong>') is a
+            sentinel raised when a deprecated API function is called.
+        </p>
+
+        <p>This concludes the '<strong>Other</strong>' UML class diagram.</p>
+    </div>
+
+</body>
+</html>
