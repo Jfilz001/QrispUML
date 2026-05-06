@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
   <diagram name="Seite-1" id="Wt9CtHhe0ZzWvVu_Ts9F">
-    <mxGraphModel dx="760" dy="612" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1361" dy="1249" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -190,7 +190,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="bTwLPTZCKIwj5BCB0jcM-10" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="ControlledJaspr" vertex="1">
-          <mxGeometry height="297" width="334" x="3557" y="817" as="geometry" />
+          <mxGeometry height="379" width="334" x="3557" y="817" as="geometry" />
         </mxCell>
         <mxCell id="bTwLPTZCKIwj5BCB0jcM-11" parent="bTwLPTZCKIwj5BCB0jcM-10" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ base_jaspr: Jaspr&lt;div&gt;+ ctrl_state: String&lt;/div&gt;" vertex="1">
           <mxGeometry height="42" width="334" y="26" as="geometry" />
@@ -198,11 +198,17 @@
         <mxCell id="bTwLPTZCKIwj5BCB0jcM-12" parent="bTwLPTZCKIwj5BCB0jcM-10" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="334" y="68" as="geometry" />
         </mxCell>
-        <mxCell id="bTwLPTZCKIwj5BCB0jcM-13" parent="bTwLPTZCKIwj5BCB0jcM-10" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+ ControlledJaspr(&lt;/div&gt;&lt;div&gt;base_jaspr: Jaspr,&lt;/div&gt;&lt;div&gt;ctrl_state: Object,&lt;/div&gt;&lt;div&gt;stop_recursion: bool = False&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;+ control(&lt;div&gt;num_ctrl: int,&lt;/div&gt;&lt;div&gt;ctrl_state: int&lt;/div&gt;&lt;div&gt;): ControlledJaspr&lt;/div&gt;&lt;div&gt;+ inverse(): ControlledJaspr&lt;/div&gt;&lt;div&gt;+ from_cache(&lt;/div&gt;&lt;div&gt;base_jaspr: &lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Jaspr,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;ctrl_state: Object&lt;/div&gt;&lt;div&gt;):&amp;nbsp;ControlledJaspr&lt;/div&gt;" vertex="1">
-          <mxGeometry height="221" width="334" y="76" as="geometry" />
+        <mxCell id="bTwLPTZCKIwj5BCB0jcM-13" parent="bTwLPTZCKIwj5BCB0jcM-10" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;+ ControlledJaspr(&lt;/div&gt;&lt;div&gt;base_jaspr: Jaspr,&lt;/div&gt;&lt;div&gt;ctrl_state: Object,&lt;/div&gt;&lt;div&gt;stop_recursion: bool = False&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;+ control(&lt;div&gt;num_ctrl: int,&lt;/div&gt;&lt;div&gt;ctrl_state: int&lt;/div&gt;&lt;div&gt;): ControlledJaspr&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ inverse(): ControlledJaspr&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;lt;&amp;lt;lru_cache&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;&lt;u&gt;+ from_cache(&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;u&gt;base_jaspr: &lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Jaspr,&lt;/span&gt;&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;u&gt;ctrl_state: Object&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;u&gt;):&amp;nbsp;ControlledJaspr&lt;/u&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="303" width="334" y="76" as="geometry" />
         </mxCell>
         <mxCell id="bTwLPTZCKIwj5BCB0jcM-14" parent="1" style="html=1;whiteSpace=wrap;" value="Jaspr" vertex="1">
           <mxGeometry height="50" width="110" x="3669" y="696" as="geometry" />
+        </mxCell>
+        <mxCell id="EhgiOfAVfosSnCqw9kBE-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+base_jaspr" vertex="1">
+          <mxGeometry height="30" width="68" x="3558" y="754" as="geometry" />
+        </mxCell>
+        <mxCell id="EhgiOfAVfosSnCqw9kBE-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="30" width="60" x="3609" y="688" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
