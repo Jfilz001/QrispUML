@@ -17,196 +17,655 @@
 
     <h1>Welcome to the QrispUML wiki!</h1>
     <h1 id="introduction">Introduction</h1>
-    <p>This documentation is dedicated to the class diagrams provided at (<em>insert</em>) for Eclipse Qrisp. The
-      documentation refers to the discovery of classes of Eclipse Qrisp and their respective UML class diagram, special
-      features that were defined during the design process and additions if necessary.</p>
-    <p>Eclipse Qrisp, hereinafter referenced by &quot;Qrisp&quot;, is a high-level quantum programming language that
-      provides many functions and quantum algorithms to the user. It provides a low-threshold interface for getting
-      started with quantum programming and enables code execution on quantum backends.</p>
-    <p>Qrisp implements 110 classes to this date (15.10.2025). Out of these 110 classes the source code was analyzed to
-      determine datatypes and relationships. UML class diagrams are typically looking at classes from a statically typed
-      viewpoint. Qrisp is implemented with the programming language Python as an embedded Domain Specific Language
-      (eDSL) and is thus a dynamically typed programming language. This makes it challenging to find appropriate
-      datatypes for function parameters, return values or properties of the class. Only with careful consideration and
-      testing it was achievable to determine static datatypes. </p>
-    <p>The classes are at times in relationship with each other but not specified further, this decision of design was
-      taken to reduce redundancy across the diagrams. Refer to {<em>page</em>} for a detailed referral to specific
-      classes.</p>
-    <p>The efforts accumulated to {<em>number</em>} of class diagrams. They summarize classes that were deemed as
-      fitting, by either having a close relationship to each other or sharing similar concepts. In the following listing
-      are the categories in which classes have been placed. <br></p>
-    <ul>
-      <li>Backends</li>
-      <li>Hamiltonian</li>
-      <li>Permeability</li>
-      <li>Operations</li>
-      <li>QuantumManagement</li>
-      <li>Tensors</li>
-      <li>Primitives</li>
-      <li>Other</li>
-    </ul>
-    <p>The first chapter of this document is dedicated to provide a quick overview of the UML class diagrams listed
-      above. The general purpose of the class diagrams is explained, and the described classes are defined. The second
-      chapter goes into detail about the individual classes outlining design decisions, special annotations, and
-      specific implementation details.</p>
-    <h1 id="quick-overview-">Quick Overview:</h1>
-    <h2 id="backends-updated-to-0-8-">Backends (Updated to 0.8)</h2>
-    <p>Qrisp supports the execution of Quantum Gates on various quantum backends, including IQM, AQT and IBM. The
-      Backends UML class diagram joins all classes Qrisp implements to enable the interaction with Backends.<br>
-      <strong>Classes described in Backends:</strong>
+    <p>
+      This documentation is dedicated to the class diagrams provided at
+      <a href="https://github.com/Jfilz001/QrispUML/tree/main/documentation">
+        QrispUML/documentation at main · Jfilz001/QrispUML
+      </a>
+      for Eclipse Qrisp. The documentation refers to the discovery of classes of
+      Eclipse Qrisp and their respective UML class diagram, special features that
+      were defined during the design process and additions if necessary.
+    </p>
+    <p>
+      Eclipse Qrisp, hereinafter referenced by "Qrisp", is a high-level quantum
+      programming language that provides many functions and quantum algorithms to
+      the user. It provides a low-threshold interface for getting started with
+      quantum programming and enables code execution on quantum backends.
+    </p>
+    <p>
+      Qrisp implements <strong>159</strong> classes to this date (12.05.2026). Out
+      of these 159 classes the source code was analyzed to determine datatypes and
+      relationships. UML class diagrams are typically looking at classes from a
+      statically typed viewpoint. Qrisp is implemented with the programming
+      language Python as an embedded Domain Specific Language (eDSL) and is thus a
+      dynamically typed programming language. This makes it challenging to find
+      appropriate datatypes for function parameters, return values or properties
+      of classes. Only with careful consideration and testing it was achievable to
+      determine static datatypes.
+    </p>
+    <p>
+      The classes are at times in relationship with each other but not specified
+      further, this decision of design was taken to reduce redundancy across the
+      diagrams.
+    </p>
+    <p>
+      The efforts accumulated to 11 class diagrams. They summarize classes that
+      were deemed as fitting, by either having a close relationship to each other
+      or sharing similar concepts. In the following listing are the categories in
+      which classes have been placed.
     </p>
     <ul>
-      <li>BackendClient</li>
-      <li>VirtualBackend</li>
-      <li>BackedServer</li>
-      <li>QiskitBackend</li>
-      <li>QiskitRuntimeBackend</li>
-      <li>BatchedBackend</li>
-      <li>AQTBackend</li>
+      <li>
+        Backends
+      </li>
+      <li>
+        Hamiltonian
+      </li>
+      <li>
+        Permeability
+      </li>
+      <li>
+        Operations
+      </li>
+      <li>
+        QuantumManagement
+      </li>
+      <li>
+        Tensors
+      </li>
+      <li>
+        QEnv &amp; QPrimitive
+      </li>
+      <li>
+        QuantumVariables
+      </li>
+      <li>
+        Metrics
+      </li>
+      <li>
+        Algorithms and Problems
+      </li>
+      <li>
+        Other
+      </li>
     </ul>
-    <p>Read more about Backends <a href="documentation/classes/backends.html"><em>here</em></a></p>
-    <h2 id="hamiltonian-updated-to-0-8-">Hamiltonian (Updated to 0.8)</h2>
-    <p>Qrisp provides a easy to use interface for simulating complex quantum behaviour of the total energy of systems,
-      with the fundamental concept of Hamiltonians. They can be used to analyze complex interactions, for example
-      simulating molecules in chemistry [1], but also have engineering [2], nanotechnology [3] and many more
-      applications. The Hamiltonian UML class diagram shows all classes regarded to Hamiltonian simulation with its
-      operations. </p>
-    <p><strong>Classes described in Hamiltonian:</strong></p>
+    <p>
+      The first chapter of this document is dedicated to provide a quick overview
+      of the UML class diagrams listed above. The general purpose of the class
+      diagrams is explained, and the described classes are defined. The second
+      chapter goes into detail about the individual classes outlining design
+      decisions, special annotations, and specific implementation details.
+    </p>
+    <h1 id="quick-overview-">Quick Overview:</h1>
+    <h2>
+      <a name="_Toc229504970">Backends</a>
+    </h2>
+    <p>
+      Qrisp supports the execution of Quantum Gates on various quantum backends,
+      including IQM, AQT and IBM. The Backends UML class diagram joins all classes
+      Qrisp implements to enable the interaction with Backends.
+    </p>
+    <p>
+      <strong>Classes described in <em>Backends</em>:</strong>
+    </p>
     <ul>
-      <li>Hamiltonian</li>
-      <li>FermionicOperator</li>
-      <li>BoundQubitOperator</li>
-      <li>QubitOperator</li>
+      <li>
+        BackendClient
+      </li>
+      <li>
+        VirtualBackend
+      </li>
+      <li>
+        BackedServer
+      </li>
+      <li>
+        QiskitBackend
+      </li>
+      <li>
+        QiskitRuntimeBackend
+      </li>
+      <li>
+        BatchedBackend
+      </li>
+      <li>
+        AQTBackend
+      </li>
     </ul>
-    <p>Read more about Hamiltonian <a href="documentation/classes/Hamiltonian.html"><em>here</em></a></p>
-    <h2 id="permeability-updated-to-0-8-">Permeability (Updated to 0.8)</h2>
-    <p>Permeability is introduced into Qrisp’s implementation of uncomputation to generalize the concept of a controlled
-      operation [4]. Qrisp uses the following classes to represent a DAG (directed acyclic graph) as a Permeability
-      Graph, which is implemented as a subclass of NetworkX’s DiGraph class, whose details are omitted here.</p>
-    <p><strong>Classes descirbed in Permeability:</strong></p>
+    <p>
+      Read more about Backends <a href=documentation/classes/backends.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504971">Hamiltonian</a>
+    </h2>
+    <p>
+      Qrisp provides a easy to use interface for simulating complex quantum
+      behaviour of the total energy of systems, with the fundamental concept of
+      Hamiltonians. They can be used to analyze complex interactions, for example
+      simulating molecules in chemistry [1], but also have engineering [2],
+      nanotechnology [3] and many more applications. The Hamiltonian UML class
+      diagram shows all classes regarded to Hamiltonian simulation with its
+      operations.
+    </p>
+    <p>
+      <strong>Classes described in <em>Hamiltonian</em>:</strong>
+    </p>
     <ul>
-      <li>UnqompNode</li>
-      <li>AllocNode</li>
-      <li>DeallocNode</li>
-      <li>TerminatorNode</li>
-      <li>InstructionNode</li>
-      <li>PermeabilityGraph</li>
+      <li>
+        Hamiltonian
+      </li>
+      <li>
+        FermionicOperator
+      </li>
+      <li>
+        BoundQubitOperator
+      </li>
+      <li>
+        QubitOperator
+      </li>
     </ul>
-    <p>Read more about Permeability <a href="documentation/classes/Permeability.html"><em>here</em></a></p>
-    <h2 id="operations-updated-to-0-8-">Operations (Updated to 0.8)</h2>
-    <p>In quantum computing there are various operations to manipulate the state of qubits within circuits. The classes
-      listed below are implemented in Qrisp to provide basic functionalities such as quantum gates or measurements. Note
-      that these classes represent operations that are appended to circuits, rather than circuits themselves. The class
-      TruthTable is also included in the diagram for completeness and clarity.</p>
-    <p><strong>Classes described in Operations:</strong></p>
+    <p>
+      Read more about Hamiltonian <a href=documentation/classes/Hamiltonian.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504972">Permeability</a>
+    </h2>
+    <p>
+      Permeability is introduced into Qrisp’s implementation of uncomputation to
+      generalize the concept of a controlled operation [4]. Qrisp uses the
+      following classes to represent a DAG (directed acyclic graph) as a
+      Permeability Graph, which is implemented as a subclass of NetworkX’s DiGraph
+      class, whose details are omitted here.
+    </p>
+    <p>
+      <strong>Classes described in <em>Permeability</em>:</strong>
+    </p>
     <ul>
-      <li>Operation</li>
-      <li>U3Gate</li>
-      <li>PauliGate</li>
-      <li>PTControlledOperation</li>
-      <li>ControlledOperation</li>
-      <li>CustomControlOperation</li>
-      <li>GZZ_wrapper</li>
-      <li>GXX_wrapper</li>
-      <li>QuasiRZZ</li>
-      <li>StimNoiseGate</li>
-      <li>ParityOperation</li>
-      <li>CLControlledOperation</li>
-      <li>ConjugatedOperation</li>
-      <li>GidneyLogicalAND</li>
-      <li>GraySynthGate</li>
-      <li>JonesToffoli</li>
-      <li>LogicSynthGate</li>
-      <li>TruthTable</li>
+      <li>
+        UnqompNode
+      </li>
+      <li>
+        AllocNode
+      </li>
+      <li>
+        DeallocNode
+      </li>
+      <li>
+        TerminatorNode
+      </li>
+      <li>
+        InstructionNode
+      </li>
+      <li>
+        PermeabilityGraph
+      </li>
     </ul>
-    <p>Read more about Operations <a href="documentation/classes/Operations.html"><em>here</em></a></p>
-    <h2 id="quantummanagement-updated-to-0-8-">QuantumManagement (Updated to 0.8)</h2>
-    <p>Qrisp provides a variety of classes to handle quantum variables. Session, circuit, and quantum state management
-      are handled in different classes and provide a comprehensive framework of automation, maintaining interoperability
-      with low-level representations like OpenQASM [5]. Following classes implement stated functionalities.</p>
-    <p><strong>Classes described in QuantumManagement:</strong></p>
+    <p>
+      Read more about Permeability <a href=documentation/classes/Permeability.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504973">Operations</a>
+    </h2>
+    <p>
+      In quantum computing there are various operations to manipulate the state of
+      qubits within circuits. The classes listed below are implemented in Qrisp to
+      provide basic functionalities such as quantum gates or measurements. Note
+      that these classes represent operations that are appended to circuits,
+      rather than circuits themselves. The class TruthTable is also included in
+      the diagram for completeness and clarity.
+    </p>
+    <p>
+      <strong>Classes described in <em>Operations</em>:</strong>
+    </p>
     <ul>
-      <li>BufferedQuantumState</li>
-      <li>QuantumState</li>
-      <li>‘QuantumCircuit’</li>
-      <li>‘QuantumSession’</li>
-      <li>Instruction</li>
-      <li>GroupedInstruction</li>
+      <li>
+        Operation
+      </li>
+      <li>
+        U3Gate
+      </li>
+      <li>
+        PauliGate
+      </li>
+      <li>
+        PTControlledOperation
+      </li>
+      <li>
+        ControlledOperation
+      </li>
+      <li>
+        CustomControlOperation
+      </li>
+      <li>
+        GZZ_wrapper
+      </li>
+      <li>
+        GXX_wrapper
+      </li>
+      <li>
+        QuasiRZZ
+      </li>
+      <li>
+        StimNoiseGate
+      </li>
+      <li>
+        ParityOperation
+      </li>
+      <li>
+        CLControlledOperation
+      </li>
+      <li>
+        ConjugatedOperation
+      </li>
+      <li>
+        GidneyLogicalAND
+      </li>
+      <li>
+        GraySynthGate
+      </li>
+      <li>
+        JonesToffoli
+      </li>
+      <li>
+        LogicSynthGate
+      </li>
+      <li>
+        TruthTable
+      </li>
     </ul>
-    <p>Read more about QuantumManagement <a href="documentation/classes/QuantumManagement.html"><em>here</em></a></p>
-    <h2 id="tensor-updated-to-0-8-">Tensor (Updated to 0.8)</h2>
-    <p>Qrisp supports tensor algebra similar to NumPy, but adapted for quantum states. With the classes listed below,
-      Qrisp implements miscellaneous types of arrays. The framework includes TensorFactor, a class that holds an
-      instance of one of the array classes. The class also provides slicing, reshaping, tensor-contraction and matrix
-      multiplication operations.</p>
-    <p><strong>Classes described in Tensor:</strong></p>
+    <p>
+      Read more about Operations <a href=documentation/classes/Operations.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504974">QuantumManagement</a>
+    </h2>
+    <p>
+      Qrisp provides a variety of classes to handle quantum variables. Session,
+      circuit, and quantum state management are handled in different classes and
+      provide a comprehensive framework of automation, maintaining
+      interoperability with low-level representations like OpenQASM [5]. Following
+      classes implement stated functionalities.
+    </p>
+    <p>
+      <strong>Classes described in <em>QuantumManagement</em>:</strong>
+    </p>
     <ul>
-      <li>BiArray</li>
-      <li>DenseBiArray</li>
-      <li>DummyBiArray</li>
-      <li>SparseBiArray</li>
-      <li>TensorFactor</li>
+      <li>
+        BufferedQuantumState
+      </li>
+      <li>
+        QuantumState
+      </li>
+      <li>
+        ‘QuantumCircuit’
+      </li>
+      <li>
+        ‘QuantumSession’
+      </li>
+      <li>
+        Instruction
+      </li>
+      <li>
+        GroupedInstruction
+      </li>
     </ul>
-    <p>Read more about Tensor <a href="documentation/classes/Tensors.html"><em>here</em></a></p>
-    <h2 id="qenvironment-and-qprimitive-updated-to-0-8-">QEnvironment and QPrimitive (Updated to 0.8)</h2>
-    <p>Qrisp supplies multiple environments that can be accessed with the python statement with. Qrisp treats these as
-      if working with unmanaged resources, such as file streams. The environments are evaluated and result in an object
-      that supports the context management protocol. For this the dunder methods ‘<strong>enter</strong>’ and
-      ‘<strong>exit</strong>’ must be individually specified for the classes. Additionally the ‘QuantumPrimitive’ class
-      and descendants are specified as the ‘QuantumEnvironments’ inherit from it.</p>
-    <p><strong>Classes described in QEnvironemnt</strong></p>
+    <p>
+      Read more about QuantumManagement <a href=documentation/classes/QuantumManagement.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504975">Tensor</a>
+    </h2>
+    <p>
+      Qrisp supports tensor algebra similar to NumPy, but adapted for quantum
+      states. With the classes listed below, Qrisp implements miscellaneous types
+      of arrays. The framework includes TensorFactor, a class that holds an
+      instance of one of the array classes. The class also provides slicing,
+      reshaping, tensor-contraction and matrix multiplication operations.
+    </p>
+    <p>
+      <strong>Classes described in <em>Tensor</em>:</strong>
+    </p>
     <ul>
-      <li>QuantumPrimitive</li>
-      <li>QuantumEnvironment</li>
-      <li>ClControlEnvironment</li>
-      <li>ConjugationEnvironment</li>
-      <li>ControlEnvironment</li>
-      <li>CustomControlEnvironment</li>
-      <li>GateWrapEnvironment</li>
-      <li>GMSEnvironment</li>
-      <li>IterationEnvironment</li>
-      <li>JIterationEnvironment</li>
-      <li>JRangeIterator</li>
-      <li>ConditionEnvironment</li>
-      <li>InversionEnvironment</li>
+      <li>
+        BiArray
+      </li>
+      <li>
+        DenseBiArray
+      </li>
+      <li>
+        DummyBiArray
+      </li>
+      <li>
+        SparseBiArray
+      </li>
+      <li>
+        TensorFactor
+      </li>
     </ul>
-    <p>Read more about QEnvironment and QPrimitive <a href="documentation/classes/QEnv_QPrim.html">here</a></p>
-    <h2 id="other">Other</h2>
-    <p>The Other diagram collects infrastructure and utility classes that do not belong to a single dedicated subsystem.
-      It covers circuit primitives, the quantum data-loading helper, the Jasp/JAX expression layer (including the
-      central <strong>Jaspr</strong> class and its supporting data structures), Pauli and fermionic operator types,
-      the xDSL/MLIR dialect layer for the Jasp compiler backend, Stim array wrappers, and a number of smaller
-      standalone utilities.</p>
-    <p><strong>Classes described in Other:</strong></p>
+    <p>
+      Read more about Tensor <a href=documentation/classes/Tensors.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504976">QEnvironment and QPrimitive</a>
+    </h2>
+    <p>
+      Qrisp supplies multiple environments that can be accessed with the python
+      statement with. Qrisp treats these as if working with unmanaged resources,
+      such as file streams. The environments are evaluated and result in an object
+      that supports the context management protocol. For this the dunder methods ‘
+      <strong>__enter__’</strong> and ‘<strong>__exit__</strong>’ must be
+      individually specified for the classes. Additionally the ‘<strong>QuantumPrimitive</strong>’
+      class and descendants are specified as the ‘<strong>QuantumEnvironments</strong>’
+      inherit from it.
+    </p>
+    <p>
+      <strong>Classes described in <em>QEnvironment:</em></strong>
+    </p>
     <ul>
-      <li>Qubit</li>
-      <li>Clbit</li>
-      <li>QuantumDictionary</li>
-      <li>Jaspr</li>
-      <li>JaxprStats</li>
-      <li>Jlist</li>
-      <li>VarTracker</li>
-      <li>StaticArg</li>
-      <li>QubitTerm</li>
-      <li>QubitOperatorMeasurement</li>
-      <li>FermionicTerm</li>
-      <li>X_, Y_, Z_, a_, c_</li>
-      <li>JaspDialect</li>
-      <li>_Dialect</li>
-      <li>QuantumStateType</li>
-      <li>QubitArrayType</li>
-      <li>QubitType</li>
-      <li>QuantumGateOp, ResetOp, SliceOp, DeleteQubitsOp, FuseOp, GetQubitOp, GetSizeOp, MeasureOp, ParityOp</li>
-      <li>StimMeasurementHandles, StimDetectorHandles, StimObservableHandles, StimQubitIndices</li>
-      <li>CompilationAccelerator</li>
-      <li>QMLGateDescriptor</li>
-      <li>RemovedFunctionError</li>
-      <li>IntegerCircuit</li>
-      <li>MeasurementArray</li>
-      <li>MetricSpec</li>
-      <li>ParityHandle</li>
-      <li>HLOControlFlowReplacement</li>
-      <li>PJITEnvironment</li>
+      <li>
+        QuantumPrimitive
+      </li>
+      <li>
+        OperationPrimitive
+      </li>
+      <li>
+        QuantumEnvironment
+      </li>
+      <li>
+        ClControlEnvironment
+      </li>
+      <li>
+        ConjugationEnvironment
+      </li>
+      <li>
+        ControlEnvironment
+      </li>
+      <li>
+        CustomControlEnvironment
+      </li>
+      <li>
+        GateWrapEnvironment
+      </li>
+      <li>
+        GMSEnvironment
+      </li>
+      <li>
+        IterationEnvironment
+      </li>
+      <li>
+        JIterationEnvironment
+      </li>
+      <li>
+        JRangeIterator
+      </li>
+      <li>
+        ConditionEnvironment
+      </li>
+      <li>
+        InversionEnvironment
+      </li>
     </ul>
-    <p>Read more about Other <a href="documentation/classes/Other.html"><em>here</em></a></p>
-  </div>
+    <p>
+      Read more about QEnvironment and QPrimitive <a href=documentation/classes/QEnv_QPrim.html> here</a>
+    </p>
+    <p>
+      <a name="_Toc229504977">Quantum Variables</a>
+    </p>
+    <p>
+      In <strong>Qrisp</strong>, quantum variables are the fundamental building
+      blocks for representing and manipulating quantum information, analogous to
+      variables in classical programming languages. The classes listed below
+      implement the quantum variables, ranging from the base class to specialized
+      numeric, logical, and array types. This answer was derived from a Claude
+      chat [38].
+    </p>
+    <p>
+      <strong>Classes described in <em>Quantum Variables</em>:</strong>
+    </p>
+    <ul>
+      <li>
+        QuantumVariable
+      </li>
+      <li>
+        QuantumBool
+      </li>
+      <li>
+        QuantumColor
+      </li>
+      <li>
+        CustomQuantumVariable
+      </li>
+      <li>
+        QuantumChar
+      </li>
+      <li>
+        QuantumFloat
+      </li>
+      <li>
+        QuantumModulus
+      </li>
+      <li>
+        OHQInt
+      </li>
+      <li>
+        QuantumArray
+      </li>
+      <li>
+        QuantumArrayIterator
+      </li>
+      <li>
+        OutcomeArray
+      </li>
+      <li>
+        QuantumVariableTemplate
+      </li>
+      <li>
+        DynamicQubitArray
+      </li>
+      <li>
+        QuantumString
+      </li>
+    </ul>
+    <p>
+      Read more about Quantum Variables <a href=documentation/classes/QuantumVariables.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504978">Metrics</a>
+    </h2>
+    <p>
+      In Qrisp, metrics are used to profile and analyze quantum circuits by
+      tracking resource usage across quantum primitives. The classes listed below
+      implement a runtime-enforced handler interface built around an abstract base
+      class, with concrete subclasses measuring distinct aspects of circuit cost.
+      This answer was derived from a Claude chat [38].
+    </p>
+    <p>
+      <strong>Classes described in <em>Metrics</em></strong>:
+    </p>
+    <ul>
+      <li>
+        BaseMetric
+      </li>
+      <li>
+        CountOpsMetric
+      </li>
+      <li>
+        DepthMetric
+      </li>
+      <li>
+        NumQubitsMetric
+      </li>
+    </ul>
+    <p>
+      Read more about Metrics <a href=documentation/classes/Metrics.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504979">Algorithms and Problems</a>
+    </h2>
+    <p>
+      Algorithms and Problems In quantum computing, algorithms are structured as
+      high-level problem classes that bundle a Hamiltonian or cost structure
+      together with a quantum circuit approach or operator, an optional classical
+      optimizer, and helper methods for running, training, and benchmarking. The
+      classes listed below are implemented in Qrisp to provide complete quantum
+      algorithm workflows across three families — VQE, QAOA/QIRO, and DCQO — plus
+      the quantum backtracking framework. Note that these classes represent full
+      algorithm problem instances rather than individual circuit operations. This
+      description was derived from a Claude chat [38].
+    </p>
+    <p>
+      <strong>Classes described in <em>Algorithms and Problems</em>:</strong>
+    </p>
+    <ul>
+      <li>
+        VQEProblem
+      </li>
+      <li>
+        VQEBenchmark
+      </li>
+      <li>
+        QAOAProblem
+      </li>
+      <li>
+        QAOABenchmark
+      </li>
+      <li>
+        QIROProblem
+      </li>
+      <li>
+        DCQOProblem
+      </li>
+      <li>
+        QuantumBacktrackingTree
+      </li>
+      <li>
+        Subtree
+      </li>
+      <li>
+        QBTNode
+      </li>
+    </ul>
+    <p>
+      Read more about Algorithms and Problems <a href=documentation/classes/AlgorithmsAndProblems.html> here</a>
+    </p>
+    <h2>
+      <a name="_Toc229504980">Other Classes</a>
+    </h2>
+    <p>
+      In Qrisp, a number of classes do not yet fit into an established
+      hierarchical or thematic category. This section collects them temporarily,
+      with the goal of progressively integrating them into the existing class
+      diagrams through peer review. The classes listed below span JAX-tracing
+      placeholders, compiler infrastructure, arithmetic types, operator algebra,
+      and various utility structures. This description was derived from a Claude
+      chat [38].
+    </p>
+    <p>
+      <strong>Classes described in <em>Other Classes</em>:</strong>
+    </p>
+    <ul>
+      <li>
+        AbstractQuantumState
+      </li>
+      <li>
+        AbstractQubit
+      </li>
+      <li>
+        AbstractQubitArray
+      </li>
+      <li>
+        AuxException
+      </li>
+      <li>
+        BigInteger
+      </li>
+      <li>
+        BlockEncoding
+      </li>
+      <li>
+        BoundQubitTerm
+      </li>
+      <li>
+        Clbit
+      </li>
+      <li>
+        CompilationAccelerator
+      </li>
+      <li>
+        ConsumeQuantumKernelOp (xdsl_dialect.py)
+      </li>
+      <li>
+        ConsumeQuantumKernelOp (jasp_ops_gen.py)
+      </li>
+      <li>
+        ContextDict
+      </li>
+      <li>
+        ControlledJaspr
+      </li>
+      <li>
+        GidneyMXCJaspr
+      </li>
+      <li>
+        CreateQuantumKernelOp (xdsl_dialect.py)
+      </li>
+      <li>
+        CreateQuantumKernelOp (jasp_ops_gen.py)
+      </li>
+      <li>
+        CreateQubitsOp (xdsl_dialect.py)
+      </li>
+      <li>
+        CreateQubitsOp (jasp_ops_gen.py)
+      </li>
+      <li>
+        DefaultBackend
+      </li>
+      <li>
+        Qubit
+      </li>
+      <li>
+        QuantumDictionary
+      </li>
+      <li>
+        Jaspr
+      </li>
+      <li>
+        JaxprStats
+      </li>
+      <li>
+        Jlist
+      </li>
+      <li>
+        VarTracker
+      </li>
+      <li>
+        StaticArg
+      </li>
+      <li>
+        QubitTerm
+      </li>
+      <li>
+        QubitOperatorMeasurement
+      </li>
+      <li>
+        FermionicTerm
+      </li>
+      <li>
+        X
+      </li>
+      <li>
+        Y
+      </li>
+      <li>
+        Z
+      </li>
+      <li>
+        a_
+      </li>
+      <li>
+        c_
+      </li>
+    </ul>
+    <p>
+      Read more about Other Classes <a href=documentation/classes/Other.html> here</a>
+    </p>

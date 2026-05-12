@@ -28,11 +28,1687 @@
         <p><img alt="Other" src="../class_diagrams/other.png" /></p>
         <h3><a name="_Toc226031301">Information about classes and methods</a></h3>
         <p>
-            The '<strong>Other</strong>' diagram collects infrastructure and utility classes spanning five areas:
+            This section is temporary for classes that are not (yet) in a hierarchical
+            or other meaningful relationship with other Class categories. This can be
+            due to the classes unique nature or unclear connections. The goal of this
+            category is to be minimized, slowly integrating these ‘<strong>other</strong>’ 
+            classes into the provided class diagrams. This section needs to be discussed
+            in a peer review.
+            <!-- <br>Ramóns version: The '<strong>Other</strong>' diagram collects infrastructure and utility classes spanning five areas:
             circuit primitives (<strong>Qubit</strong>, <strong>Clbit</strong>), the quantum data-loading helper
             (<strong>QuantumDictionary</strong>), the Jasp/JAX expression layer (<strong>Jaspr</strong> and its
             supporting classes), Pauli and fermionic operator types, and the xDSL/MLIR dialect used by the Jasp
-            compiler backend.
+            compiler backend.-->
+        </p>
+
+        <h3>
+            <a name="_Toc229413425">AbstractQuantumState</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is part of the JAX-integration of Qrisp (qrisp.jasp) and is used
+            in JAX-tracing contexts. It does not hold concrete contents but is used for
+            JAX to keep a correct ordering for quantum operations within a computation
+            graph, by being used as a placeholder.
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor does not receive any parameters. It instantiates an
+            object ‘<strong>vma</strong>’ and calls the ‘<strong>AbstractValue</strong>’ 
+            constructor.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has 3 dunder methods:
+        </p>
+        <p>
+            -          ‘<strong>__repr__</strong>’ – This representational method
+            returns a string “<strong>QuantumState</strong>”
+        </p>
+        <p>
+            -          ‘<strong>__hash__</strong>’ – This method returns a hash value in
+            form of an integer of a ‘<strong>AbstractQuantumState</strong>’
+        </p>
+        <p>
+            -          ‘<strong>__eq__</strong>’ – This method returns a bool
+            representing a comparison of the class object with another ‘<strong>AbstractQuantumState</strong>’ 
+            object
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class inherits from ‘<strong>AbstractValue</strong>’, which is not
+            further described as it is part of the ‘<strong>jax</strong>’ library.
+        </p>
+        <h3>
+            <a name="_Toc229413426">AbstractQubit</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is part of the JAX-integration of Qrisp (qrisp.jasp) and is used
+            in JAX-tracing contexts. It does not hold concrete contents but is used for
+            JAX to keep a correct ordering for qubits within a computation graph, by
+            being used as a placeholder.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has 3 dunder methods:
+        </p>
+        <p>
+            -          ‘<strong>__repr__</strong>’ – This representational method
+            returns a string “<strong>Qubit</strong>”
+        </p>
+        <p>
+            -          ‘<strong>__hash__</strong>’ – This method returns a hash value in
+            form of an integer of a ‘<strong>AbstractQubit</strong>’
+        </p>
+        <p>
+            -          ‘<strong>__eq__</strong>’ – This method returns a bool
+            representing a comparison of the class object with another ‘<strong>AbstractQubitArray</strong>’ 
+            object
+        </p>
+        <p>
+            Additionally, there is one internal helper method:
+        </p>
+        <p>
+            -          ‘<strong>_add</strong>’ – This method returns a ‘<strong>DynamicQubitArray</strong>’ 
+            object fusing two ‘<strong>DynamicQubitArray</strong>’ objects ‘<strong>a</strong>’ 
+            and ‘<strong>b</strong>’, of which b is the tracer.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class has no constructor and no attributes. This class inherits from
+            ‘<strong>AbstractValue</strong>’, which is not further described, as it is
+            part of the ‘<strong>jax</strong>’ library. Internal helper methods are
+            designed as ‘<em>protected</em>’ (#).
+        </p>
+        <h3>
+            <a name="_Toc229413427">AbstractQubitArray</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is part of the JAX-integration of Qrisp (qrisp.jasp) and is used
+            in JAX-tracing contexts. It does not hold concrete contents but is used for
+            JAX to keep a correct ordering for qubit-arrays within a computation graph,
+            by being used as a placeholder.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has 3 dunder methods:
+        </p>
+        <p>
+            -          ‘<strong>__repr__</strong>’ – This representational method
+            returns a string “<strong>QubitArray</strong>”
+        </p>
+        <p>
+            -          ‘<strong>__hash__</strong>’ – This method returns a hash value in
+            form of an integer of a ‘<strong>AbstractQubitArray</strong>’
+        </p>
+        <p>
+            -          ‘<strong>__eq__</strong>’ – This method returns a bool
+            representing a comparison of the class object with another ‘<strong>AbstractQubitArray</strong>’ 
+            object
+        </p>
+        <p>
+            Additionally, there is one internal helper method:
+        </p>
+        <p>
+            -          ‘<strong>_getitem</strong>’ – This method implements cached
+            indexing for a traced quantum-register (qubit-array) so that each index
+            consistently maps to one unique qubit during JAX tracing
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class has no constructor and no attributes. This class inherits from
+            ‘<strong>AbstractValue</strong>’, which is not further described, as it is
+            part of the ‘<strong>jax</strong>’ library. Internal helper methods are
+            designed as ‘<em>protected</em>’ (#).
+        </p>
+        <h3>
+            <a name="_Toc229413428">AuxException</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class simply passes, thus not performing any relevant code.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class exists twice in the implementation of Qrisp. Since the
+            functionality is exactly equal, it is only modelled once. It inherits from
+            the python ‘<strong>Exception</strong>’ class.
+        </p>
+        <h3>
+            <a name="_Toc229413429">BigInteger</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            As described in the source code [34]:
+        </p>
+        <p>
+            <strong>“Fixed-width, little-endian base-2^32 big integer for JAX.</strong>
+        </p>
+        <p>
+            <strong>
+                This type represents non-negative integers using a fixed number of
+                32-bit limbs (dtype=uint32) in little-endian order (digits[0] is the
+                least significant limb). It is compatible with JAX transformations (jit,
+                vmap, pytrees).
+            </strong>
+        </p>
+        <p>
+            <strong>
+                All arithmetic (addition, subtraction, multiplication, shifts, division,
+                modulo, bitwise) is performed modulo 2^(32*n), where n = len(digits).
+                Overflow and underflow beyond the most-significant limb are discarded.
+            </strong>
+            ”
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class does not have a constructor, it only yields a ‘<strong>__call__</strong>’ 
+            method that supplies an instance of ‘<strong>BigInteger</strong>’. The only
+            class attribute is a ‘<strong>jnp.array</strong>’ ‘<strong>digits</strong>’.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has the following methods dunder methods:
+        </p>
+        <p>
+            -          ‘<strong>__call__</strong>’ – “<strong>Return a float64
+            approximation of the integer value when in tracing mode and an exact Python
+            integer otherwise. Computes sum_i digits[i] * (2^32)^i. Exact only for
+            values that fit into float64 or for Python integers.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__add__</strong>’ – “<strong>Add two BigIntegers with
+            wraparound modulo 2^(32*n). If `other` is a scalar, it is converted to the
+            same width. The number of limbs `n` is taken from `self`.</strong>” [34]
+            <strong></strong>
+        </p>
+        <p>
+            -          ‘<strong>__sub__</strong>’ – “<strong>Subtract two BigIntegers
+            with wraparound modulo 2^(32*n). If `other` is a scalar, it is converted to
+            the same width. Computes (self - other) mod 2^(32*n) using borrow
+            propagation.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__sub_alt__</strong>’ – “<strong>Alternative subtraction
+            using bitwise complement identity. Computes (self - other) as `~((~self) +
+            other)` with wraparound modulo 2^(32*n).</strong>“ [34]
+        </p>
+        <p>
+            -          ‘<strong>__mul__</strong>’ – “<strong>Multiply two BigIntegers
+            with wraparound modulo 2^(32*n). Implements schoolbook multiplication and
+            accumulates into `n` limbs, discarding overflow beyond the n-th limb
+            (wraparound).</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__pow__</strong>’ – “<strong>Integer exponentiation
+            (square-and-multiply). Performs `self ** other` by binary exponentiation,
+            modulo 2^(32*n).</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__repr__</strong>’ – “<strong>String representation with
+            limbs in little-endian order.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__lt__</strong>’ – “<strong>Less-than comparison between
+            two fixed-width BigIntegers. If `other` is a scalar, it is converted to the
+            same width. Requires both operands to have the same number of limbs.</strong>” 
+            [34]
+        </p>
+        <p>
+            -          ‘<strong>__eq__</strong>’ – “<strong>Equality comparison between
+            two fixed-width BigIntegers. If `other` is a scalar, it is converted to the
+            same width.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__ne__</strong>’ – “<strong>Inequality comparison
+            between two fixed-width BigIntegers.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__le__</strong>’ – “<strong>Less-or-equal comparison
+            between two fixed-width BigIntegers. If `other` is a scalar, it is converted
+            to the same width. Requires  both operands to have the same number of limbs.</strong>” 
+            [34]
+        </p>
+        <p>
+            -          ‘<strong>__gt__</strong>’ – “<strong>Greater-than comparison
+            between two fixed-width BigIntegers. If `other` is a scalar, it is converted
+            to the same width. Requires both operands to have the same number of limbs.</strong>” 
+            [34]
+        </p>
+        <p>
+            -          ‘<strong>__ge__</strong>’ – “<strong>Greater-or-equal comparison
+            between two fixed-width BigIntegers. If `other` is a scalar, it is converted
+            to the same width. Requires both operands to have the same number of limbs.</strong>” 
+            [34]
+        </p>
+        <p>
+            -          ‘<strong>__lshift__</strong>’ – “<strong>Logical left shift by a
+            non-negative number of bits. Shifts bits left by `shift` and fills with
+            zeros, within fixed width. Bits shifted out of the most-significant end are
+            discarded.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__rshift__</strong>’ – “<strong>Logical right shift by a
+            non-negative number of bits. Shifts bits right by `shift` and fills with
+            zeros, within fixed width. Bits shifted out of the least-significant end are
+            discarded.</strong>” [34]
+        </p>
+        <p>
+            - <strong>‘__and__</strong>’ – “<strong>Bitwise AND between two fixed-width
+            BigIntegers. If `other` is a scalar, it is converted to the same width.</strong>” 
+            [34]
+        </p>
+        <p>
+            -          ‘<strong>__or__</strong>’ – “<strong>Bitwise OR between two
+            fixed-width BigIntegers. If `other` is a scalar, it is converted to the same
+            width.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__xor__</strong>’ – “<strong>Bitwise XOR between two
+            fixed-width BigIntegers. If `other` is a scalar, it is converted to the same
+            width.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__invert__</strong>’ – “<strong>Bitwise NOT on a
+            fixed-width BigInteger.</strong>” [34] <strong></strong>
+        </p>
+        <p>
+            -          ‘<strong>__mod__</strong>’ – “<strong>Modulo operation `self %
+            other` (fixed-width). If `other` is a scalar, it is converted to the same
+            width. Uses `</strong><strong>remainder_division`.</strong>“ [34]
+        </p>
+        <p>
+            -          ‘<strong>__floordiv__</strong>’ – “<strong>Floor division `self
+            // other` (fixed-width). If `other` is a scalar, it is converted to the same
+            width. Uses</strong><strong>`remainder_division`.</strong>“ [34]
+        </p>
+        <p>
+            Standard methods:
+        </p>
+        <p>
+            -          ‘<strong>tree_flatten</strong>’ – “PyTree flatten for JAX.“ [34]
+            This method is a <em>class method</em>and therefore written as static (<u>underlined</u>).
+        </p>
+        <p>
+            -          ‘<strong>tree_unflatten</strong>’ – “<strong>PyTree unflatten for
+            JAX.</strong>“ [34] This method is a <em>static method</em>and therefore
+            written as static (<u>underlined</u>).
+        </p>
+        <p>
+            -          ‘<strong>create_static</strong>’ – “<strong>Create a BigInteger
+            using JAX primitives. Constructs a fixed-width BigInteger with exactly
+            `size` limbs, interpreting the input modulo 2^(32*size). JIT-friendly.</strong>” 
+            [34] This method is a <em>static method</em>and therefore written as static
+            (<u>underlined</u>).
+        </p>
+        <p>
+            -          ‘<strong>create_dynamic</strong>’ – “<strong>Alias of `create`</strong>” 
+            [34] This method is a <em>static method</em>and therefore written as static
+            (<u>underlined</u>).
+        </p>
+        <p>
+            -          ‘<strong>get_bit</strong>’ – “<strong>Get the value of the i-th
+            bit (0-based, LSB=bit 0).</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>flip_bit</strong>‘ – “<strong>Toggle the i-th bit
+            (0-based, LSB=bit 0).</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>bit_size</strong>’ – “<strong>Return the position of the
+            most significant set bit plus one. Approximates the bit-length of the value:
+            floor(log2(x)) + 1.</strong><strong>Returns 0 for zero.</strong>“ [34]
+        </p>
+        <p>
+            -          ‘<strong>remainder_division</strong>’ – “<strong>Exact division
+            using Knuth long division (base 2^32). Computes quotient and remainder such
+            that: `self = other * q + r`, with `0 &lt;= r &lt; other`.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>get_larger</strong>’ – “<strong>Given a BigInteger with
+            n limbs, return a new BigInteger with 2n limbs and the same number.</strong>” 
+            [34]
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The ‘<strong>BigInteger</strong>’ class has no inheritance. It has a single
+            composition to jnp.ndarray, as it ceases to exist without the ‘<strong>BigInteger</strong>’ 
+            class. The class contains <em>dunder methods</em>which are noted with
+            stereotypes. Some of the methods are decorated with the ‘<strong>@jax.jit</strong>’ 
+            annotation. This detail is added to the stereotype describing the method.
+        </p>
+        <h3>
+            <a name="_Toc229413430">BlockEncoding</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            <strong>
+                “Central structure for representing block-encodings. Block-encoding is a
+                foundational technique that enables the implementation of non-unitary
+                operations on a quantum computer by embedding them into a larger unitary
+                operator. Given an operator
+            </strong>
+            <strong>, we embed a scaled version</strong> <strong></strong>
+            <strong>
+                into the upper-left block of a unitary matrix
+            </strong>
+            <strong>:</strong> <strong></strong> <strong></strong>
+        </p>
+        <p>
+            <strong>More formally, a block-encoding of an operator</strong>
+            <strong>
+                (not necessarily unitary) acting on a Hilbert space
+            </strong>
+            <strong>is a unitary acting on</strong> <strong></strong>
+            <strong>
+                (for some auxiliary Hilbert space
+            </strong>
+            <strong>) such that</strong> <strong></strong>
+        </p>
+        <p>
+            <strong></strong> <strong></strong>
+        </p>
+        <p>
+            <strong>where</strong>
+        </p>
+        <p>
+            <strong>-</strong>
+            <strong>
+                is a subnormalization factor (or scaling factor) that ensures
+            </strong>
+            <strong>has singular values within the unit disk.</strong> <strong></strong>
+        </p>
+        <p>
+            <strong>-</strong> <strong>represents the approximation error.</strong>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>The block-encoding is termed exact if</strong>
+            <strong>
+                meaning the upper-left block of
+            </strong>
+            <strong>is exactly</strong> <strong>.</strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>**Implementation mechanism**</strong>
+        </p>
+        <p>
+            <strong>To apply the operator</strong> <strong>to a quantum state</strong>
+            <strong>:</strong> <strong></strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>- Prepare the system in state</strong> <strong></strong>
+            <strong>
+            </strong>
+            <strong>.</strong> <strong></strong>
+        </p>
+        <p>
+            <strong>- Apply the unitary</strong> <strong>.</strong>
+        </p>
+        <p>
+            <strong>- Post-select by measuring the ancillas. If the result is</strong>
+            <strong>, the remaining state is</strong> <strong></strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>- The success probability of this operation is given by</strong>
+        </p>
+        <p>
+            <strong></strong> <strong></strong> <strong>”</strong>[34]
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor has following parameters:
+        </p>
+        <p>
+            -          ‘<strong>alpha: ndarray</strong>’ – ‘<strong>The scalar scaling
+            factor</strong>’ [34]. This attribute becomes instantiated.
+        </p>
+        <p>
+            -
+            <strong>
+                ‘ancillas: List&lt;QuantumVariable | QuantumVariableTemplate&gt;’
+            </strong>
+            – “<strong>A list of QuantumVariables or QuantumVariableTemplates. These
+            serve as templates for the ancilla variables used in the block-encoding.</strong>” 
+            [34] This becomes instantiated as ‘<strong>_anc_templates</strong>’.
+        </p>
+        <p>
+            - <strong>‘unitary: Callable’</strong>– “<strong>A function
+            `unitary(*ancillas, *operands)` applying the block-encoding unitary. It
+            receives the ancilla and operand QuantumVariables as arguments.”</strong>[34] 
+            This parameter becomes instantiated. <strong></strong>
+        </p>
+        <p>
+            - <strong>‘num_ops: int = 1’</strong>– “<strong>The number of operand
+            quantum variables. The default is 1.</strong>“ [34] This parameter becomes
+            instantiated.
+        </p>
+        <p>
+            - <strong>‘is_hermitian: bool = False’</strong>– “<strong>Indicates whether
+            the block-encoding unitary is Hermitian. The default is False.</strong>”
+            [34] This parameter becomes instantiated.
+        </p>
+        <p>
+            The remaining attributes are:
+        </p>
+        <p>
+            - <strong>‘num_ancs’ –</strong>“<strong>The number of ancilla quantum
+            variables.</strong>” [34]
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The methods of ‘<strong>BlockEncoding</strong>’ are as follows:
+        </p>
+        <p>
+            -          ‘<strong>tree_flatten</strong>’ – “<strong>PyTree flatten for
+            JAX.</strong>“ [34]
+        </p>
+        <p>
+            -          ‘<strong>tree_unflatten</strong>’ –“<strong>PyTree unflatten for
+            JAX.“</strong>[34] This method is a class method and is thus modelled as
+            underlined.
+        </p>
+        <p>
+            -          ‘<strong>from_operator</strong>’ – “<strong>Constructs a
+            BlockEncoding from an operator.</strong>” [34] This method is a class method
+            and is thus modelled as underlined.
+        </p>
+        <p>
+            -          ‘<strong>from_array</strong>‘ – “<strong>Constructs a
+            BlockEncoding from a 2-D array.”</strong>[34] This method is a class method
+            and is thus modelled as underlined.
+        </p>
+        <p>
+            -          ‘<strong>from_lcu</strong>’ – “
+            <strong>
+                Constructs a BlockEncoding using the Linear Combination of Unitaries
+                (LCU) protocol. For an LCU block encoding, consider a linear combination
+                of unitaries:
+            </strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>where</strong>
+            <strong>
+                are real non-negative coefficients such that
+            </strong>
+            <strong></strong> <strong>and</strong>
+            <strong>
+                are unitaries acting on the same operand quantum variables. The block
+                encoding unitary is constructed via the LCU protocol:
+            </strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>where:</strong>
+        </p>
+        <p>
+            <strong>SEL applies each unitary</strong>
+            <strong>
+                conditioned on the auxiliary variable state
+            </strong>
+            <strong>:</strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>PREP prepares the state representing the coefficients:</strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            “ [34] This class is a class method and thus modelled with an underlining.
+        </p>
+        <p>
+            -          ‘<strong>create_ancillas</strong>’ – “<strong>Returns a list of
+            ancilla QuantumVariables for the BlockEncoding.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>apply</strong>’ – “<strong>Applies the BlockEncoding
+            unitary to the given operands</strong>.” [34]
+        </p>
+        <p>
+            -          ‘<strong>apply_rus</strong>’ – “<strong>Applies the BlockEncoding
+            using RUS.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>expectation_value</strong>’ – “
+            <strong>
+                Measures the expectation value of the operator using the Hadamard test
+                protocol. For a block-encoded Hermitian operator
+            </strong>
+            <strong>and a state</strong>
+            <strong>
+                , this method measures the expectation value
+            </strong>
+            ” [34]
+        </p>
+        <p>
+            -          ‘<strong>resources</strong>’ – “<strong>Estimate the quantum
+            resources required for the BlockEncoding. This method uses the `count_ops`,
+            `depth` and `num_qubits` decorators to obtain gate counts, circuit depth,
+            and qubit usage for a single execution of block-encoding `.unitary`. Unlike
+            `apply_rus`, it does not run the simulator and does not include repetitions
+            from the `RUS` procedure.</strong>” [34]. This method is experimental and
+            may not act as expected
+        </p>
+        <p>
+            -       ‘<strong>qubitization</strong>‘ – “ <strong>The action of</strong>
+            <strong>
+                partitions the Hilbert space into a direct sum of two-dimensional
+                invariant subspaces giving it the name "qubitization". For an eigenstate
+            </strong>
+            <strong>of</strong> <strong>with eigenvalue</strong>
+            <strong>
+                , the two-dimensional space is spanned by
+            </strong>
+        </p>
+        <p>
+            <strong>-</strong> <strong></strong>
+        </p>
+        <p>
+            <strong>-</strong> <strong></strong>
+        </p>
+        <p>
+            <strong>In this subspace,</strong>
+            <strong>
+                implements a Pauli-Y rotaion by angle
+            </strong>
+            <strong>,  i.e.,</strong> <strong></strong>
+        </p>
+        <p>
+            <strong>If the block-encoding unitary</strong>
+            <strong>
+                is Hermitian (i.e.,
+            </strong>
+            <strong>), then</strong> <strong>where</strong>
+            <strong>
+                is the reflection around the state
+            </strong>
+            <strong>of the ancilla variables. Otherwise,</strong> <strong>where</strong>
+            <strong>is a Hermitian block-encoding of</strong>
+            <strong>
+                requiring one additional ancilla qubit.
+            </strong>
+            ” [34]
+        </p>
+        <p>
+            - <strong>‘chebyshev‘</strong>– “
+            <strong>
+                Returns a BlockEncoding representing
+            </strong>
+            <strong>
+                -th Chebyshev polynomial of the first kind applied to the operator.
+            </strong>
+        </p>
+        <p>
+            <strong>For a block-encoded Hermitian operator</strong>
+            <strong>
+                with normalization factor
+            </strong>
+            <strong>
+                , this method returns a BlockEncoding of the rescaled operator
+            </strong>
+            <strong>if `rescale=True`, or</strong> <strong>if `rescale=False`.</strong>”
+        </p>
+        <p>
+            -          ‘<strong>__add__</strong>’ – “
+            <strong>
+                Returns a BlockEncoding of the sum of two operators.
+            </strong>
+        </p>
+        <p>
+            <strong>This method implements the linear combination</strong>
+            <strong>
+                via the LCU (Linear Combination of Unitaries) framework, where
+            </strong>
+            <strong>and</strong>
+            <strong>
+                are the operators encoded by the respective instances.
+            </strong>
+            ” [34] This is a dunder method and is labelled with ‘<strong>&lt;&lt;arithmetic&gt;&gt;</strong>’ 
+            to label its use.
+        </p>
+        <p>
+            - <strong>‘__sub__’</strong>– “
+            <strong>
+                Returns a BlockEncoding of the difference between two operators. This
+                method implements the subtraction
+            </strong>
+            <strong>using a linear combination of unitaries (LCU), where</strong>
+            <strong>is the operator encoded by this instance and</strong>
+            <strong>
+                is the operator encoded by 'other'.
+            </strong>
+            ” [34] This is a dunder method and is labelled with ‘<strong>&lt;&lt;arithmetic&gt;&gt;</strong>’ 
+            to label its use.
+        </p>
+        <p>
+            -          ‘<strong>__mul__</strong>’ – “
+            <strong>
+                Returns a BlockEncoding of the scaled operator. This method implements
+                the scalar multiplication
+            </strong>
+            <strong>, where</strong>
+            <strong>
+                is the operator encoded by this instance and
+            </strong>
+            <strong>is the provided scalar.</strong>” [34] This is a dunder method and
+            is labelled with ‘<strong>&lt;&lt;arithmetic&gt;&gt;</strong>’ to label its
+            use.
+        </p>
+        <p>
+            -          ‘<strong>__matmul__</strong>’ – “
+            <strong>
+                Returns a BlockEncoding of the product of two operators. This method
+                implements the operator product
+            </strong>
+            <strong>by composing two BlockEncodings, where</strong> <strong>and</strong>
+            <strong>are the operators encoded by the respective instances.</strong>”
+            [34] This is a dunder method and is labelled with ‘<strong>&lt;&lt;arithmetic&gt;&gt;</strong>’ 
+            to label its use. <strong></strong>
+        </p>
+        <p>
+            -          ‘<strong>__radd__</strong>’ – This method is equivalent to the
+            ‘<strong>__add__</strong>’ class.
+        </p>
+        <p>
+            -          ‘<strong>__rmul__</strong>’ – This method is equivalent to the
+            ‘<strong>__mul__</strong>’ class.
+        </p>
+        <p>
+            -          ‘<strong>kron</strong>’ – “
+            <strong>
+                Returns a BlockEncoding of the Kronecker product (tensor product) of two
+                operators. This method implements the operator
+            </strong>
+            <strong>, where</strong> <strong>and</strong>
+            <strong>
+                are the operators encoded by the respective instances. Following the
+                construction in Chapter 10.2 in `Dalzell et al.
+                &lt;https://arxiv.org/abs/2310.03011&gt;`_, the resulting BlockEncoding
+                is formed by the tensor product of the underlying unitaries,
+            </strong>
+            <strong>.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>__neg__</strong>’ – “
+            <strong>
+                Returns a BlockEncoding of the negated operator. This method implements
+                the transformation
+            </strong>
+            <strong>by scaling the encoded operator by</strong> <strong>.</strong>”
+            [34]. This is a dunder method and is labelled with ‘<strong>&lt;&lt;operation&gt;&gt;</strong>’ 
+            to label its use.
+        </p>
+        <p>
+            -          ‘<strong>inv</strong>’ – “
+            <strong>
+                Returns a BlockEncoding approximating the matrix inversion of the
+                operator. For a block-encoded Hermitian matrix
+            </strong>
+            <strong>with normalization factor</strong>
+            <strong>
+                , this function returns a BlockEncoding of an operator
+            </strong>
+            <strong>such that</strong>
+            <strong>
+                . The inversion is implemented via Quantum Eigenvalue Transformation
+                (QET) using a polynomial approximation of
+            </strong>
+            <strong>over the domain</strong> <strong>.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>sim</strong>’ – “
+            <strong>
+                Returns a BlockEncoding approximating Hamiltonian simulation of the
+                operator. For a block-encoded Hamiltonian
+            </strong>
+            <strong>
+                , this method returns a BlockEncoding of an approximation of the unitary
+                evolution operator
+            </strong>
+            <strong>for a given time</strong> <strong>.</strong>
+        </p>
+        <p>
+            <strong>
+                The approximation is based on the Jacobi-Anger expansion into Bessel
+                functions of the first kind (
+            </strong>
+            <strong>):</strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            “[34]
+        </p>
+        <p>
+            -          ‘<strong>poly</strong>’ – “
+            <strong>
+                Returns a BlockEncoding representing a polynomial transformation of the
+                operator. For a block-encoded Hermitian matrix
+            </strong>
+            <strong>and a (complex) polynomial</strong>
+            <strong>
+                , this method returns a BlockEncoding of the operator
+            </strong>
+            <strong>
+                . This is achieved using Generalized Quantum Eigenvalue Transformation
+                (GQET).
+            </strong>
+            “ [34]
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The ‘<strong>BlockEncoding</strong>’ class has no inheritance. It has a
+            single composition to ‘<strong>QuantumVariableTemplate</strong>’, as it
+            logically ceases to exist and can’t exist without the ‘
+            <strong>
+                BlockEncoding’
+            </strong>
+            class. The class contains <em>dunder methods</em>which are noted with
+            stereotypes. Static and class methods are designed with underlining.
+        </p>
+        <h3>
+            <a name="_Toc229413431">BoundQubitTerm</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class “<em>locks onto</em>” a Qubit by wrapping it into a bound term.
+            The developer confirmed that this class is outdated and has been kept as an
+            idea to be visited another time. This class is used for the ‘<strong>BoundQubitOperation</strong>’ 
+            class.
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The constructor takes a parameter ‘<strong>factor_dict’</strong>. This
+            parameter is a dictionary, or here in the diagram written as Map, that
+            consists of Integer as keys and String as values. It also becomes
+            instantiated. These values become hashed and put into a sorted tuple. The
+            tuple is hashed again and put into the second attribute of the class
+            ‘<strong>hash_value</strong>’ in form of an integer.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The normal class methods are as follows:
+        </p>
+        <p>
+            -          ‘<strong>update</strong>’ – This method updates the ‘<strong>factor_dict</strong>’ 
+            and ‘<strong>hash_value</strong>’
+        </p>
+        <p>
+            -          ‘<strong>copy</strong>’ – This returns a copy of the ‘<strong>BoundQubitTerm</strong>’ 
+            object.
+        </p>
+        <p>
+            -          ‘<strong>is_identity</strong>’ – This method returns whether the
+            length of the ‘<strong>factor_dict</strong>’ is 0 or not
+        </p>
+        <p>
+            -          ‘<strong>simulate</strong>’ – “<strong>Implements
+            exp(i*coeff*\prod_j Z_j) where the product goes over all qubits j in
+            self.factor_dict</strong>” [34] This method is decorated with ‘<strong>@lifted</strong>’
+        </p>
+        <p>
+            -          ‘<strong>to_expr</strong>’ – “<strong>Returns a SymPy expression
+            representing the BoundQubitTerm.</strong>” [34]
+        </p>
+        <p>
+            -          ‘<strong>subs</strong>’ – This method returns a ‘<strong>BoundQubitTerm</strong>’ 
+            and a result coefficient with the ‘<strong>factor_dict</strong>’ with
+            deleted keys, depending on the ‘<strong>subs_dict</strong>’ parameter
+        </p>
+        <p>
+            -          ‘<strong>commute</strong>’ – “Checks if two BoundQubitTerms
+            commute.” [34]
+        </p>
+        <p>
+            The dunder methods are as follows:
+        </p>
+        <p>
+            -          ‘<strong>__hash__</strong>’ – This method returns the ‘<strong>hash_value</strong>’ 
+            attribute.
+        </p>
+        <p>
+            -          ‘<strong>__eq__</strong>’ – This method compares the ‘<strong>hash_value</strong>’ 
+            with another ‘<strong>BoundQubitTerm</strong>’s ‘<strong>hash_value</strong>’
+        </p>
+        <p>
+            -          ‘<strong>__str__</strong>’ – This method returns the object in
+            form of a string
+        </p>
+        <p>
+            -          ‘<strong>__pow__</strong>’ – This method does not produce
+            meaningful results, as it doesn’t apply the appropriate arithmetic
+            operations.
+        </p>
+        <p>
+            -          ‘<strong>__mul__</strong>’ – <em>Claude</em> [38] explains that
+            “<strong>This method multiplies two Pauli operator terms qubit-by-qubit
+            using a lookup table to determine the resulting Pauli operators and phase
+            coefficients.</strong>“, which checks out. The method likely produces bugs
+            and unwanted behavior as it doesn’t account for complex numbers for the
+            coefficients.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class contains dunder methods that are marked with the ‘<strong>&lt;&lt;&gt;&gt;</strong>’ 
+            notation (stereotypes). The stereotype ‘<strong>&lt;&lt;lifted&gt;&gt;</strong>’ 
+            marks the ‘<strong>@lifted</strong>’ annotation.
+        </p>
+        <h3>
+            <a name="_Toc229413432">Clbit</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            “<strong>This class represents classical bits. Classical bits are created by
+            supplying the identifier string.</strong>“ [34] This class is used for
+            ‘<strong>QuantumCircuit</strong>’ objects, to better represent the
+            Operation.
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor receives the parameter:
+        </p>
+        <p>
+            -          ‘<strong>identifier: String</strong>’ – this parameter becomes
+            instantiated
+        </p>
+        <p>
+            The class constructor instantiates the following attributes:
+        </p>
+        <p>
+            -          ‘<strong>hash_value: int</strong>’ – This is the integer value of
+            the numpy value of the ’<strong>clbit_hash</strong>’ attribute.
+        </p>
+        <p>
+            -          ‘<strong>bit_type: int</strong>’ – This integer is used for the
+            comparison operation and is always one for classical bits
+        </p>
+        <p>
+            -          ‘<strong>clbit_hash: int</strong>’ – This value increases for
+            every ‘<strong>Clbit</strong>’ object. It is static
+        </p>
+        <p>
+            The other attributes of the class:
+        </p>
+        <p>
+            -          ‘<strong>dtype: nd.dtype</strong>’ – This <em>dtype</em> is of
+            bool for every ‘<strong>Clbit</strong>’. It is a static attribute.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            This class consists of dunder methods:
+        </p>
+        <p>
+            -          ‘<strong>__str__</strong>’ – This method returns the ‘<strong>identifier</strong>’.
+        </p>
+        <p>
+            -          ‘<strong>__repr__</strong>’ – This method returns the ‘<strong>identifier</strong>’ 
+            in a different representation
+        </p>
+        <p>
+            -          ‘<strong>__hash__</strong>’ – This method returns the ‘<strong>hash_value</strong>’
+        </p>
+        <p>
+            -          ‘__eq__’ – This method alters the <em>equals comparison</em> of
+            two ‘<strong>Clbit</strong>’ objects, so their ‘<strong>hash_value</strong>’ 
+            and ‘<strong>bit_type</strong>’ are compared.
+        </p>
+        <p>
+            Details and design decisions: <br/>
+            This class has dunder methods that are declared with the ‘<strong>&lt;&lt;&gt;&gt;</strong>’ 
+            notation (stereotypes). Static attributes are represented as
+            <u>
+                underlined
+            </u>
+            .
+        </p>
+        <h3>
+            <a name="_Toc229413433">CompilationAccelerator</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is an environment that sets the static ‘<strong>xla_mode</strong>’ 
+            of ‘<strong>QuantumCircuits</strong>’ to a specified mode. This is helpful,
+            when the current thread is the main thread for compilation. This class is
+            also synonymous with ‘<strong>fast_append</strong>’.
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class receives one parameter:
+        </p>
+        <p>
+            -          ‘<strong>xla_mode: int</strong>’ – This is the <em>xla
+            mode</em>(xla =accelerated linear algebra) that the ‘<strong>QuantumCircuit</strong>’ 
+            class will change to, depending on the thread.
+        </p>
+        <p>
+            The class has one more attributes:
+        </p>
+        <p>
+            -          ‘<strong>original_xla_mode: int</strong>’ – This is the current
+            xla mode of ‘<strong>QuantumCircuit</strong>’
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            -          ‘<strong>__enter__</strong>’ – This is the method called when
+            this environment is entered. It changes the ‘<strong>xla_mode</strong>’ of
+            ‘<strong>QuantumCircuit</strong>’ to the specified ‘<strong>xla_mode</strong>’ 
+            and saves, the original xla mode of ‘<strong>QuantumCircuit</strong>’. The
+            mode only gets changed if the current thread is the main thread.
+        </p>
+        <p>
+            -          ‘<strong>__exit__</strong>’ – This is the method called when this
+            environment is exited. It changes the ‘<strong>xla_mode</strong>’ of
+            ‘<strong>QuantumCircuit</strong>’ to the specified ‘<strong>original_xla_mode</strong>’ 
+            back. The mode only gets changed if the current thread is the main thread.
+            This method has 3 parameters, all of which are not used in the function.
+        </p>
+        <h3>
+            <a name="_Toc229413434">ConsumeQuantumKernelOp</a> (xdsl_dialect.py)
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class exists two times. The class is described in the source code:
+        </p>
+        <p>
+            “<strong>Destroys the quantum state. Indicates to the execution environment
+            that the quantum computation has concluded.</strong>“ [34]
+        </p>
+        <p>
+            Class attributes:
+        </p>
+        <p>
+            The class attributes are all static and are as follows:
+        </p>
+        <p>
+            -          ‘<strong>name: String</strong>’ – this is always set to
+            “jasp.consume_quantum_kernel”. Unique identifier string for the operation.
+        </p>
+        <p>
+            -          ‘<strong>qst: QuantumStateType</strong>’ – This is the quantum
+            state being consumed.
+        </p>
+        <p>
+            -          ‘<strong>success: _TensorI1</strong>’ – This is a result output
+            that defines whether the consumption was successful.
+        </p>
+        <p>
+            -          ‘<strong>assembly_format: String</strong>’ this is always set to
+            “$qst attr-dict `:` type($qst) `-&gt;` type($success)". Claude describes
+            [38]: “It defines how the op is printed and parsed in MLIR’s textual IR.“
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class does not have a constructor or methods. It inherits from
+            ‘<strong>IRDLOperation</strong>’. This class is decorated with the ‘<strong>@irdl_op_definition</strong>’, 
+            which is designed with the ‘&lt;&lt;&gt;&gt;’ notation.
+        </p>
+        <h3>
+            ConsumeQuantumKernelOp (_jasp_ops_gen.py)
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is the auto-generated Python binding. The description of the
+            source code: <br/>
+            “<strong>Indicates to the execution environment that the quantum computation
+            has concluded.</strong>” [38].
+        </p>
+        <h4>
+            Class attributes:
+        </h4>
+        <p>
+            The class constructor receives n parameters, of which these are certain:
+        </p>
+        <p>
+            -          ‘<strong>success: _ods_ir.OpResult</strong>’ – This parameter
+            will be appended to the results. This is also a class attribute because of
+            the method ‘<strong>success</strong>’, which is decorated with the ‘<strong>@builtins.property</strong>’ 
+            annotation.
+        </p>
+        <p>
+            -          ‘<strong>qst: _ods_ir.OpResult</strong>’ – The in/outgoing
+            quantum state. This is also a class attribute because of the method
+            ‘<strong>qst</strong>’, which is decorated with the ‘<strong>@builtins.property</strong>’ 
+            annotation.
+        </p>
+        <p>
+            -          ‘<strong>loc: Object</strong>’ – “<strong>optional source
+            location for debugging</strong>“ [38]. The type could not be determined,
+            hence it is of type object.
+        </p>
+        <p>
+            -          ‘<strong>ip: Object</strong>’ – “<strong>optional insertion point
+            in the IR</strong>” [38]. The type could not be determined, hence it is of
+            type object.
+        </p>
+        <p>
+            The class can also receive n more arguments, which is designed with a star
+            in the diagram.
+        </p>
+        <p>
+            Claude describes the following class attributes:
+        </p>
+        <p>
+            -          ‘<strong>OPERATION_NAME: String</strong>’ – “<strong>The unique
+            string identifier for the operation, matching the IRDL definition.</strong>” 
+            [38] It is static.
+        </p>
+        <p>
+            -          ‘<strong>_ODS_REGIONS: (int, bool)</strong>’ – “<strong>Declares 
+            the op has 0 regions and is non-variadic.</strong>” [38] It is static.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class inherits from the parent class ‘<strong>_odr_ir.OpView</strong>’ 
+            and is decorated with the ‘<strong>@_ods_cext.register_operation(_Dialect)</strong>’ 
+            annotation. This detail is designed with the ‘<strong>&lt;&lt;&gt;&gt;</strong>’notation. 
+            The class does not have unique methods.
+        </p>
+        <h3>
+            <a name="_Toc229413435">ContextDict</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            “ <strong>Execution environment for the Jaxpr abstract interpreter.</strong>
+        </p>
+        <p>
+            <strong>
+                `ContextDict` is the central data structure used while evaluating a
+                Jaxpr in the profiling/metric interpreters. It acts as a mutable
+                environment that maps SSA-style Jaxpr variables (`eqn.invars` /
+                `eqn.outvars`) to the concrete or traced values chosen by a metric to
+                represent them.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                In a normal JAX execution, primitives are evaluated by the XLA runtime.
+                In the profiler, however, we *replay* the Jaxpr equation-by-equation in
+                pure Python using a custom `eqn_evaluator`. During this replay, every
+                Jaxpr variable must be associated with a value. `ContextDict` provides
+                this association.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                Conceptually, this is equivalent to the “environment” of an interpreter:
+            </strong>
+        </p>
+        <p>
+            <strong>Jaxpr variable  ---&gt;  metric-specific runtime value</strong>
+        </p>
+        <p>
+            <strong>
+                The values stored in the dictionary are **not** the original program
+                values. Instead, they are arbitrary Python/JAX objects chosen by the
+                active metric to represent the meaning of that variable for the purpose
+                of resource analysis. For example:
+            </strong>
+        </p>
+        <p>
+            <strong>- In `count_ops`:</strong>
+        </p>
+        <p>
+            <strong>
+                * `QuantumCircuit`  -&gt;  (counting_array, incrementation_constants)
+            </strong>
+        </p>
+        <p>
+            <strong>* `QubitArray`      -&gt;  integer size</strong>
+        </p>
+        <p>
+            <strong>* `Qubit`           -&gt;  None</strong>
+        </p>
+        <p>
+            <strong>...</strong>
+        </p>
+        <p>
+            <strong>- In `depth`:</strong>
+        </p>
+        <p>
+            <strong>
+                * `QuantumCircuit`  -&gt;  (depth_array, current_depth, invalid_flag)
+            </strong>
+        </p>
+        <p>
+            <strong>* `QubitArray`      -&gt;  (lookup_table, logical_size)</strong>
+        </p>
+        <p>
+            <strong>* `Qubit`           -&gt;  integer qubit id</strong>
+        </p>
+        <p>
+            <strong>...</strong>
+        </p>
+        <p>
+            <strong>and so on for other metrics.</strong>
+        </p>
+        <p>
+            <strong>
+                The Jaxpr structure itself is **never modified**. Only the
+                interpretation of its variables changes through what is stored in this
+                dictionary.
+            </strong>
+        </p>
+        <p>
+            <strong>Special behavior</strong>
+        </p>
+        <p>
+            <strong>----------------</strong>
+        </p>
+        <p>
+            <strong>`ContextDict` overrides `__getitem__` for two main reasons:</strong>
+        </p>
+        <p>
+            <strong>1. **Literal handling**</strong>
+        </p>
+        <p>
+            <strong>
+                Jaxpr literals (`jax.core.Literal`) do not appear as normal variables.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                When accessed, they are transparently converted to their Python value.
+            </strong>
+        </p>
+        <p>
+            <strong>2. **Automatic JAX scalar conversion**</strong>
+        </p>
+        <p>
+            <strong></strong>
+        </p>
+        <p>
+            <strong>
+                If a stored value is a Python `int` or `float`, it is automatically
+                converted to a JAX scalar array. This guarantees that subsequent JAX
+                operations inside the metric evaluator can treat these values as valid
+                JAX types, avoiding abstractification errors.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                Because metrics are free to choose what values to associate with
+                variables, this mechanism allows multiple resource metrics (gate counts,
+                depth, future metrics) to reuse the same Jaxpr interpreter without
+                changing its logic —  only the contents of this dictionary differ.
+            </strong>
+        </p>
+        <p>
+            <strong>In summary, `ContextDict` is the bridge between:</strong>
+        </p>
+        <p>
+            <strong>
+                static Jaxpr structure  &lt;--&gt;  dynamic metric-specific semantics
+            </strong>
+            ” [34]
+        </p>
+        <p>
+            This class has no method, attributes. It only overrides the ‘<strong>__getitem__</strong>’ 
+            method. The method is described like this: “<strong>Override to handle Jaxpr
+            literals and automatic JAX scalar conversion.</strong>” [34]
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This is class is inheriting from the python ‘<strong>Dict</strong>’ class.
+        </p>
+        <h3>
+            <a name="_Toc229413436">ControlledJaspr</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            “
+            <strong>
+                This class enables the representation of controlled quantum functions.
+                The advantage of treating controlled functions in a separate manner is
+                that controlled function have an efficient control themselves:
+                Performing an MCX gate into a newly allocated Qubit and controlling the
+                function on that qubit.
+            </strong>
+        </p>
+        <p>
+            <strong>
+                In addition to the Jaspr for representing itself, this class therefore
+                also carries a Jaxpr for the base function.
+            </strong>
+            ” [34]
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor receives 3 parameters:
+        </p>
+        <p>
+            -          ‘<strong>base_jaspr</strong>’ – The base ‘<strong>Jaspr</strong>’ 
+            object, of which the ‘<strong>ControlledJaspr</strong>’ is derived from. It
+            gets instantiated.
+        </p>
+        <p>
+            -          ‘<strong>ctrl_state</strong>’ – This object represents the
+            control state for the base function to be applied. It becomes instantiated.
+        </p>
+        <p>
+            -          ‘<strong>stop_recursion</strong>’ – This attribute is passed for
+            recursion purposes and is by default False.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class methods are as follows:
+        </p>
+        <p>
+            -          ‘<strong>control</strong>’ – This method turns the ‘<strong>base_jaspr</strong>’ 
+            into a ‘<strong>ControlledJaspr</strong>’ object and returns it.
+        </p>
+        <p>
+            -          ‘<strong>inverse</strong>’ – This turns the inverse of the
+            ‘<strong>base_jaspr</strong>’ into a ‘<strong>ControlledJaspr</strong>’
+            object and returns it.
+        </p>
+        <p>
+            -          ‘<strong>from_cache</strong>’ – This is the method used by the
+            prior methods to create the ‘<strong>ControlledJaspr</strong>’ object. It is
+            decorated with ‘<strong>@lru_cache</strong>’ and is static.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class has one aggregation towards the ‘<strong>Jaspr</strong>’ and also
+            inherits from it. The static methods of the class are designed with
+            <u>
+                underlining
+            </u>
+            .
+        </p>
+        <h3>
+            <a name="_Toc229413437">GidneyMXCJaspr</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            Claude describes: “<strong>This class ‘GidneyMCXJaspr’ implements a Gidney
+            multiply-controlled X (MCX) gate — a quantum computing operation — as a
+            specialized Jaspr object.</strong>” [38] It returns a data structure of a
+            gidney-multi-controlled X gate for the Jasp compiler layer.
+        </p>
+        <h4>
+            Class constructor and attributes:
+        </h4>
+        <p>
+            The class constructor has exactly one parameter:
+        </p>
+        <p>
+            -          ‘<strong>inv: bool</strong>’ – which decides if the ‘<strong>GidneyMCX</strong>’ 
+            Gate is inverted. It gets instantiated.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            The class has one method:
+        </p>
+        <p>
+            -          ‘<strong>inverse</strong>’ – This method returns the inverse of
+            the ‘<strong>GidneyMCXJaspr</strong>’ object.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class inherits from ‘<strong>Jaspr</strong>’
+        </p>
+        <h3>
+            <a name="_Toc229413438">CreateQuantumKernelOp (xdsl_dialect.py)</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class exists two times. The class is described in the source code:
+            <br/>
+            “<strong>Indicates to the execution environment that a quantum computation
+            will start.</strong>” [34].
+        </p>
+        <h4>
+            Class attributes:
+        </h4>
+        <p>
+            Claude gives the description for the following attributes:
+        </p>
+        <p>
+            -          ‘<strong>name: String</strong>’ – “<strong>This is the IRDL
+            operation name/identifier. It follows the dialect.operation_name convention
+            — here jasp is the dialect and create_quantum_kernel is the op name.</strong><strong>Used 
+            for textual IR representation and op lookup</strong>“ [38]
+        </p>
+        <p>
+            -          ‘<strong>result: QuantumStateType</strong>’ – “<strong>Declares a
+            single SSA result value of type QuantumStateType. The result_def() call
+            registers it with the IRDL framework so it gets verified and accessible as
+            op.result. Since there are no operands, this op produces a quantum state
+            from thin air (hence "from nothing" in the docstring)</strong>.” [38]
+        </p>
+        <p>
+            -          ‘<strong>assembly_format: String</strong>’ – “<strong>Declarative 
+            format string for parsing/printing</strong>“ [38]
+        </p>
+        <p>
+            All of the class attributes are static.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            The class does not have a constructor or methods. It inherits from the
+            ‘<strong>IRDLOperation</strong>’ Class from the MLIR Library. The static
+            attributes are designed with <u>underlining</u>. This class defines the
+            source definition for the auto-generated Python binding which will be
+            explained in the following.
+        </p>
+        <h3>
+            <a name="_Toc229413439">CreateQuantumKernelOp (_jasp_ops_gen.py)</a>
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is the the auto-generated Python binding. It has the same class
+            description as ‘<strong>CreateQuantumKernelOP</strong>’.
+        </p>
+        <h4>
+            Class attributes:
+        </h4>
+        <p>
+            The class constructor receives n parameters, of which these are certain:
+        </p>
+        <p>
+            -          ‘<strong>result: Object</strong>’ – “<strong>the single quantum
+            state output.</strong>” [38] This is also a class attribute because of the
+            method ‘<strong>result</strong>’, which is decorated with the ‘<strong>@builtins.property</strong>’ 
+            annotation.
+        </p>
+        <p>
+            -          ‘<strong>loc: Object</strong>’ – “<strong>optional source
+            location for debugging</strong>“ [38]. The type could not be determined,
+            hence it is of type object.
+        </p>
+        <p>
+            -          ‘<strong>ip: Object</strong>’ – “<strong>optional insertion point
+            in the IR</strong>” [38]. The type could not be determined, hence it is of
+            type object.
+        </p>
+        <p>
+            The class can also receive n more parameters, which is designed with a star
+            in the diagram.
+        </p>
+        <p>
+            Claude describes the following class attributes:
+        </p>
+        <p>
+            -          ‘<strong>OPERATION_NAME: String</strong>’ – “<strong>The unique
+            string identifier for the operation, matching the IRDL definition.</strong>” 
+            [38] It is static.
+        </p>
+        <p>
+            -          ‘<strong>_ODS_REGIONS</strong>’ – “<strong>Declares the op has 0
+            regions and is non-variadic.</strong>” [38] It is static.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class inherits from the parent class ‘<strong>_odr_ir.OpView</strong>’ 
+            and is decorated with the ‘<strong>@_ods_cext.register_operation(_Dialect)</strong>’ 
+            annotation. This detail is designed with the ‘<strong>&lt;&lt;&gt;&gt;</strong>’notation. 
+            The class does not have unique methods.
+        </p>
+        <h3>
+            <a name="_Toc229413440">CreateQubitsOp</a> (xdsl_dialect.py)
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class exists two times. The class is described in the source code:
+            <br/>
+            “<strong>Allocates a QubitArray containing n qubits. N can be dynamically
+            sized.</strong>" [34].
+        </p>
+        <p>
+            Class attributes:
+        </p>
+        <p>
+            The class attributes are all static and are as follows:
+        </p>
+        <p>
+            -          ‘<strong>name: String</strong>’ – this is always set to “<strong>jasp.create_qubits</strong>”. 
+            Unique identifier string for the operation.
+        </p>
+        <p>
+            -          ‘<strong>amount: _TensorI64</strong>’ – Claude describes:
+            “<strong>An input operand of type TensorI64 representing the number of
+            qubits to allocate — dynamically sized at runtime.</strong>” [38]
+        </p>
+        <p>
+            -          ‘<strong>qst_in: QuantumStateType</strong>’ – This is the quantum
+            state that is being consumed.
+        </p>
+        <p>
+            -          ‘<strong>result: QubitArrayType</strong>’ – Claude describes:
+            “<strong>The output — a freshly allocated QubitArrayType containing amount
+            qubits.</strong>” [38]
+        </p>
+        <p>
+            -          ‘<strong>qst_out: QuantumStateType</strong>’ – Claude describes :
+            ”<strong>The outgoing quantum state token, passed forward to the next
+            quantum op in the chain.</strong>” [38]
+        </p>
+        <p>
+            -          ‘ <strong>assembly_format: (String,…)</strong> this tuple of
+            Strings is always set to the same tuple. Claude describes [38]: “It defines
+            how the op is printed and parsed in MLIR’s textual IR.“
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class does not have a constructor or methods. It inherits from
+            ‘<strong>IRDLOperation</strong>’. This class is decorated with the ‘<strong>@irdl_op_definition</strong>’, 
+            which is designed with the ‘<strong>&lt;&lt;&gt;&gt;</strong>’ notation.
+        </p>
+        <h3>
+            CreateQubitsOp (_jasp_ops_gen.py)
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is the the auto-generated Python binding. It has the same class
+            description as ‘<strong>CreateQubitsOp</strong>’.
+        </p>
+        <h4>
+            Class attributes:
+        </h4>
+        <p>
+            The class constructor receives n parameters, of which these are certain:
+        </p>
+        <p>
+            -          ‘<strong>result: _ods_ir.OpResult</strong>’ – “<strong>the
+            allocated qubit array and outgoing quantum state</strong>” [38]. This is
+            also a class attribute because of the method ‘<strong>result</strong>’,
+            which is decorated with the ‘<strong>@builtins.property</strong>’
+            annotation.
+        </p>
+        <p>
+            -          ‘<strong>qst_out: _ods_ir.OpResult</strong>’ – “the outgoing
+            quantum state” [38]. This is also a class attribute because of the method
+            ‘<strong>qst_out</strong>’, which is decorated with the ‘<strong>@builtins.property</strong>’ 
+            annotation.
+        </p>
+        <p>
+            -          ‘<strong>amount: _ods_ir.Value</strong>’ – This parameter gets
+            added to the classes operands and controls the amount of qubis. This is also
+            a class attribute because of the method ‘<strong>amount</strong>’, which is
+            decorated with the ‘<strong>@builtins.property</strong>’ annotation.
+        </p>
+        <p>
+            -          ‘<strong>qst_in: _ods_ir.Value</strong>’ -  This is the ingoing
+            quantum state. This is also a class attribute because of the method
+            ‘<strong>qst_in</strong>’, which is decorated with the ‘<strong>@builtins.property</strong>’ 
+            annotation.
+        </p>
+        <p>
+            -          ‘<strong>loc: Object</strong>’ – “<strong>optional source
+            location for debugging</strong>“ [38]. The type could not be determined,
+            hence it is of type object.
+        </p>
+        <p>
+            -          ‘<strong>ip: Object</strong>’ – “<strong>optional insertion point
+            in the IR</strong>” [38]. The type could not be determined, hence it is of
+            type object.
+        </p>
+        <p>
+            The class can also receive n more parameters, which is designed with a star
+            in the diagram.
+        </p>
+        <p>
+            Claude describes the following class attributes:
+        </p>
+        <p>
+            -          ‘<strong>OPERATION_NAME: String</strong>’ – “<strong>The unique
+            string identifier for the operation, matching the IRDL definition.</strong>” 
+            [38] It is static.
+        </p>
+        <p>
+            -          ‘<strong>_ODS_REGIONS: (int, bool)</strong>’ – “<strong>Declares 
+            the op has 0 regions and is non-variadic.</strong>” [38] It is static.
+        </p>
+        <h4>
+            Details and design decisions:
+        </h4>
+        <p>
+            This class inherits from the parent class ‘<strong>_odr_ir.OpView</strong>’ 
+            and is decorated with the ‘<strong>@_ods_cext.register_operation(_Dialect)</strong>’ 
+            annotation. This detail is designed with the ‘<strong>&lt;&lt;&gt;&gt;</strong>’notation. 
+            The class does not have unique methods.
+        </p>
+        <h3>
+            DefaultBackend
+        </h3>
+        <h4>
+            Class functionality:
+        </h4>
+        <p>
+            This class is incomplete and provides no functionality.
+        </p>
+        <h4>
+            Class methods:
+        </h4>
+        <p>
+            This class has one method:
+        </p>
+        <p>
+            -          ‘run: None’ – This method is not complete and is non functional
         </p>
 
         <!-- ═══════════════ CIRCUIT PRIMITIVES ═══════════════ -->
@@ -64,15 +1740,6 @@
             '<strong>__radd__</strong>' both read <em>"only list ist possible"</em>. '<strong>__add__</strong>'
             actually accepts <code>list | Qubit</code>, so the message is wrong on two counts - wrong type set
             and German typo <em>"ist"</em> instead of <em>"is"</em>.
-        </p>
-
-        <h3><a name="_Toc226031303">Clbit</a></h3>
-        <p>
-            '<strong>Clbit</strong>' is the classical-bit counterpart of '<strong>Qubit</strong>'. It uses the same
-            hash-counter mechanism (a class-level <code>clbit_hash: np.ndarray</code>) and the same
-            '<strong>__eq__</strong>' logic but sets <code>bit_type = 1</code>. Unlike '<strong>Qubit</strong>'
-            it does not use <code>__slots__</code>. '<strong>dtype</strong>' and '<strong>clbit_hash</strong>'
-            are class-level (static) attributes, shown underlined in the diagram.
         </p>
 
         <!-- ═══════════════ QUANTUM DICTIONARY ═══════════════ -->
