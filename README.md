@@ -41,9 +41,11 @@ Qrisp has been confirmed to work with Python version 3.11 & 3.12.
 
 Qrisp is compatible with any QASM-capable quantum backend! In particular, it offers convenient interfaces for using IBM, IQM and AQT quantum computers, and any quantum backend provider is invited to reach out for a tight integration! 
 
-If you want to work with IQM quantum computers as a backend, you need to install additional dependencies using
+Additional backends require extra dependencies:
 ```bash
-pip install qrisp[iqm]
+pip install qrisp[aqt]     # AQT quantum hardware
+pip install qrisp[iqm]     # IQM quantum hardware
+pip install qrisp[qiskit]  # Qiskit Aer simulator + IBM Quantum Runtime
 ```
 
 ## Documentation
@@ -56,19 +58,19 @@ Shor's algorithm is among the most famous quantum algorithm since it provides a 
 Despite this importance, the amount of software that is actually able to compile the algorithm to the circuit level is extremely limited. This is because a key operation within the algorithm (modular in-place multiplication) is difficult to implement and has strong requirements for the underlying compiler. These problems highlight how the Qrisp programming-model delivers significant advantages to quantum programmers because the quantum part of the algorithm can be expressend within a few lines of code:
 
 ```python
-
 from qrisp import QuantumFloat, QuantumModulus, h, QFT, control
+
 
 def find_order(a, N):
     qg = QuantumModulus(N)
     qg[:] = 1
-    qpe_res = QuantumFloat(2*qg.size + 1, exponent = -(2*qg.size + 1))
+    qpe_res = QuantumFloat(2 * qg.size + 1, exponent=-(2 * qg.size + 1))
     h(qpe_res)
     for i in range(len(qpe_res)):
         with control(qpe_res[i]):
             qg *= a
-        a = (a*a)%N
-    QFT(qpe_res, inv = True)
+        a = (a * a) % N
+    QFT(qpe_res, inv=True)
     return qpe_res.get_measurement()
 ```
 
@@ -76,20 +78,18 @@ To find out how this can be used to break encryption be sure to check the [tutor
 
 Qrisp offers much more than just factoring! More examples, like simulating molecules at the quantum level or how to solve the Travelling Salesman Problem, can be found [here](https://qrisp.eu/general/tutorial/index.html).
 
+## Feedback and Contact
+If you have comments, questions or love letters, here is how you can engange with the Qrisp Community and Developers:
+
+- Join the Discussions on [Discord](https://discord.gg/v5np7DeBaq).
+- Join the bi-weekly [Developer Call](https://github.com/eclipse-qrisp/Qrisp/wiki/Eclipse-Qrisp-Developer-Meetings).
+- Ask a question, request a new feature and file a bug with [GitHub issues](https://github.com/eclipse-qrisp/qrisp/issues/new/choose).
+- Vote on existing GitHub issues by reacting with a 👍. We regularly check issues with votes!
+- Star the repository to show your support.
+
+
 ## Authors and Citation
 Qrisp is the work of [many people](https://projects.eclipse.org/projects/technology.qrisp/who).
-
-If you have comments, questions or love letters, feel free to reach out to us:
-
-raphael.seidel [at] meetiqm.com
-
-sebastian.bock [at] fokus.fraunhofer.de
-
-nikolay.tcholtchev [at] fokus.fraunhofer.de
-
-rene.zander [at] fokus.fraunhofer.de
-
-matic.petric [at] fokus.fraunhofer.de
 
 If you want to cite Qrisp in your work, please use:
 
