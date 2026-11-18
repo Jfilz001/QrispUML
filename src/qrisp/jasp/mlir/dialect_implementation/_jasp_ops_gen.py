@@ -18,6 +18,7 @@ class _Dialect(_ods_ir.Dialect):
     DIALECT_NAMESPACE = "jasp"
 
 
+
 @_ods_cext.register_operation(_Dialect)
 class ConsumeQuantumKernelOp(_ods_ir.OpView):
     r"""Indicates to the execution environment that the quantum computation has concluded."""
@@ -62,7 +63,7 @@ def consume_quantum_kernel(success, qst, *, loc=None, ip=None) -> _ods_ir.OpResu
     return ConsumeQuantumKernelOp(success=success, qst=qst, loc=loc, ip=ip).result
 
 
-@_ods_cext. 
+@_ods_cext 
 class CreateQuantumKernelOp(_ods_ir.OpView):
     r"""Indicates to the execution environment that a quantum computation will start."""
 

@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-
+import mcp
 
 class XML_Handler():
     
@@ -20,7 +20,7 @@ class XML_Handler():
     def read_classes(self):
         classes={}    
         try:
-            with open(r"C:\Users\filzj\Desktop\Hiwi\Classes.txt", "r", encoding="utf-8") as file:
+            with open(r"C:\Users\filzj\Desktop\Hiwi\QrispUML\CENELEC_layers\Qrisp-Classes_to_CENELEC.txt", "r", encoding="utf-8") as file:
                 lines = [line.strip() for line in file.readlines()]
                 for line in lines:   
                     if line in self.titles_to_ignore:

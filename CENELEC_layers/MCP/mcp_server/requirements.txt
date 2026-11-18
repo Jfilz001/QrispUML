@@ -1,0 +1,8 @@
+@MCP Server Requirements
+
+langchain==0.1.0
+langchain-community==0.1.0
+gitpython>=3.1.0
+astparse==2024*
+typing-extensions>=4.0.0
+
